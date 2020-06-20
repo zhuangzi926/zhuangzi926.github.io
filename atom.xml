@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://xinlu.cool/"/>
   <updated>2020-06-19T20:52:20.478Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://xinlu.cool/</id>
   
   <author>
     <name>zhuangzi926</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>C++并发：从std::thread()开始</title>
-    <link href="http://yoursite.com/Reading-Notes/cppconcurrency-1/"/>
-    <id>http://yoursite.com/Reading-Notes/cppconcurrency-1/</id>
+    <link href="http://xinlu.cool/Reading-Notes/cppconcurrency-1/"/>
+    <id>http://xinlu.cool/Reading-Notes/cppconcurrency-1/</id>
     <published>2020-06-19T20:43:36.000Z</published>
     <updated>2020-06-19T20:52:20.478Z</updated>
     
@@ -28,21 +28,21 @@
     </summary>
     
     
-      <category term="Reading Notes" scheme="http://yoursite.com/categories/Reading-Notes/"/>
+      <category term="Reading Notes" scheme="http://xinlu.cool/categories/Reading-Notes/"/>
     
     
-      <category term="C++" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C++" scheme="http://xinlu.cool/tags/C/"/>
     
-      <category term="Concurrency" scheme="http://yoursite.com/tags/Concurrency/"/>
+      <category term="Concurrency" scheme="http://xinlu.cool/tags/Concurrency/"/>
     
-      <category term="C++ Concurrency in Action" scheme="http://yoursite.com/tags/C-Concurrency-in-Action/"/>
+      <category term="C++ Concurrency in Action" scheme="http://xinlu.cool/tags/C-Concurrency-in-Action/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/uncategorized/hello-world/"/>
-    <id>http://yoursite.com/uncategorized/hello-world/</id>
+    <link href="http://xinlu.cool/uncategorized/hello-world/"/>
+    <id>http://xinlu.cool/uncategorized/hello-world/</id>
     <published>2020-06-02T20:18:00.090Z</published>
     <updated>2020-06-02T20:18:00.090Z</updated>
     
