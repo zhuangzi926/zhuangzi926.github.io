@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="这是个啥？ tf.data.Dataset包含数据集导入、预处理、导出的高级api 适用于数据量可以分批导入内存的场景 可以通过简单的api实现流水线处理 这货本质是个封装程度非常高的IO Adapter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="调包侠工具箱：tf.data.Dataset">
+<meta property="og:url" content="http://xinlu.cool/Machine-Learning/tf-data-Dataset/index.html">
+<meta property="og:site_name" content="xinlu&#39;s blog">
+<meta property="og:description" content="这是个啥？ tf.data.Dataset包含数据集导入、预处理、导出的高级api 适用于数据量可以分批导入内存的场景 可以通过简单的api实现流水线处理 这货本质是个封装程度非常高的IO Adapter">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-29T07:36:29.000Z">
+<meta property="article:modified_time" content="2020-06-30T16:48:43.267Z">
+<meta property="article:author" content="xinlu">
+<meta property="article:tag" content="TensorFlow">
+<meta property="article:tag" content="Keras">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xinlu.cool/Machine-Learning/tf-data-Dataset/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>调包侠工具箱：tf.data.Dataset | xinlu's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="xinlu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">xinlu's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/zhuangzi926" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Machine-Learning/tf-data-Dataset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xinlu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xinlu's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          调包侠工具箱：tf.data.Dataset
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-29 15:36:29" itemprop="dateCreated datePublished" datetime="2020-06-29T15:36:29+08:00">2020-06-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-01 00:48:43" itemprop="dateModified" datetime="2020-07-01T00:48:43+08:00">2020-07-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="这是个啥？"><a href="#这是个啥？" class="headerlink" title="这是个啥？"></a>这是个啥？</h2><ul>
+<li>tf.data.Dataset包含数据集导入、预处理、导出的高级api</li>
+<li>适用于数据量可以分批导入内存的场景</li>
+<li>可以通过简单的api实现流水线处理</li>
+<li><strong>这货本质是个封装程度非常高的IO Adapter</strong></li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Dataset创建"><a href="#Dataset创建" class="headerlink" title="Dataset创建"></a>Dataset创建</h2><h3 id="与导入操作有关的api"><a href="#与导入操作有关的api" class="headerlink" title="与导入操作有关的api"></a>与导入操作有关的api</h3><ul>
+<li>从<code>python list</code>导入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.from_tensor_slices([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>从<code>txt</code>文件导入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.TextLineDataset([</span><br><span class="line">  <span class="string">"file1.txt"</span>, </span><br><span class="line">  <span class="string">"file2.txt"</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>从<code>TFRecord</code>导入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.TFRecordDataset([</span><br><span class="line">    <span class="string">"file1.tfrecords"</span>, </span><br><span class="line">    <span class="string">"file2.tfrecords"</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>从多文件导入（正则表达式）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.list_files(<span class="string">"/path/*.txt"</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其他导入方式<ul>
+<li><code>tf.data.FixedLengthRecordDataset</code></li>
+<li><code>tf.data.Dataset.from_generator</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="一些优雅的导入姿势"><a href="#一些优雅的导入姿势" class="headerlink" title="一些优雅的导入姿势"></a>一些优雅的导入姿势</h3><ul>
+<li>导入一个tuple</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Slicing a tuple of 1D tensors produces tuple elements containing scalar tensors.</span></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices((</span><br><span class="line">  [<span class="number">1</span>, <span class="number">2</span>], </span><br><span class="line">  [<span class="number">3</span>, <span class="number">4</span>], </span><br><span class="line">  [<span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">))</span><br><span class="line">list(dataset.as_numpy_iterator())</span><br><span class="line"><span class="comment"># [(1, 3, 5), (2, 4, 6)]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导入两个tuple</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Two tensors can be combined into one Dataset object.</span></span><br><span class="line">features = tf.constant([[<span class="number">1</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">3</span>]]) <span class="comment"># ==&gt; 3x2 tensor</span></span><br><span class="line">labels = tf.constant([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'A'</span>]) <span class="comment"># ==&gt; 3x1 tensor</span></span><br><span class="line">dataset = Dataset.from_tensor_slices((features, labels))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Both the features and the labels tensors can be converted</span></span><br><span class="line"><span class="comment"># to a Dataset object separately and combined after.</span></span><br><span class="line">features_dataset = Dataset.from_tensor_slices(features)</span><br><span class="line">labels_dataset = Dataset.from_tensor_slices(labels)</span><br><span class="line">dataset = Dataset.zip((features_dataset, labels_dataset))</span><br></pre></td></tr></table></figure>
+
+<h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><h3 id="Dataset级别的api"><a href="#Dataset级别的api" class="headerlink" title="Dataset级别的api"></a>Dataset级别的api</h3><ul>
+<li><p><code>.apply()</code></p>
+<ul>
+<li><p>Args:</p>
+<ul>
+<li>transformation func, from Dataset to Dataset</li>
+</ul>
+</li>
+<li><p>Rets:</p>
+<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dataset_fn</span><span class="params">(ds)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> ds.filter(<span class="keyword">lambda</span> x: x &lt; <span class="number">5</span>)</span><br><span class="line">dataset = dataset.apply(dataset_fn)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.batch()</code><ul>
+<li>Args:<ul>
+<li>batch_size</li>
+<li>drop_remainder=False</li>
+</ul>
+</li>
+<li>新Dataset输出的数据新增一个维度，大小为batch_size</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = dataset.batch(<span class="number">3</span>, drop_remainder=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.shard()</code><ul>
+<li>Args:<ul>
+<li>num_shards</li>
+<li>index</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>一个新的Dataset，只包含原Dataset的<code>1/num_shards</code>数据，而且数据在原Dataset中的下标<code>% num_shards = index</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset_B = dataset_A.shard(num_shards=<span class="number">3</span>, index=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.concatenate()</code><ul>
+<li>Args:<ul>
+<li>another Dataset</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.data.Dataset.range(<span class="number">1</span>, <span class="number">4</span>)  <span class="comment"># ==&gt; [ 1, 2, 3 ]</span></span><br><span class="line">b = tf.data.Dataset.range(<span class="number">4</span>, <span class="number">8</span>)  <span class="comment"># ==&gt; [ 4, 5, 6, 7 ]</span></span><br><span class="line">ds = a.concatenate(b)</span><br><span class="line"><span class="comment"># ==&gt; [ 1, 2, 3, 4, 5, 6, 7 ]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Dataset.zip()</code><ul>
+<li>Args:<ul>
+<li>(Dataset, Dataset, …)</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.data.Dataset.range(<span class="number">1</span>, <span class="number">4</span>)  <span class="comment"># ==&gt; [ 1, 2, 3 ]</span></span><br><span class="line">b = tf.data.Dataset.range(<span class="number">4</span>, <span class="number">7</span>)  <span class="comment"># ==&gt; [ 4, 5, 6 ]</span></span><br><span class="line">ds = tf.data.Dataset.zip((a, b))</span><br><span class="line"><span class="comment"># ==&gt; [(1, 4), (2, 5), (3, 6)]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字段级别的api"><a href="#字段级别的api" class="headerlink" title="字段级别的api"></a>字段级别的api</h3><ul>
+<li><code>.filter()</code><ul>
+<li>Args:<ul>
+<li>predicate(func)</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset, element by predicate is True</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = dataset.filter(<span class="keyword">lambda</span> x: x &lt; <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.map()</code><ul>
+<li>Args:<ul>
+<li>map_func</li>
+<li>num_parallel_calls(=<code>tf.data.experimental.AUTOTUNE</code>)</li>
+<li>deterministic</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataset = Dataset.range(<span class="number">1</span>, <span class="number">6</span>)  <span class="comment"># ==&gt; [ 1, 2, 3, 4, 5 ]</span></span><br><span class="line">dataset = dataset.map(<span class="keyword">lambda</span> x: x + <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>interleave()</code><ul>
+<li>Args:<ul>
+<li>map_func</li>
+<li>cycle_length=AUTOTUNE</li>
+<li>block_length=1</li>
+<li>num_parallel_calls(=<code>tf.data.experimental.AUTOTUNE</code>)</li>
+<li>deterministic=None</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>如何理解：</p>
+<ol>
+<li>遍历原Dataset，用<code>map_func</code>函数处理每个字段，该过程并行度由<code>cycle_length</code>控制</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设cycle_length = 3</span></span><br><span class="line">[map_func(x1), map_func(x2), map_func(x3)] </span><br><span class="line">  =&gt; [res1, res2, res3] </span><br><span class="line">  =&gt; cycle1</span><br><span class="line"></span><br><span class="line">[map_func(x4), map_func(x5), map_func(x6)] </span><br><span class="line">  =&gt; [res4, res5, res6] </span><br><span class="line">  =&gt; cycle2</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">==&gt; cycles = [cycle1, cycle2, cycle3, ...]</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>遍历cycles，取每个cycle的<code>block_length</code>个元素后，换下一个cycle继续读取，环形遍历直到所有元素都被取出</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设block_length = 2</span></span><br><span class="line"></span><br><span class="line">cycle1 =&gt; [res1, res2]</span><br><span class="line">cycle2 =&gt; [res4, res5]</span><br><span class="line"></span><br><span class="line">cycle1 =&gt; [res3]</span><br><span class="line">cycle2 =&gt; [res6]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终结果被flatten</span></span><br><span class="line">==&gt; [res1, res2, res4, res5, res3, res6]</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>最终获得flatten后的新Dataset</li>
+</ol>
+<h2 id="Dataset导出"><a href="#Dataset导出" class="headerlink" title="Dataset导出"></a>Dataset导出</h2><ul>
+<li><code>.prefetch()</code><ul>
+<li>Args:<ul>
+<li>buffer_size</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>官方建议在所有Dataset的处理结束后加上<code>.prefetch()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 预取两个字段</span></span><br><span class="line">dataset = dataset.prefetch(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预取两个batch</span></span><br><span class="line">dataset = dataset.batch(<span class="number">20</span>).prefetch(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.shuffle()</code><ul>
+<li>Args:<ul>
+<li>buffer_size</li>
+<li>seed=None</li>
+<li>reshuffle_each_iteration=None</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>官方建议<code>buffer_size</code> &gt;= Dataset数据量</p>
+<ul>
+<li><code>.enumerate()</code><ul>
+<li>Args:<ul>
+<li>start=0</li>
+</ul>
+</li>
+<li>Rets:<ul>
+<li>a new Dataset，每个输出结果多了一个表示索引的维度</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.from_tensor_slices([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">dataset = dataset.enumerate(start=<span class="number">5</span>)</span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> dataset.as_numpy_iterator():</span><br><span class="line">  print(element)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">(5, 1)</span></span><br><span class="line"><span class="string">(6, 2)</span></span><br><span class="line"><span class="string">(7, 3)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.as_numpy_iterator()</code><ul>
+<li>Rets:<ul>
+<li>a new Dataset</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.from_tensor_slices([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> dataset.as_numpy_iterator():</span><br><span class="line">  print(element)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+              <a href="/tags/Keras/" rel="tag"># Keras</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Reading-Notes/cppconcurrency-1/" rel="prev" title="C++并发：从std::thread()开始">
+      <i class="fa fa-chevron-left"></i> C++并发：从std::thread()开始
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#这是个啥？"><span class="nav-number">1.</span> <span class="nav-text">这是个啥？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset创建"><span class="nav-number">2.</span> <span class="nav-text">Dataset创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与导入操作有关的api"><span class="nav-number">2.1.</span> <span class="nav-text">与导入操作有关的api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些优雅的导入姿势"><span class="nav-number">2.2.</span> <span class="nav-text">一些优雅的导入姿势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理"><span class="nav-number">3.</span> <span class="nav-text">预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataset级别的api"><span class="nav-number">3.1.</span> <span class="nav-text">Dataset级别的api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字段级别的api"><span class="nav-number">3.2.</span> <span class="nav-text">字段级别的api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset导出"><span class="nav-number">4.</span> <span class="nav-text">Dataset导出</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xinlu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhuangzi926" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhuangzi926" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinluzhuang@gmail.com" title="E-Mail → mailto:xinluzhuang@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://xinlu.cool/" title="http:&#x2F;&#x2F;xinlu.cool">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinlu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

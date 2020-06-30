@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinlu.cool/Machine-Learning/tf-data-Dataset/</loc>
+    
+    <lastmod>2020-06-30T16:48:43.267Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinlu.cool/Reading-Notes/cppconcurrency-1/</loc>
     
-    <lastmod>2020-06-29T06:54:35.319Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tag/index.html</loc>
-    
-    <lastmod>2020-06-19T20:40:42.906Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/category/index.html</loc>
-    
-    <lastmod>2020-06-19T20:40:25.416Z</lastmod>
+    <lastmod>2020-06-30T16:48:23.501Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://xinlu.cool/about/index.html</loc>
     
-    <lastmod>2020-06-04T17:41:40.891Z</lastmod>
+    <lastmod>2020-06-30T16:40:16.710Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xinlu.cool/uncategorized/hello-world/</loc>
+    <loc>http://xinlu.cool/tags/index.html</loc>
     
-    <lastmod>2020-06-02T20:18:00.090Z</lastmod>
+    <lastmod>2020-06-30T16:40:10.194Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/categories/index.html</loc>
+    
+    <lastmod>2020-06-30T16:40:03.604Z</lastmod>
     
   </url>
   
