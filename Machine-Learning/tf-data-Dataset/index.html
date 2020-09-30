@@ -231,27 +231,22 @@
 <li><strong>这货本质是个封装程度非常高的IO Adapter</strong></li>
 </ul>
 <a id="more"></a>
-
 <h2 id="Dataset创建"><a href="#Dataset创建" class="headerlink" title="Dataset创建"></a>Dataset创建</h2><h3 id="与导入操作有关的api"><a href="#与导入操作有关的api" class="headerlink" title="与导入操作有关的api"></a>与导入操作有关的api</h3><ul>
 <li>从<code>python list</code>导入</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.from_tensor_slices([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>从<code>txt</code>文件导入</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.TextLineDataset([</span><br><span class="line">  <span class="string">"file1.txt"</span>, </span><br><span class="line">  <span class="string">"file2.txt"</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>从<code>TFRecord</code>导入</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.TFRecordDataset([</span><br><span class="line">    <span class="string">"file1.tfrecords"</span>, </span><br><span class="line">    <span class="string">"file2.tfrecords"</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>从多文件导入（正则表达式）</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.list_files(<span class="string">"/path/*.txt"</span>)</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>其他导入方式<ul>
 <li><code>tf.data.FixedLengthRecordDataset</code></li>
@@ -263,12 +258,10 @@
 <li>导入一个tuple</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Slicing a tuple of 1D tensors produces tuple elements containing scalar tensors.</span></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices((</span><br><span class="line">  [<span class="number">1</span>, <span class="number">2</span>], </span><br><span class="line">  [<span class="number">3</span>, <span class="number">4</span>], </span><br><span class="line">  [<span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">))</span><br><span class="line">list(dataset.as_numpy_iterator())</span><br><span class="line"><span class="comment"># [(1, 3, 5), (2, 4, 6)]</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>导入两个tuple</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Two tensors can be combined into one Dataset object.</span></span><br><span class="line">features = tf.constant([[<span class="number">1</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">3</span>]]) <span class="comment"># ==&gt; 3x2 tensor</span></span><br><span class="line">labels = tf.constant([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'A'</span>]) <span class="comment"># ==&gt; 3x1 tensor</span></span><br><span class="line">dataset = Dataset.from_tensor_slices((features, labels))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Both the features and the labels tensors can be converted</span></span><br><span class="line"><span class="comment"># to a Dataset object separately and combined after.</span></span><br><span class="line">features_dataset = Dataset.from_tensor_slices(features)</span><br><span class="line">labels_dataset = Dataset.from_tensor_slices(labels)</span><br><span class="line">dataset = Dataset.zip((features_dataset, labels_dataset))</span><br></pre></td></tr></table></figure>
-
 <h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><h3 id="Dataset级别的api"><a href="#Dataset级别的api" class="headerlink" title="Dataset级别的api"></a>Dataset级别的api</h3><ul>
 <li><p><code>.apply()</code></p>
 <ul>
@@ -286,7 +279,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dataset_fn</span><span class="params">(ds)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> ds.filter(<span class="keyword">lambda</span> x: x &lt; <span class="number">5</span>)</span><br><span class="line">dataset = dataset.apply(dataset_fn)</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>.batch()</code><ul>
 <li>Args:<ul>
@@ -299,7 +291,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = dataset.batch(<span class="number">3</span>, drop_remainder=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>.shard()</code><ul>
 <li>Args:<ul>
@@ -315,7 +306,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset_B = dataset_A.shard(num_shards=<span class="number">3</span>, index=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>.concatenate()</code><ul>
 <li>Args:<ul>
@@ -330,7 +320,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.data.Dataset.range(<span class="number">1</span>, <span class="number">4</span>)  <span class="comment"># ==&gt; [ 1, 2, 3 ]</span></span><br><span class="line">b = tf.data.Dataset.range(<span class="number">4</span>, <span class="number">8</span>)  <span class="comment"># ==&gt; [ 4, 5, 6, 7 ]</span></span><br><span class="line">ds = a.concatenate(b)</span><br><span class="line"><span class="comment"># ==&gt; [ 1, 2, 3, 4, 5, 6, 7 ]</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>Dataset.zip()</code><ul>
 <li>Args:<ul>
@@ -345,7 +334,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.data.Dataset.range(<span class="number">1</span>, <span class="number">4</span>)  <span class="comment"># ==&gt; [ 1, 2, 3 ]</span></span><br><span class="line">b = tf.data.Dataset.range(<span class="number">4</span>, <span class="number">7</span>)  <span class="comment"># ==&gt; [ 4, 5, 6 ]</span></span><br><span class="line">ds = tf.data.Dataset.zip((a, b))</span><br><span class="line"><span class="comment"># ==&gt; [(1, 4), (2, 5), (3, 6)]</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="字段级别的api"><a href="#字段级别的api" class="headerlink" title="字段级别的api"></a>字段级别的api</h3><ul>
 <li><code>.filter()</code><ul>
 <li>Args:<ul>
@@ -360,7 +348,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataset = dataset.filter(<span class="keyword">lambda</span> x: x &lt; <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>.map()</code><ul>
 <li>Args:<ul>
@@ -377,7 +364,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataset = Dataset.range(<span class="number">1</span>, <span class="number">6</span>)  <span class="comment"># ==&gt; [ 1, 2, 3, 4, 5 ]</span></span><br><span class="line">dataset = dataset.map(<span class="keyword">lambda</span> x: x + <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>interleave()</code><ul>
 <li>Args:<ul>
@@ -400,13 +386,11 @@
 <li>遍历原Dataset，用<code>map_func</code>函数处理每个字段，该过程并行度由<code>cycle_length</code>控制</li>
 </ol>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设cycle_length = 3</span></span><br><span class="line">[map_func(x1), map_func(x2), map_func(x3)] </span><br><span class="line">  =&gt; [res1, res2, res3] </span><br><span class="line">  =&gt; cycle1</span><br><span class="line"></span><br><span class="line">[map_func(x4), map_func(x5), map_func(x6)] </span><br><span class="line">  =&gt; [res4, res5, res6] </span><br><span class="line">  =&gt; cycle2</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">==&gt; cycles = [cycle1, cycle2, cycle3, ...]</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
+<ol>
 <li>遍历cycles，取每个cycle的<code>block_length</code>个元素后，换下一个cycle继续读取，环形遍历直到所有元素都被取出</li>
 </ol>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设block_length = 2</span></span><br><span class="line"></span><br><span class="line">cycle1 =&gt; [res1, res2]</span><br><span class="line">cycle2 =&gt; [res4, res5]</span><br><span class="line"></span><br><span class="line">cycle1 =&gt; [res3]</span><br><span class="line">cycle2 =&gt; [res6]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终结果被flatten</span></span><br><span class="line">==&gt; [res1, res2, res4, res5, res3, res6]</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
+<ol>
 <li>最终获得flatten后的新Dataset</li>
 </ol>
 <h2 id="Dataset导出"><a href="#Dataset导出" class="headerlink" title="Dataset导出"></a>Dataset导出</h2><ul>
@@ -424,7 +408,6 @@
 </ul>
 <p>官方建议在所有Dataset的处理结束后加上<code>.prefetch()</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 预取两个字段</span></span><br><span class="line">dataset = dataset.prefetch(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预取两个batch</span></span><br><span class="line">dataset = dataset.batch(<span class="number">20</span>).prefetch(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>.shuffle()</code><ul>
 <li>Args:<ul>
@@ -455,7 +438,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.from_tensor_slices([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">dataset = dataset.enumerate(start=<span class="number">5</span>)</span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> dataset.as_numpy_iterator():</span><br><span class="line">  print(element)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">(5, 1)</span></span><br><span class="line"><span class="string">(6, 2)</span></span><br><span class="line"><span class="string">(7, 3)</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>.as_numpy_iterator()</code><ul>
 <li>Rets:<ul>
@@ -466,8 +448,6 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dataset = tf.data.Dataset.from_tensor_slices([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> dataset.as_numpy_iterator():</span><br><span class="line">  print(element)</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">1</span></span><br><span class="line"><span class="string">2</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-
-
 
     </div>
 

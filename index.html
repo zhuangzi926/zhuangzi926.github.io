@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-29 20:33:01" itemprop="dateModified" datetime="2020-09-29T20:33:01+08:00">2020-09-29</time>
+                <time title="Modified: 2020-09-30 09:39:14" itemprop="dateModified" datetime="2020-09-30T09:39:14+08:00">2020-09-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,14 +221,16 @@
           <h1 id="概念引入"><a href="#概念引入" class="headerlink" title="概念引入"></a>概念引入</h1><h2 id="随机变量的定义"><a href="#随机变量的定义" class="headerlink" title="随机变量的定义"></a>随机变量的定义</h2><blockquote>
 <p>给定样本空间S，随机变量是一个从样本空间S映射到实数域R的函数，一般用大写英文字母表示。</p>
 </blockquote>
-<h2 id="通过例子来理解定义"><a href="#通过例子来理解定义" class="headerlink" title="通过例子来理解定义"></a>通过例子来理解定义</h2><p>以“抛硬币”游戏为例，连续抛两次硬币，每次抛硬币的结果要么是 $H$ (Head)，要么是 $T$ (Tail)，那么抛硬币的结果样本空间就是 ${HH, HT, TH, TT}$  。</p>
+<h2 id="通过例子来理解定义"><a href="#通过例子来理解定义" class="headerlink" title="通过例子来理解定义"></a>通过例子来理解定义</h2><p>以“抛硬币”游戏为例，连续抛两次硬币，每次抛硬币的结果要么是$H$(Head)，要么是$T$(Tail)，那么抛硬币的结果样本空间就是 $\{HH, HT, TH, TT\}$  。</p>
 <p>假设 $X$ 是表示硬币头部向上次数的随机变量，那么很明显：</p>
-<p>$$<br>X(HH) = 2 \<br>X(HT) = X(TH) = 1 \<br>X(TT) = 0<br>$$</p>
-<p>如果再用随机变量 $Y$ 来表示硬币头部向下，$Y$ 就可以表示成：</p>
-<p>$$<br>Y = 2 - X<br>$$</p>
-<p>或者</p>
-<p>$$<br>Y(s) = 2 - X(s)<br>$$</p>
-<p>此处的 $s$ 表示样本空间中的一次抽样结果。</p>
+<script type="math/tex; mode=display">
+X(HH) = 2 \\
+X(HT) = X(TH) = 1 \\
+X(TT) = 0</script><p>如果再用随机变量 $Y$ 来表示硬币头部向下，$Y$ 就可以表示成：</p>
+<script type="math/tex; mode=display">
+Y = 2 - X</script><p>或者</p>
+<script type="math/tex; mode=display">
+Y(s) = 2 - X(s)</script><p>此处的 $s$ 表示样本空间中的一次抽样结果。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/Online-Courses/harvard-statistics-1/#more" rel="contents">
@@ -675,6 +677,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
