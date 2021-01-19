@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="HopSkipJumpAttack是发表于2020年S&amp;P的论文，提出了一种新型黑盒对抗攻击的方法，利用采样+逼近的思路来生成对抗样本，理论基础完备，实验效果达到了SOTA。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HopSkipJumpAttack论文分析">
+<meta property="og:url" content="http://xinlu.cool/Machine-Learning/paper-hsja/index.html">
+<meta property="og:site_name" content="xinlu&#39;s blog">
+<meta property="og:description" content="HopSkipJumpAttack是发表于2020年S&amp;P的论文，提出了一种新型黑盒对抗攻击的方法，利用采样+逼近的思路来生成对抗样本，理论基础完备，实验效果达到了SOTA。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-19T07:36:29.000Z">
+<meta property="article:modified_time" content="2021-01-19T12:43:43.728Z">
+<meta property="article:author" content="xinlu">
+<meta property="article:tag" content="Adversarial Example">
+<meta property="article:tag" content="Black-box Attack">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xinlu.cool/Machine-Learning/paper-hsja/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>HopSkipJumpAttack论文分析 | xinlu's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/custom_css_source.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="xinlu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">xinlu's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/zhuangzi926" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Machine-Learning/paper-hsja/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xinlu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xinlu's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HopSkipJumpAttack论文分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-19 15:36:29 / Modified: 20:43:43" itemprop="dateCreated datePublished" datetime="2021-01-19T15:36:29+08:00">2021-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1904.02144">HopSkipJumpAttack</a>是发表于2020年S&amp;P的论文，提出了一种新型黑盒对抗攻击的方法，利用采样+逼近的思路来生成对抗样本，理论基础完备，实验效果达到了SOTA。</p>
+<a id="more"></a>
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><h2 id="被攻击模型的定义"><a href="#被攻击模型的定义" class="headerlink" title="被攻击模型的定义"></a>被攻击模型的定义</h2><p>定义神经网络为以下函数</p>
+<script type="math/tex; mode=display">F: \mathbb{R}^d \rightarrow \mathbb{R}^m</script><p>函数的输入为区间[0, 1]上的d维向量</p>
+<script type="math/tex; mode=display">x \in [0, 1]^d</script><p>函数的输出为[0, 1]上的m维概率分布向量，满足全概率公式</p>
+<script type="math/tex; mode=display">y \in \Delta_m := \{y \in [0, 1]^m \: | \:  \Sigma^m_{c=1} \: y_c = 1\}</script><p>m同时也是神经网络输出类别的总个数，c用来指代任意一个类别，神经网络输出的所有类别标签的集合即为</p>
+<script type="math/tex; mode=display">[m] = {1,...,m}</script><p>将函数的输出写成向量的形式为</p>
+<script type="math/tex; mode=display">y = (F_1(x),...,F_m(x))</script><p>基于以上函数的分类器可以表示为</p>
+<script type="math/tex; mode=display">C(x) := \underset{c \in [m]}{\operatorname{argmax}}F_c (x)</script><h2 id="对抗攻击的定义"><a href="#对抗攻击的定义" class="headerlink" title="对抗攻击的定义"></a>对抗攻击的定义</h2><p>untarget attack的目标是让分类器的输出类别从</p>
+<script type="math/tex; mode=display">c^* := C(x^*)</script><p>变成与原来类别不同的任何类别</p>
+<script type="math/tex; mode=display">c \in [m] - \{c^*\}</script><p>targeted attack的目标是让分类器的输出类别变成某个预先定义好的类别</p>
+<script type="math/tex; mode=display">c^{\dagger} \in [m] - \{c^*\}</script><p>定义函数S，S与攻击者的攻击目标有关，可以判定当前生成的对抗样本是否满足攻击目标</p>
+<script type="math/tex; mode=display">S_{x^*}(x'):= \left \{ \begin{array}{rcl}
+\operatorname{max}_{c \neq c^*} F_c(x')-F_{c^*}(x') & (Untargeted) \\
+F_{c^\dagger}(x')-\operatorname{max}_{c \neq c^\dagger}F_c(x') & (Targeted)
+\end{array}\right.</script><p>对于任意对抗样本x’而言，只要满足S(x’)&gt;0，就可以认为攻击成功</p>
+<h2 id="边界上的对抗样本集合"><a href="#边界上的对抗样本集合" class="headerlink" title="边界上的对抗样本集合"></a>边界上的对抗样本集合</h2><p>当S(x’)=0时，对抗攻击正好处在成功与失败的边界上，定义边界上的对抗样本构成的集合为</p>
+<script type="math/tex; mode=display">bd(S_{x^*}):=\{ z \in [0, 1]^d \: | \: S_{x^*}(z)=0 \}</script><h2 id="攻击成功的判定函数"><a href="#攻击成功的判定函数" class="headerlink" title="攻击成功的判定函数"></a>攻击成功的判定函数</h2><p>构造sign函数如下</p>
+<script type="math/tex; mode=display">\phi_{x^*}(x'):=\operatorname{sign}(S_{x^*}(x'))= \left \{ \begin{array}{rcl}
+1 & if \; S_{x^*}(x')>0 \\
+-1 & otherwise
+\end{array}\right.</script><p>当sign函数取值为+1时，对抗样本攻击即为成功。</p>
+<p>为了实现攻击的隐蔽性，攻击者最终的目标是找到与原始样本距离最小的对抗样本，距离函数一般取0、2、无穷范数。</p>
+<script type="math/tex; mode=display">\operatorname{min}_{x'}\;d(x', x^*) \;\;\;\; s.t.  \phi_{x^*}(x')=1</script><h1 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h1><h2 id="迭代更新"><a href="#迭代更新" class="headerlink" title="迭代更新"></a>迭代更新</h2><p>HSJA算法可以用数学公式描述如下</p>
+<script type="math/tex; mode=display">x_{t+1} = \alpha_t x^* + (1 - \alpha_t) 
+\{ x_t + \xi_t \frac{\nabla S_{x^*}(x_t)}{||\nabla S_{x^*}(x_t)||_2} \}</script><p>其中涉及的关键步骤有：</p>
+<ul>
+<li>用<strong>二分搜索</strong>来选取合适的alpha，让新对抗样本逼近边界</li>
+<li>在边界上，用<strong>Monte Carlo采样</strong>得到函数S的梯度的估计，生成对抗扰动</li>
+<li>用<strong>Geometric Progression</strong>来控制扰动的大小，更新对抗样本</li>
+<li>继续用<strong>二分搜索</strong>来选取合适的alpha，让新对抗样本逼近边界</li>
+<li>……</li>
+</ul>
+<h2 id="步长选择"><a href="#步长选择" class="headerlink" title="步长选择"></a>步长选择</h2><p>把梯度估计线性叠加到对抗样本上的公式描述如下</p>
+<script type="math/tex; mode=display">\tilde{x}_t := x_t + \xi_t v_t (x_t, \delta_t)</script><script type="math/tex; mode=display">v_t(x_t, \delta_t) = \left \{ \begin{array}{rcl}
+\widehat{\nabla S}(x_t, \delta_t) / ||\widehat{\nabla S}(x_t, \delta_t)||_2 & if \;\; p = 2 \\
+\operatorname{sign}(\widehat{\nabla S}(x_t, \delta_t)) & if \;\; p = \infty
+\end{array}
+\right.</script><p>该迭代算法的收敛性与步长的选择直接相关，HSJA将步长初始化如下，如果更新后的对抗样本攻击失败，那么步长减半，以此类推。</p>
+<script type="math/tex; mode=display">\xi_t := ||x_t - x^*||_p / \sqrt{t}</script><h1 id="算法细节"><a href="#算法细节" class="headerlink" title="算法细节"></a>算法细节</h1><h2 id="Lp-projection"><a href="#Lp-projection" class="headerlink" title="Lp-projection"></a>Lp-projection</h2><p>与大多数主流算法相似，HSJA算法给对抗样本到原始样本的距离增加了限制，不能大于epsilon。距离函数取Lp范数，p=2或inf。</p>
+<p>给定对抗样本x，Lp-projection步骤的目的是在对抗样本x上进行裁剪，裁剪后得到的新对抗样本y既要满足到原始样本的距离限制，又要距离原来的对抗样本x尽可能地近。</p>
+<p>Lp-projection步骤在p=1, 2, …, 无穷时都有通解，但本算法重新构造了通解，以便后续进行二分搜索。以下分别为L2和Linf两种情况下的映射公式。</p>
+<p>当p=2时，映射公式如下</p>
+<script type="math/tex; mode=display">\Pi_{x^*,\alpha_t}^2 (x) := 
+\underset{||y-x^*||_2 \leqslant \alpha_t}{\operatorname{argmin}}
+||y-x||_2 = 
+\alpha_t x^* + (1-\alpha_t)x</script><p>当p=inf时，映射公式如下，值得注意的是，x和x*都是向量，而此处新定义的c是常数。</p>
+<script type="math/tex; mode=display">\Pi_{x^*, \alpha}^\infty (x) := 
+\operatorname{max}\{\operatorname{min}\{x, x^*+c\}, x^*-c\} \;\; (modified)</script><script type="math/tex; mode=display">c := \alpha||x - x^*||_\infty</script><p><strong>原论文在此处的公式可能有误，已知c是个非负数，那么x<em>与x</em>+c的比较就失去了意义，以下给出原论文上的无穷范数映射公式</strong></p>
+<script type="math/tex; mode=display">\Pi_{x^*, \alpha}^\infty (x)_i := 
+\operatorname{max}\{\operatorname{min}\{x_i^*, x_i^*+c\}, x_i-c\}</script><p>无论p=2还是inf，alpha的概念都是统一的：越接近0就离原始样本越近，越接近0就离对抗样本越近。利用概念上的统一性，后续在对alpha在区间[0, 1]上做二分搜索时，也更加方便。</p>
+<p>开源代码库<a target="_blank" rel="noopener" href="https://github.com/bethgelab/foolbox/blob/master/foolbox/attacks/hop_skip_jump.py">foolbox</a>给出了Lp-projection的实现，如下所示<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_project</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    self, originals: ep.Tensor, perturbed: ep.Tensor, epsilons: ep.Tensor</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) -&gt; ep.Tensor:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Clips the perturbations to epsilon and returns the new perturbed</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        originals: A batch of reference inputs.</span></span><br><span class="line"><span class="string">        perturbed: A batch of perturbed inputs.</span></span><br><span class="line"><span class="string">        epsilons: A batch of norm values to project to.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        A tensor like perturbed but with the perturbation clipped to epsilon.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    epsilons = atleast_kd(epsilons, originals.ndim)</span><br><span class="line">    <span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">        perturbation = perturbed - originals</span><br><span class="line"></span><br><span class="line">        <span class="comment"># ep.clip does not support tensors as min/max</span></span><br><span class="line">        clipped_perturbed = ep.where(</span><br><span class="line">            perturbation &gt; epsilons, originals + epsilons, perturbed</span><br><span class="line">        )</span><br><span class="line">        clipped_perturbed = ep.where(</span><br><span class="line">            perturbation &lt; -epsilons, originals - epsilons, clipped_perturbed</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> clipped_perturbed</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1.0</span> - epsilons) * originals + epsilons * perturbed</span><br></pre></td></tr></table></figure></p>
+<h2 id="梯度估计"><a href="#梯度估计" class="headerlink" title="梯度估计"></a>梯度估计</h2><h3 id="估计的成立条件"><a href="#估计的成立条件" class="headerlink" title="估计的成立条件"></a>估计的成立条件</h3><p>HSJA算法需要对函数S在第t次迭代生成的对抗样本xt上求梯度。若要使这一梯度可被估计，需要满足以下假设条件</p>
+<ul>
+<li>函数S<strong>二阶可导</strong>，并且满足<strong>局部Lipschitz约束</strong>，x0是初始对抗样本</li>
+</ul>
+<script type="math/tex; mode=display">\exists L>0, \;\; 
+\forall x,y \in \{z:||z-x^*||_2 \leqslant ||x_0 - x^*||_2 \},</script><script type="math/tex; mode=display">||\nabla S_{x^*}(x) - \nabla S_{x^*}(y)||_2 \leqslant L||x-y||_2</script><ul>
+<li>如果对抗样本xt刚好<strong>处于边界</strong>，即S(xt)=0，那么函数S在xt上的导数一定<strong>存在下界</strong>，并且<strong>下界大于0</strong></li>
+</ul>
+<script type="math/tex; mode=display">\exists \tilde{C} > 0, \;\; \forall z \in bd(S_{x^*})</script><script type="math/tex; mode=display">|| \nabla S_{x^*}(z) || > \tilde{C}</script><ul>
+<li>如果要用对抗样本xt与初始样本x<em>的差来做函数S梯度的<strong>无偏估计</strong>（即下面的函数r=1），那么xt必须要处于HSJA算法优化过程中的<em>*驻点</em></em>上</li>
+</ul>
+<script type="math/tex; mode=display">\begin{align}
+r(x_t, x^*) :&= cos \angle (x_t - x^*, \nabla S_{x^*}(x_t)) \\
+& = \frac{<x_t - x^*, \nabla S_{x^*}(x_t)>}{||x_t - x^*||_2 || \nabla S_{x^*}(x_t)||_2}
+\end{align}</script><ul>
+<li>在上述假设都成立的情况下，在HSJA算法优化过程中<strong>选取合适的步长</strong>，可以保证算法得到的对抗样本xt最终收敛至驻点</li>
+</ul>
+<script type="math/tex; mode=display">\xi_t = || x_t - x^* ||_2 t^{-q} \;\;\;\; for \; q \in (\frac{1}{2},1)</script><script type="math/tex; mode=display">0 \leqslant 1 - r(x_t, x^*) \leqslant ct^{q-1} \;\;\;\; for \; t=1,2,...</script><p>以上分别为步长更新公式和步长对函数r的限制，具体证明过程里用到了二阶泰勒估计。</p>
+<p>上述估计方法也可以推广到p=inf的情况。</p>
+<h3 id="渐进无偏估计量"><a href="#渐进无偏估计量" class="headerlink" title="渐进无偏估计量"></a>渐进无偏估计量</h3><p>对任意位于边界上的xt，可以用以下Monte Carlo采样得到的统计量来估计函数S的梯度</p>
+<script type="math/tex; mode=display">\widetilde{\nabla S}(x_t, \delta) := 
+\frac{1}{B} \sum_{b=1}^{B} \phi_{x^*}(x_t+\delta u_b)u_b,</script><script type="math/tex; mode=display">x_t \in bd(S_{x^*})</script><script type="math/tex; mode=display">i.i.d. \;\{u_b\}_{b=1}^B \sim U(-1, 1)^d</script><p>随机变量ub是独立同分布的d维随机向量，服从均匀分布，B表示样本容量，也是Monte Carlo采样的次数。</p>
+<p>由于引入了delta，导致该估计量是有偏的，但偏差具有下界，可表示为</p>
+<script type="math/tex; mode=display">\cos \angle (\mathbb{E}[ \widetilde{\nabla S} (x_t, \delta)], \nabla S_{x^*}(x_t)) \geqslant
+1 - \frac{9 L^2 \delta^2 d^2}{8||\nabla S(x_t)||_2^2}</script><p>以上估计量的渐进无偏性可表示为</p>
+<script type="math/tex; mode=display">\lim_{\delta \rightarrow 0} \cos \angle (\mathbb{E}[ \widetilde{\nabla S} (x_t, \delta)], \nabla S_{x^*}(x_t))=1</script><p>一般取delta为1/d，之后会给出一个偏差更小的delta选取方法。</p>
+<h3 id="方差更小的估计量"><a href="#方差更小的估计量" class="headerlink" title="方差更小的估计量"></a>方差更小的估计量</h3><p>由于实验误差的存在，xt不一定恰好在边界上，delta也不总是为0，因此采样得到的新样本在边界两边常常是分布不均匀的，这会产生难以忽视的误差。</p>
+<p>因此HSJA算法提出了一个新的方差更小的估计量。和之前的估计量一样，新估计量也是渐进无偏的。新估计量表示如下</p>
+<script type="math/tex; mode=display">\begin{align}
+\overline{\phi_{x^*}} & := \frac{1}{B} \sum_{b=1}^{B} \phi_{x^*}(x_t + \delta u_b)
+\\ \widehat{\nabla S}(x_t, \delta) &:= \frac{1}{B-1} \sum_{b=1}^{B} (\phi_{x^*}(x_t+\delta u_b) - \overline{\phi_{x^*}})u_b
+\end{align}</script><p>方差上界的证明部分略去。</p>
+<h3 id="Monte-Carlo采样方法的实现"><a href="#Monte-Carlo采样方法的实现" class="headerlink" title="Monte Carlo采样方法的实现"></a>Monte Carlo采样方法的实现</h3><p>开源代码库<a target="_blank" rel="noopener" href="https://github.com/bethgelab/foolbox/blob/master/foolbox/attacks/hop_skip_jump.py">foolbox</a>给出了该梯度估计方法的实现，与原论文的代码仓库相比实现更加简洁，但思路比较难理解。</p>
+<p>首先，生成随机张量rv并单位化。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.constraint == <span class="string">&quot;l2&quot;</span>:</span><br><span class="line">    rv = ep.normal(x_advs, noise_shape)</span><br><span class="line"><span class="keyword">elif</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">    rv = ep.uniform(x_advs, low=-<span class="number">1</span>, high=<span class="number">1</span>, shape=noise_shape)</span><br><span class="line">rv /= atleast_kd(ep.norms.l2(flatten(rv, keep=<span class="number">1</span>), -<span class="number">1</span>), rv.ndim) + <span class="number">1e-12</span></span><br></pre></td></tr></table></figure></p>
+<p>然后生成扰动图片，即x_adv+delta*rv，图片的值域必须被裁剪到[0, 1]之间。<br>foolbox库要求用户在实例化对象时指明输入的上下界，之后会把所有的输入张量都缩放到[0, 1]之间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scaled_rv = atleast_kd(ep.expand_dims(delta, <span class="number">0</span>), rv.ndim) * rv</span><br><span class="line">perturbed = ep.expand_dims(x_advs, <span class="number">0</span>) + scaled_rv</span><br><span class="line">perturbed = ep.clip(perturbed, <span class="number">0</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>从扰动图片中还原出采样得到的rv，这一步其实有点巧妙，隐式地对采样得到的rv的大小进行了裁剪。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rv = (perturbed - x_advs) / delta</span><br></pre></td></tr></table></figure>
+<p>接下来的步骤需要对pytorch的张量condition操作有一定了解，但这段代码的目的是很明确的，只要生成的扰动图片攻击成功了，multipliers中该扰动图片就对应为1，否则对应为-1。</p>
+<p>perturbed的形状为：<code>(step_size, batch_size, C, H, W)</code>。</p>
+<p>decision的形状为：<code>(step_size, batch_size)</code>，类型为<code>bool</code>。</p>
+<p>multipliers最终的形状为：<code>(step_size, batch_size)</code>，攻击成功对应为1，攻击失败对应为-1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">multipliers_list: List[ep.Tensor] = []</span><br><span class="line"><span class="keyword">for</span> step <span class="keyword">in</span> <span class="built_in">range</span>(steps):</span><br><span class="line">    decision = is_adversarial(perturbed[step])</span><br><span class="line">    multipliers_list.append(</span><br><span class="line">        ep.where(</span><br><span class="line">            decision,</span><br><span class="line">            ep.ones(x_advs, (<span class="built_in">len</span>(x_advs,))),</span><br><span class="line">            -ep.ones(x_advs, (<span class="built_in">len</span>(decision,))),</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"><span class="comment"># (steps, bs, ...)</span></span><br><span class="line">multipliers = ep.stack(multipliers_list, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>代码还精炼地实现了减少方差的操作，如果所有采样得到的随机扰动都攻击成功/都攻击失败，那么multipliers值不变，否则就需要减去均值来减少估计的方差。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vals = ep.where(</span><br><span class="line">    ep.<span class="built_in">abs</span>(ep.mean(multipliers, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)) == <span class="number">1</span>,</span><br><span class="line">    multipliers,</span><br><span class="line">    multipliers - ep.mean(multipliers, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>最后求出梯度的估计量，并单位化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grad = ep.mean(atleast_kd(vals, rv.ndim) * rv, axis=<span class="number">0</span>)</span><br><span class="line">grad /= ep.norms.l2(atleast_kd(flatten(grad), grad.ndim)) + <span class="number">1e-12</span></span><br></pre></td></tr></table></figure>
+<h2 id="选择合适的扰动大小"><a href="#选择合适的扰动大小" class="headerlink" title="选择合适的扰动大小"></a>选择合适的扰动大小</h2><p>HSJA论文中这部分证明比较硬核，我所学知识有限，实在无法理解。大概意思是控制扰动大小的参数delta与估计误差有很大关系，因此需要谨慎选择。</p>
+<p>常量gamma的值在论文中并没有，而是作为经验参数，默认为1.0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_delta</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    self, originals: ep.Tensor, distances: ep.Tensor, step: <span class="built_in">int</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>) -&gt; ep.Tensor:</span></span><br><span class="line">    result: ep.Tensor</span><br><span class="line">    <span class="keyword">if</span> step == <span class="number">0</span>:</span><br><span class="line">        result = <span class="number">0.1</span> * ep.ones_like(distances)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        d = np.prod(originals.shape[<span class="number">1</span>:])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">            theta = self.gamma / (d * d)</span><br><span class="line">            result = d * theta * distances</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            theta = self.gamma / (d * np.sqrt(d))</span><br><span class="line">            result = np.sqrt(d) * theta * distances</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h2 id="二分搜索逼近边界"><a href="#二分搜索逼近边界" class="headerlink" title="二分搜索逼近边界"></a>二分搜索逼近边界</h2><p>上述梯度估计的重要前提之一是对抗样本xt要刚好处于边界，如果并不处于边界的话，就需要用二分搜索来逼近边界。</p>
+<p>HSJA算法将Lp-projection与二分搜索相结合。在Lp-projection中，参数alpha的值越大，新对抗样本距离原始样本就越远，alpha值越小，新对抗样本距离原始样本就越近。</p>
+<p>以下结合代码来理解该二分搜索的步骤，初始时，设置alpha的上界、下界分别为0、1。（Linf时上界不可能超过当前无穷范数距离，因此上界初始化为Linf的值）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">    highs = linf(originals, perturbed)</span><br><span class="line">    thresholds = highs * self.gamma / (d * d)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    highs = ep.ones(perturbed, <span class="built_in">len</span>(perturbed))</span><br><span class="line">    thresholds = self.gamma / (d * math.sqrt(d))</span><br><span class="line">lows = ep.zeros_like(highs)</span><br></pre></td></tr></table></figure></p>
+<p>当新对抗样本攻击成功时，将上界调低一点；当新对抗样本攻击失败时，将下界调高一点。如果上下界差距超过预先定义的thresholds就停止搜索。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ep.<span class="built_in">any</span>(highs - lows &gt; thresholds):</span><br><span class="line">    mids = (lows + highs) / <span class="number">2</span></span><br><span class="line">    mids_perturbed = self._project(originals, perturbed, mids)</span><br><span class="line">    is_adversarial_ = is_adversarial(mids_perturbed)</span><br><span class="line"></span><br><span class="line">    highs = ep.where(is_adversarial_, mids, highs)</span><br><span class="line">    lows = ep.where(is_adversarial_, lows, mids)</span><br></pre></td></tr></table></figure></p>
+<p>以上步骤中有一个注意点：用变量highs中存储的所有alpha值来做Lp-projection，都可以攻击成功。利用这个trick，把最终生成的对抗样本再通过highs进行Lp-projection，确保输出的对抗样本都能攻击成功。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = self._project(originals, perturbed, highs)</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Adversarial-Example/" rel="tag"># Adversarial Example</a>
+              <a href="/tags/Black-box-Attack/" rel="tag"># Black-box Attack</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Manual/server-configuration/" rel="prev" title="实验室服务器虚拟环境配置日志">
+      <i class="fa fa-chevron-left"></i> 实验室服务器虚拟环境配置日志
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A2%AB%E6%94%BB%E5%87%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">被攻击模型的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">对抗攻击的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E4%B8%8A%E7%9A%84%E5%AF%B9%E6%8A%97%E6%A0%B7%E6%9C%AC%E9%9B%86%E5%90%88"><span class="nav-number">1.3.</span> <span class="nav-text">边界上的对抗样本集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E6%88%90%E5%8A%9F%E7%9A%84%E5%88%A4%E5%AE%9A%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">攻击成功的判定函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">算法框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E6%9B%B4%E6%96%B0"><span class="nav-number">2.1.</span> <span class="nav-text">迭代更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%95%BF%E9%80%89%E6%8B%A9"><span class="nav-number">2.2.</span> <span class="nav-text">步长选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">算法细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lp-projection"><span class="nav-number">3.1.</span> <span class="nav-text">Lp-projection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%BC%B0%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text">梯度估计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%B0%E8%AE%A1%E7%9A%84%E6%88%90%E7%AB%8B%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">估计的成立条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%90%E8%BF%9B%E6%97%A0%E5%81%8F%E4%BC%B0%E8%AE%A1%E9%87%8F"><span class="nav-number">3.2.2.</span> <span class="nav-text">渐进无偏估计量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%B7%AE%E6%9B%B4%E5%B0%8F%E7%9A%84%E4%BC%B0%E8%AE%A1%E9%87%8F"><span class="nav-number">3.2.3.</span> <span class="nav-text">方差更小的估计量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monte-Carlo%E9%87%87%E6%A0%B7%E6%96%B9%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.4.</span> <span class="nav-text">Monte Carlo采样方法的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E6%89%B0%E5%8A%A8%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.3.</span> <span class="nav-text">选择合适的扰动大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E9%80%BC%E8%BF%91%E8%BE%B9%E7%95%8C"><span class="nav-number">3.4.</span> <span class="nav-text">二分搜索逼近边界</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xinlu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhuangzi926" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhuangzi926" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinluzhuang@gmail.com" title="E-Mail → mailto:xinluzhuang@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinlu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
