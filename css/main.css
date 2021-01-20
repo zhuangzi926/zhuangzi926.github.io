@@ -246,7 +246,6 @@ h6 {
 }
 p {
   margin: 0 0 20px 0;
-  text-align: left;
 }
 a,
 span.exturl {
@@ -1265,7 +1264,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #30d4a4;
+  background: #ff13aa;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1415,7 +1414,7 @@ pre .javascript .function {
   white-space: nowrap;
 }
 .post-toc .nav .nav-child {
-  display: none;
+  display: block;
 }
 .post-toc .nav .active > .nav-child {
   display: block;

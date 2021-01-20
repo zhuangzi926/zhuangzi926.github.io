@@ -2,59 +2,175 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xinlu.cool/Machine-Learning/paper-hsja/</loc>
-    
-    <lastmod>2021-01-19T12:43:43.728Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xinlu.cool/Reading-Notes/cppconcurrency-2/</loc>
     
-    <lastmod>2021-01-19T12:17:12.659Z</lastmod>
+    <lastmod>2021-01-20</lastmod>
     
   </url>
   
   <url>
     <loc>http://xinlu.cool/Manual/server-configuration/</loc>
     
-    <lastmod>2020-12-31T09:17:58.480Z</lastmod>
+    <lastmod>2021-01-20</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/Machine-Learning/paper-hsja/</loc>
+    
+    <lastmod>2021-01-20</lastmod>
     
   </url>
   
   <url>
     <loc>http://xinlu.cool/Machine-Learning/tf-data-Dataset/</loc>
     
-    <lastmod>2020-06-30T16:48:43.267Z</lastmod>
+    <lastmod>2020-06-30</lastmod>
     
   </url>
   
   <url>
     <loc>http://xinlu.cool/Reading-Notes/cppconcurrency-1/</loc>
     
-    <lastmod>2020-06-30T16:48:23.501Z</lastmod>
+    <lastmod>2020-06-30</lastmod>
     
   </url>
   
   <url>
     <loc>http://xinlu.cool/about/index.html</loc>
     
-    <lastmod>2020-06-30T16:40:16.710Z</lastmod>
+    <lastmod>2020-06-30</lastmod>
     
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/index.html</loc>
     
-    <lastmod>2020-06-30T16:40:10.194Z</lastmod>
+    <lastmod>2020-06-30</lastmod>
     
   </url>
   
   <url>
     <loc>http://xinlu.cool/categories/index.html</loc>
     
-    <lastmod>2020-06-30T16:40:03.604Z</lastmod>
+    <lastmod>2020-06-30</lastmod>
     
+  </url>
+  
+
+  <url>
+    <loc>http://xinlu.cool/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>http://xinlu.cool/tags/C/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Concurrency/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/C-Concurrency-in-Action/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/LXD/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/netdata/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/CUDA/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/tensorflow/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/pytorch/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Adversarial-Example/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Black-box-Attack/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/TensorFlow/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Keras/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>http://xinlu.cool/categories/Reading-Notes/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/categories/Manual/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/categories/Machine-Learning/</loc>
+    <lastmod>2021-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
   </url>
   
 </urlset>
