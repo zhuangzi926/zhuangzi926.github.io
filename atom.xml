@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xinlu.cool/"/>
-  <updated>2021-01-20T02:11:04.095Z</updated>
+  <updated>2021-03-08T13:45:00.092Z</updated>
   <id>http://xinlu.cool/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【论文摘要】A Gift from Knowledge Distillation Fast Optimization, Network Minimization and Transfer Learning</title>
+    <link href="http://xinlu.cool/Machine-Learning/a-gift-from-knowledge-distillation/"/>
+    <id>http://xinlu.cool/Machine-Learning/a-gift-from-knowledge-distillation/</id>
+    <published>2021-03-08T13:33:20.000Z</published>
+    <updated>2021-03-08T13:45:00.092Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来最小化FSP矩阵的L2距离，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。</p><a id="more"></a><h2 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h2><div class="table-container"><table><thead><tr><th>会议/期刊</th><th>CVPR</th></tr></thead><tbody><tr><td>年份</td><td>2017</td></tr><tr><td>机构</td><td>KAIST</td></tr><tr><td>一作</td><td>Junho Yim，Donggyu Joo，Junmo Kim</td></tr><tr><td>领域</td><td>Knowledge Distillation，Transfer Learning</td></tr></tbody></table></div><h2 id="二、做了什么？针对什么应用场景？"><a href="#二、做了什么？针对什么应用场景？" class="headerlink" title="二、做了什么？针对什么应用场景？"></a>二、做了什么？针对什么应用场景？</h2><p>本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来minimize L2(FSP_teacher, FSP_student)，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。</p><p>主要针对场景：<br>    1）手上有一个超大的模型，但部署环境不支持计算量/存储/功耗，因此需要训练一个小一点的模型or多个小型模型的集成，<br>    2）手上有一个预训练模型，但新任务样本量较少、从头训练效果不好，因此需要在新任务上进行fine-tune，<br>    3）追求模型的快速收敛，需要好的初始化策略，</p><h2 id="三、这么做有什么好处？（纵向比较）"><a href="#三、这么做有什么好处？（纵向比较）" class="headerlink" title="三、这么做有什么好处？（纵向比较）"></a>三、这么做有什么好处？（纵向比较）</h2><p>第一次从“flow of solving problems”的角度看待知识蒸馏，具有启发意义。（之前的方法过于注重让student模仿</p><p>将知识蒸馏技术引入了迁移学习领域。</p><h2 id="四、为什么做这个工作？（横向比较）"><a href="#四、为什么做这个工作？（横向比较）" class="headerlink" title="四、为什么做这个工作？（横向比较）"></a>四、为什么做这个工作？（横向比较）</h2><p>vs 普通的KD（Romero/FitNets）：</p><ul><li><p>其他知识蒸馏方法只追求student模仿teacher的结果输出/中间层输出，只重视结果而不重视解决问题的过程，</p></li><li><p>训练过程低效，本方法多个模块可以独立训练，效果仍然很好，</p></li><li><p>不利于产生迁移性好的学生网络，因为没有学习过程只强调模仿</p></li></ul><p>vs 其他快速收敛的方法：选择一个好的初始化策略能使深度网络优化地更快，选择一个好的优化器能使深度网络更易于达到全局/局部最优</p><ul><li><p>simple init：Gaussian noise、Xavier</p></li><li><p>complicated init：he normal、he uniform。。。</p></li><li><p>optimizer：sgd、adam。。。</p></li></ul><h2 id="五、方法上有什么创新之处？（实验方法-评价指标-谋篇布局-制图）"><a href="#五、方法上有什么创新之处？（实验方法-评价指标-谋篇布局-制图）" class="headerlink" title="五、方法上有什么创新之处？（实验方法/评价指标/谋篇布局/制图）"></a>五、方法上有什么创新之处？（实验方法/评价指标/谋篇布局/制图）</h2><p>核心问题：</p><ol><li>如何定义teacher网络所含的信息？ =&gt; FSP矩阵</li><li>如何让student网络学习到teacher所含信息？ =&gt; 最小化两个网络的FSP矩阵距离</li><li>如何减少students之前的关联性、引入差异性？（好做集成分类器） =&gt; 打乱teacher网络的通道，生成新的FSP matrices</li><li>如何比较初始化策略 vs 简单的知识迁移？=&gt; 用相同的架构做kd，一种init student=trained teacher，另一种init student=FSP trained(trained  teacher)</li><li>怎么证明收敛更快？=&gt; student只用 1/3 的迭代次数，达到和teacher相似的精确度</li></ol><h2 id="六、思路上有什么创新之处？（新发现-新论断-新猜想）"><a href="#六、思路上有什么创新之处？（新发现-新论断-新猜想）" class="headerlink" title="六、思路上有什么创新之处？（新发现/新论断/新猜想）"></a>六、思路上有什么创新之处？（新发现/新论断/新猜想）</h2><ul><li>定义了一种high level knowledge =&gt; flow of solving problems =&gt; relationship between outputs of 2 connected layers</li><li>借鉴了Gramian matrix的思想（A neural algorithm of artistic style），提出了FSP矩阵（flow of solving problems）</li></ul><h2 id="七、有什么我可以借鉴的？"><a href="#七、有什么我可以借鉴的？" class="headerlink" title="七、有什么我可以借鉴的？"></a>七、有什么我可以借鉴的？</h2><p>对CIFAR10数据集，可以先padding到40x40再训练。</p><h2 id="八、缺点有哪些？"><a href="#八、缺点有哪些？" class="headerlink" title="八、缺点有哪些？"></a>八、缺点有哪些？</h2><p>语言描述过于累赘，实验部分思路不够清晰。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来最小化FSP矩阵的L2距离，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Machine Learning" scheme="http://xinlu.cool/categories/Machine-Learning/"/>
+    
+    
+      <category term="Knowledge Distillation" scheme="http://xinlu.cool/tags/Knowledge-Distillation/"/>
+    
+  </entry>
   
   <entry>
     <title>HopSkipJumpAttack论文分析</title>
