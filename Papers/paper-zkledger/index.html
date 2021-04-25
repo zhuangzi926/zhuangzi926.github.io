@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基本信息    会议&#x2F;期刊 NSDI     年份 2018   机构 MIT Media Lab   一作 Neha Narula   领域 Blockchain，Zero Knowledge Proof，Auditing     主要贡献本文提出了一种支持对链上密文数据进行实时审计的区块链系统zkledger。zkledger上记录着多个银行间进行场外交易的交易记录，链上记录的交易内容是加密的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zkLedger Privacy-Preserving Auditing for Distributed Ledger论文摘要">
+<meta property="og:url" content="http://xinlu.cool/Papers/paper-zkledger/index.html">
+<meta property="og:site_name" content="xinlu&#39;s blog">
+<meta property="og:description" content="基本信息    会议&#x2F;期刊 NSDI     年份 2018   机构 MIT Media Lab   一作 Neha Narula   领域 Blockchain，Zero Knowledge Proof，Auditing     主要贡献本文提出了一种支持对链上密文数据进行实时审计的区块链系统zkledger。zkledger上记录着多个银行间进行场外交易的交易记录，链上记录的交易内容是加密的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-25T03:37:21.000Z">
+<meta property="article:modified_time" content="2021-04-25T03:51:26.486Z">
+<meta property="article:author" content="xinlu">
+<meta property="article:tag" content="Blockchain">
+<meta property="article:tag" content="Auditing">
+<meta property="article:tag" content="Zero-knowledge Proof">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://xinlu.cool/Papers/paper-zkledger/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>zkLedger Privacy-Preserving Auditing for Distributed Ledger论文摘要 | xinlu's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/custom_css_source.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="xinlu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">xinlu's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/zhuangzi926" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Papers/paper-zkledger/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xinlu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xinlu's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          zkLedger Privacy-Preserving Auditing for Distributed Ledger论文摘要
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-25 11:37:21 / Modified: 11:51:26" itemprop="dateCreated datePublished" datetime="2021-04-25T11:37:21+08:00">2021-04-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index"><span itemprop="name">Papers</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>会议/期刊</th>
+<th>NSDI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>年份</td>
+<td>2018</td>
+</tr>
+<tr>
+<td>机构</td>
+<td>MIT Media Lab</td>
+</tr>
+<tr>
+<td>一作</td>
+<td>Neha Narula</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>Blockchain，Zero Knowledge Proof，Auditing</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>本文提出了一种<a target="_blank" rel="noopener" href="https://www.usenix.org/conference/nsdi18/presentation/narula">支持对链上密文数据进行实时审计的区块链系统zkledger</a>。zkledger上记录着多个银行间进行场外交易的交易记录，链上记录的交易内容是加密的。通过zkledger提出的审计协议，审计方可以实时地对任意银行进行质询，以验证银行间的交易行为符合监管当局的规定和法律要求。zkledger的证明机制确保银行无法向审计方撒谎，也无法合谋转移资产。</p>
+<a id="more"></a>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="为什么要用区块链平台做审计？"><a href="#为什么要用区块链平台做审计？" class="headerlink" title="为什么要用区块链平台做审计？"></a>为什么要用区块链平台做审计？</h3><p>传统审计方式的缺点：</p>
+<ul>
+<li>劳累、耗时，而且监管方没有办法实时地获取信息</li>
+<li>审计方可能出错，造成巨大损失</li>
+</ul>
+<p>区块链审计的优点：</p>
+<ul>
+<li>减少验证（审计方的人力消耗）和协调（审计方和被审计方的交互）的开销</li>
+<li>支持实时验证</li>
+<li>区块链本身的优势：避免单点故障、匿名性、不可伪造、不可抵赖……</li>
+</ul>
+<h3 id="已有的区块链平台做审计有哪些缺陷？"><a href="#已有的区块链平台做审计有哪些缺陷？" class="headerlink" title="已有的区块链平台做审计有哪些缺陷？"></a>已有的区块链平台做审计有哪些缺陷？</h3><p>早期工作（不支持加密数据的区块链审计系统）的缺点：</p>
+<ul>
+<li>可能暴露交易方的关系</li>
+<li>缺乏对隐私信息（GDPR规定的隐私信息、知识产权等）的保护</li>
+</ul>
+<p>支持加密数据的区块链审计方法：</p>
+<ul>
+<li>要么只用区块链记录交易的hash，而导致无法对链上数据进行审计</li>
+<li>要么在链上记录加密数据，但可能暴露交易图，被攻击后可能被注入恶意交易记录</li>
+<li>以上两种方法都不支持实时审计</li>
+</ul>
+<h2 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h2><h3 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h3><p>本文认为，审计本身的作用是，引入被信任的第三方来证明自己的行为合法合规。因此，zkledger假设该区块链平台可以运行在某个受信任的第三方上，节点之间的通信或与外部的通信在点对点加密信道上完成。</p>
+<p>zkledger假设系统的参与方既包括投资银行Bank1，Bank2，Bank3，…，Bankn，又包括审计方Auditor。其中，Auditor的角色是不定的，Bank也可以承担Auditor的职责。系统内的节点允许动态地增加/减少。</p>
+<p>zkledger的Bank参与方允许向区块链平台发起交易，Auditor参与方允许对其他Bank发起质询，并将质询结果与链上数据对比，确保Bank没有撒谎。另外，zkledger还允许外部用户Depositor从Bank中取钱/向Bank中存钱，而内部的参与方却不能修改某项资产的总量（没有外部输入输出的情况下，内部资产既不能凭空增加，也不能凭空消失）。</p>
+<h3 id="交易"><a href="#交易" class="headerlink" title="交易"></a>交易</h3><p>在审计业务中，区块链作为交易数据的分布式账本，应该记录的是资产法定保管权的变更，而不是所有权的变更。</p>
+<p><strong>一条zkledger的交易表示为：Banki向Bankj转移v股t资产。</strong>而在zkledger链上记录的交易信息里，交易的参与方和资产数量是隐藏的，而交易发生的时间和资产类型是公开的。另外，交易的拓扑顺序也是隐藏的。</p>
+<p>zkledger使用<strong>Pedersen Commitments</strong>来对交易的资产数量进行加密。Pedersen Commitments满足additively comitment的性质。大概可以表示为，对资产数量v（非负整数）和随机数r，用以下方式加密：</p>
+<script type="math/tex; mode=display">cm := COMM(v, r) = g^v h^r</script><p>zkledger中所有的交易记录合在一起，可以看做是以交易为行，以Bank为列的表，这种设计下，在表中查询某Bank的资产持有量会非常方便（相比比特币采用的UTXO机制，zkledger的方法更加适合审计场景）。</p>
+<p>虽然每笔交易一般只与两个Bank有关（spender Bank和receive Bank，其中spender Bank负责向区块链发起交易），但在每个zkledger的交易行中，会包含所有Bank的entry和所有Bank的证明信息（因为不能暴露交易的参与方）。</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>当交易由某个Bank发起并对外广播后，其他节点需要验证交易的合法性和准确性，通过验证的交易才能被加到链上。</p>
+<p><strong>Proof of Balance</strong>：由于交易不能创建新的资产、也不能销毁现有的资产，因此节点需要验证交易内的总资产变化之和为0。</p>
+<p><strong>Proof of Assets</strong>：交易的spender Bank手中已有的资产必须要&gt;=此次交易所花费的资产，这一操作可以通过遍历spender Bank的column里所有对应资产之和来计算出spender Bank账上的资产余额。</p>
+<p><strong>Range Proof</strong>：交易的资产数量要比密码体制规定的取模运算的底数小，防止恶意节点利用计算溢出导致资产的总量发生变化。</p>
+<h3 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h3><p>审计行为和交易的广播、验证行为都涉及节点之间的交互，为了节省交互行为的开销，zkledger采用了<strong>Non-interactive Zero-knowledge Proof（NIZK）</strong>技术，在每笔交易行中的每个entry上加入多个proof来保证交易的准确性和完整性。</p>
+<p>在zkledger上，审计协议可以保证Bank无法向Auditor隐藏已有的交易记录，因为Auditor可以访问table中Bank对应的整个列。而且Bank之间难以做到合谋，因为Auditor可以检查过去任意时刻的记录，而合谋掩盖资产转移的行为也只能掩盖一时。</p>
+<p><strong>审计在数学上可以被归纳为，对某项资产数据进行求和、滑动平均、方差、标准差、比例等运算。</strong>zkledger采用的Pedersen Commitments天然支持加减法运算。每种审计操作可以看做是多个加减法运算通过乘除组合在一起。其中，加减法运算在链上，由Auditor和Bank之间的交互来完成，并且与链上数据对比来验证，而乘除运算由Auditor在本地完成。（这一段是我在强行解释，目前还完全不懂零知识证明orz）</p>
+<p><strong>Token机制</strong>：由于记账操作只需要spender来完成，因此可能有恶意的spender在未告知receiver的情况下进行交易，从而导致receiver的本地数据与链上数据不一致。为防止这种情况，zkledger要求spender在交易中，为每个Bank对应的entry都增加一个公共可见的token，这样的话其他bank就可以通过该token来核查自己在交易后的资产变化/资产总量。</p>
+<p><strong>Proof of Consistency</strong>：审计行为需要Auditor和Bank之间的交互，而Bank并不想让Auditor知道自己每笔交易的资产转移数目的细节，只想让Auditor知道最后运算得到的结果（可以理解为，如果Auditor向知道sum=v1+v2+v3+…+vn，但是Bank只会帮Auditor算好sum，并不想让Auditor知道v1、v2、v3…的具体值）。为了达到这个目的，bank就不能把它所使用的随机数r告诉Auditor，而只会把自己过去每笔相关交易所使用的随机数r的和暴露给Auditor，因此在每个Bank的entry中的token项会被利用起来，token中蕴含了随机数的和的相关性质。为了防止恶意节点伪造这个信息，还需要在entry中引入一个新的证明，证明token中蕴含的随机数和之前使用过的随机数是一致的。</p>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>为了提高审计过程的效率，zkledger为每个节点都设计了cache，cache中存储了节点所属的Bank当前的资产余额信息，以及Bank参与的交易信息。当Auditor向Bank发起质询时，Bank可以利用cache快速回答。</p>
+<p>zkledger在工程实现上还引入了Map-Reduce的方法。因为Auditor可能想知道Bank平均每笔交易的信息，而Bank无法直接证明是否具体参与了某项交易。因此，审计过程被分成map和reduce两阶段。以下假设Auditor想知道Bank参与的交易总数。</p>
+<p><strong>map阶段</strong>：Bank对自己是否参与某笔交易做出NIZK证明。</p>
+<p><strong>reduce阶段</strong>：Bank在本地计算出NIZK证明的同态加密之和，并且只公开该证明内蕴含的交易总数信息。</p>
+<p>之后，Bank将参与的交易信息、NIZK证明、参与交易的数目和随机数r发送给Auditor，Auditor负责与链上数据对比，验证准确性。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
+              <a href="/tags/Auditing/" rel="tag"># Auditing</a>
+              <a href="/tags/Zero-knowledge-Proof/" rel="tag"># Zero-knowledge Proof</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Papers/paper-qfool-attack/" rel="prev" title="A Geometry-Inspired Decision-Based Attack论文摘要">
+      <i class="fa fa-chevron-left"></i> A Geometry-Inspired Decision-Based Attack论文摘要
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="nav-number">2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B9%B3%E5%8F%B0%E5%81%9A%E5%AE%A1%E8%AE%A1%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">为什么要用区块链平台做审计？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%B2%E6%9C%89%E7%9A%84%E5%8C%BA%E5%9D%97%E9%93%BE%E5%B9%B3%E5%8F%B0%E5%81%9A%E5%AE%A1%E8%AE%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E7%BC%BA%E9%99%B7%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">已有的区块链平台做审计有哪些缺陷？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.</span> <span class="nav-text">系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E5%8F%B0"><span class="nav-number">4.1.</span> <span class="nav-text">平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93"><span class="nav-number">4.2.</span> <span class="nav-text">交易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81"><span class="nav-number">4.3.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A1%E8%AE%A1"><span class="nav-number">4.4.</span> <span class="nav-text">审计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-number">4.5.</span> <span class="nav-text">性能</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xinlu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhuangzi926" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhuangzi926" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinluzhuang@gmail.com" title="E-Mail → mailto:xinluzhuang@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinlu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
