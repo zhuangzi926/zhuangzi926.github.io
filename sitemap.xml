@@ -123,13 +123,6 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
-    <lastmod>2021-05-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://xinlu.cool/tags/Adversarial-Example/</loc>
     <lastmod>2021-05-05</lastmod>
     <changefreq>daily</changefreq>
@@ -144,35 +137,7 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/LXD/</loc>
-    <lastmod>2021-05-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Netdata/</loc>
-    <lastmod>2021-05-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/CUDA/</loc>
-    <lastmod>2021-05-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Tensorflow/</loc>
-    <lastmod>2021-05-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Pytorch/</loc>
+    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
     <lastmod>2021-05-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -208,6 +173,41 @@
   
   <url>
     <loc>http://xinlu.cool/tags/White-box-Attack/</loc>
+    <lastmod>2021-05-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/LXD/</loc>
+    <lastmod>2021-05-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Netdata/</loc>
+    <lastmod>2021-05-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/CUDA/</loc>
+    <lastmod>2021-05-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Tensorflow/</loc>
+    <lastmod>2021-05-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Pytorch/</loc>
     <lastmod>2021-05-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
