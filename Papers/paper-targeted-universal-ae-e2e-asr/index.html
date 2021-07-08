@@ -20,21 +20,24 @@
     var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来最小化FSP矩阵的L2距离，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。">
+  <meta name="description" content="基本信息    会议&#x2F;期刊 arxiv     年份 2021   机构 Google   一作 Zhiyun Lu   领域 Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR     主要贡献这篇文章主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Atte">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Gift from Knowledge Distillation Fast Optimization, Network Minimization and Transfer Learning论文摘要">
-<meta property="og:url" content="http://xinlu.cool/Papers/paper-a-gift-from-knowledge-distillation/index.html">
+<meta property="og:title" content="Exploring Targeted Universal Adversarial Perturbations to End-to-end ASR Models论文摘要">
+<meta property="og:url" content="http://xinlu.cool/Papers/paper-targeted-universal-ae-e2e-asr/index.html">
 <meta property="og:site_name" content="xinlu&#39;s blog">
-<meta property="og:description" content="本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来最小化FSP矩阵的L2距离，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。">
+<meta property="og:description" content="基本信息    会议&#x2F;期刊 arxiv     年份 2021   机构 Google   一作 Zhiyun Lu   领域 Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR     主要贡献这篇文章主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Atte">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-08T13:33:20.000Z">
-<meta property="article:modified_time" content="2021-03-24T05:53:41.290Z">
+<meta property="article:published_time" content="2021-07-08T06:18:41.000Z">
+<meta property="article:modified_time" content="2021-07-08T06:28:25.800Z">
 <meta property="article:author" content="xinlu">
 <meta property="article:tag" content="Machine Learning">
-<meta property="article:tag" content="Knowledge Distillation">
+<meta property="article:tag" content="Adversarial Example">
+<meta property="article:tag" content="Audio Adversarial Example">
+<meta property="article:tag" content="White-box Attack">
+<meta property="article:tag" content="End-to-end ASR">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://xinlu.cool/Papers/paper-a-gift-from-knowledge-distillation/">
+<link rel="canonical" href="http://xinlu.cool/Papers/paper-targeted-universal-ae-e2e-asr/">
 
 
 <script id="page-configurations">
@@ -47,7 +50,7 @@
   };
 </script>
 
-  <title>A Gift from Knowledge Distillation Fast Optimization, Network Minimization and Transfer Learning论文摘要 | xinlu's blog</title>
+  <title>Exploring Targeted Universal Adversarial Perturbations to End-to-end ASR Models论文摘要 | xinlu's blog</title>
   
 
 
@@ -173,7 +176,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Papers/paper-a-gift-from-knowledge-distillation/">
+    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Papers/paper-targeted-universal-ae-e2e-asr/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -186,7 +189,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          A Gift from Knowledge Distillation Fast Optimization, Network Minimization and Transfer Learning论文摘要
+          Exploring Targeted Universal Adversarial Perturbations to End-to-end ASR Models论文摘要
         </h1>
 
         <div class="post-meta">
@@ -195,16 +198,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-03-08 21:33:20" itemprop="dateCreated datePublished" datetime="2021-03-08T21:33:20+08:00">2021-03-08</time>
+              <time title="Created: 2021-07-08 14:18:41 / Modified: 14:28:25" itemprop="dateCreated datePublished" datetime="2021-07-08T14:18:41+08:00">2021-07-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-24 13:53:41" itemprop="dateModified" datetime="2021-03-24T13:53:41+08:00">2021-03-24</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -226,72 +223,56 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来最小化FSP矩阵的L2距离，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。</p>
-<a id="more"></a>
-<h2 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h2><div class="table-container">
+        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
 <table>
 <thead>
 <tr>
 <th>会议/期刊</th>
-<th>CVPR</th>
+<th>arxiv</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>年份</td>
-<td>2017</td>
+<td>2021</td>
 </tr>
 <tr>
 <td>机构</td>
-<td>KAIST</td>
+<td>Google</td>
 </tr>
 <tr>
 <td>一作</td>
-<td>Junho Yim，Donggyu Joo，Junmo Kim</td>
+<td>Zhiyun Lu</td>
 </tr>
 <tr>
 <td>领域</td>
-<td>Knowledge Distillation，Transfer Learning</td>
+<td>Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h2 id="二、做了什么？针对什么应用场景？"><a href="#二、做了什么？针对什么应用场景？" class="headerlink" title="二、做了什么？针对什么应用场景？"></a>二、做了什么？针对什么应用场景？</h2><p>本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来minimize L2(FSP_teacher, FSP_student)，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。</p>
-<p>主要针对场景：<br>    1）手上有一个超大的模型，但部署环境不支持计算量/存储/功耗，因此需要训练一个小一点的模型or多个小型模型的集成，<br>    2）手上有一个预训练模型，但新任务样本量较少、从头训练效果不好，因此需要在新任务上进行fine-tune，<br>    3）追求模型的快速收敛，需要好的初始化策略，</p>
-<h2 id="三、这么做有什么好处？（纵向比较）"><a href="#三、这么做有什么好处？（纵向比较）" class="headerlink" title="三、这么做有什么好处？（纵向比较）"></a>三、这么做有什么好处？（纵向比较）</h2><p>第一次从“flow of solving problems”的角度看待知识蒸馏，具有启发意义。（之前的方法过于注重让student模仿</p>
-<p>将知识蒸馏技术引入了迁移学习领域。</p>
-<h2 id="四、为什么做这个工作？（横向比较）"><a href="#四、为什么做这个工作？（横向比较）" class="headerlink" title="四、为什么做这个工作？（横向比较）"></a>四、为什么做这个工作？（横向比较）</h2><p>vs 普通的KD（Romero/FitNets）：</p>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.02757">这篇文章</a>主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Attention、RNN-T）训练universal perturbation，评估三种模型的鲁棒性。</p>
+<p>提出了一种新的攻击思路，prepending attack，在对抗语音前追加对抗噪声，而不改变原语音。由于e2e模型具有良好的推理能力（尤其是LAS模型），因此很容易受这种攻击影响。</p>
+<p>发现了Attention机制是鲁棒性低的原因，在对抗攻击场景下，Attention模型容易只考虑少数注入了对抗噪声的frame，而忽略掉其他部分。</p>
+<p>发现CTC模型对universal perturbation非常鲁棒。Targeted universal attacks exist for both LAS and RNN-T, but not for CTC models.</p>
+<a id="more"></a>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p><strong>为什么语音对抗样本比图像难？</strong>因为语音识别是序列识别（sequential predictions）。举例，语音untarget攻击会导致很高的WER，让用户发现大量与真实结果无关的识别文本，而图像untargeted攻击只会造成一次误分类。</p>
+<p><strong>什么是universal perturbation？</strong>一个从训练集中学习得到的扰动向量，可以泛化（到其他数据），以高概率使任意音频被误识别。</p>
+<p><strong>扰动的分类。</strong>将扰动分为additive和prepending（在头部追加）。additive攻击ASR的additive stability，prepending攻击ASR的causal stability。</p>
+<p><strong>Additive Attack的结论：</strong></p>
 <ul>
-<li><p>其他知识蒸馏方法只追求student模仿teacher的结果输出/中间层输出，只重视结果而不重视解决问题的过程，</p>
-</li>
-<li><p>训练过程低效，本方法多个模块可以独立训练，效果仍然很好，</p>
-</li>
-<li><p>不利于产生迁移性好的学生网络，因为没有学习过程只强调模仿</p>
-</li>
+<li><strong>LAS模型特别容易受到攻击。</strong>在LAS上的对抗扰动使模型只关注某几个特定frame，而忽略其他frame，导致错误识别。Attention机制是LAS模型易受攻击的根源。</li>
+<li><strong>CTC和RNN-T模型难以被攻击。</strong>只使用固定长度的扰动，很难生成任意长度的识别文本。</li>
 </ul>
-<p>vs 其他快速收敛的方法：选择一个好的初始化策略能使深度网络优化地更快，选择一个好的优化器能使深度网络更易于达到全局/局部最优</p>
+<p><strong>Prepending Attack的结论：</strong></p>
 <ul>
-<li><p>simple init：Gaussian noise、Xavier</p>
-</li>
-<li><p>complicated init：he normal、he uniform</p>
-</li>
-<li><p>optimizer：sgd、adam</p>
-</li>
+<li><strong>LAS模型特别容易受到攻击。</strong>LAS模型上训练得到的扰动非常小（~-30dB），成功率接近100%。</li>
+<li><strong>RNN-T模型更容易被prepending attack攻击。</strong>在prepending attack下，RNN-T模型上得到的扰动更小，攻击成功率更高。实验表明，对additive attack，音频长度超过4秒（刚好是扰动的长度）后，攻击成功率大幅下降，而对prepending attack，音频长度与攻击成功率之间关联性较弱。</li>
+<li><strong>文本对实验结果的影响。</strong>观察结论表明，目标识别文本越短、词汇使用频率越高，攻击就越容易成功。</li>
 </ul>
-<h2 id="五、方法上有什么创新之处？（实验方法-评价指标-谋篇布局-制图）"><a href="#五、方法上有什么创新之处？（实验方法-评价指标-谋篇布局-制图）" class="headerlink" title="五、方法上有什么创新之处？（实验方法/评价指标/谋篇布局/制图）"></a>五、方法上有什么创新之处？（实验方法/评价指标/谋篇布局/制图）</h2><p>核心问题：</p>
-<ol>
-<li>如何定义teacher网络所含的信息？ =&gt; FSP矩阵</li>
-<li>如何让student网络学习到teacher所含信息？ =&gt; 最小化两个网络的FSP矩阵距离</li>
-<li>如何减少students之前的关联性、引入差异性？（好做集成分类器） =&gt; 打乱teacher网络的通道，生成新的FSP matrices</li>
-<li>如何比较初始化策略 vs 简单的知识迁移？=&gt; 用相同的架构做kd，一种init student=trained teacher，另一种init student=FSP trained(trained  teacher)</li>
-<li>怎么证明收敛更快？=&gt; student只用 1/3 的迭代次数，达到和teacher相似的精确度</li>
-</ol>
-<h2 id="六、思路上有什么创新之处？（新发现-新论断-新猜想）"><a href="#六、思路上有什么创新之处？（新发现-新论断-新猜想）" class="headerlink" title="六、思路上有什么创新之处？（新发现/新论断/新猜想）"></a>六、思路上有什么创新之处？（新发现/新论断/新猜想）</h2><ul>
-<li>定义了一种high level knowledge =&gt; flow of solving problems =&gt; relationship between outputs of 2 connected layers</li>
-<li>借鉴了Gramian matrix的思想（A neural algorithm of artistic style），提出了FSP矩阵（flow of solving problems）</li>
-</ul>
-<h2 id="七、有什么我可以借鉴的？"><a href="#七、有什么我可以借鉴的？" class="headerlink" title="七、有什么我可以借鉴的？"></a>七、有什么我可以借鉴的？</h2><p>对CIFAR10数据集，可以先padding到40x40再训练。</p>
-<h2 id="八、缺点有哪些？"><a href="#八、缺点有哪些？" class="headerlink" title="八、缺点有哪些？"></a>八、缺点有哪些？</h2><p>语言描述过于累赘，实验部分思路不够清晰。</p>
+<p><strong>只使用一句话训练universal perturbation，效果不好。</strong>使用Librispeech中的一句话训练的对抗扰动平均成功率仅为0.7%（test-clean）、2.7%（test-other）。</p>
+<p><strong>max-norm约束越强，成功率越低。</strong>无max-norm约束，，RNN-T上prepending attack成功率为~40%，4000时为~30%，2000时为~3%。</p>
+<p><strong>untargeted universal attack比较容易，但还是会保留一定的正常文本。</strong>三种模型被攻击后的WER分别为LAS 76.0/100.5、RNN-T 87.5/100.6、CTC 106.1/121.2。</p>
 
     </div>
 
@@ -302,7 +283,10 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
-              <a href="/tags/Knowledge-Distillation/" rel="tag"># Knowledge Distillation</a>
+              <a href="/tags/Adversarial-Example/" rel="tag"># Adversarial Example</a>
+              <a href="/tags/Audio-Adversarial-Example/" rel="tag"># Audio Adversarial Example</a>
+              <a href="/tags/White-box-Attack/" rel="tag"># White-box Attack</a>
+              <a href="/tags/End-to-end-ASR/" rel="tag"># End-to-end ASR</a>
           </div>
 
         
@@ -311,13 +295,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Papers/paper-hsja/" rel="prev" title="HopSkipJumpAttack论文分析">
-      <i class="fa fa-chevron-left"></i> HopSkipJumpAttack论文分析
+    <a href="/Papers/paper-ipc/" rel="prev" title="Generating Robust Audio Adversarial Examples with Temporal Dependency论文摘要">
+      <i class="fa fa-chevron-left"></i> Generating Robust Audio Adversarial Examples with Temporal Dependency论文摘要
     </a></div>
-      <div class="post-nav-item">
-    <a href="/Papers/paper-qfool-attack/" rel="next" title="A Geometry-Inspired Decision-Based Attack论文摘要">
-      A Geometry-Inspired Decision-Based Attack论文摘要 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -376,7 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">一、基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F%E9%92%88%E5%AF%B9%E4%BB%80%E4%B9%88%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">二、做了什么？针对什么应用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BF%99%E4%B9%88%E5%81%9A%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84%EF%BC%9F%EF%BC%88%E7%BA%B5%E5%90%91%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、这么做有什么好处？（纵向比较）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%81%9A%E8%BF%99%E4%B8%AA%E5%B7%A5%E4%BD%9C%EF%BC%9F%EF%BC%88%E6%A8%AA%E5%90%91%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、为什么做这个工作？（横向比较）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%96%B9%E6%B3%95%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84%EF%BC%9F%EF%BC%88%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95-%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87-%E8%B0%8B%E7%AF%87%E5%B8%83%E5%B1%80-%E5%88%B6%E5%9B%BE%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">五、方法上有什么创新之处？（实验方法&#x2F;评价指标&#x2F;谋篇布局&#x2F;制图）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%9D%E8%B7%AF%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84%EF%BC%9F%EF%BC%88%E6%96%B0%E5%8F%91%E7%8E%B0-%E6%96%B0%E8%AE%BA%E6%96%AD-%E6%96%B0%E7%8C%9C%E6%83%B3%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、思路上有什么创新之处？（新发现&#x2F;新论断&#x2F;新猜想）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%9C%89%E4%BB%80%E4%B9%88%E6%88%91%E5%8F%AF%E4%BB%A5%E5%80%9F%E9%89%B4%E7%9A%84%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">七、有什么我可以借鉴的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E7%BC%BA%E7%82%B9%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">八、缺点有哪些？</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="nav-number">2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">3.</span> <span class="nav-text">Q&amp;A</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

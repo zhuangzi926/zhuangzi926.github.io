@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinlu.cool/Papers/paper-targeted-universal-ae-e2e-asr/</loc>
+    
+    <lastmod>2021-07-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/Reading-Notes/cppconcurrency-2/</loc>
+    
+    <lastmod>2021-07-08</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinlu.cool/Papers/paper-ipc/</loc>
     
-    <lastmod>2021-05-05</lastmod>
+    <lastmod>2021-07-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/Manuals/server-configuration/</loc>
+    
+    <lastmod>2021-07-08</lastmod>
     
   </url>
   
@@ -17,13 +38,6 @@
   
   <url>
     <loc>http://xinlu.cool/Papers/paper-qfool-attack/</loc>
-    
-    <lastmod>2021-03-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/Manuals/server-configuration/</loc>
     
     <lastmod>2021-03-24</lastmod>
     
@@ -47,13 +61,6 @@
     <loc>http://xinlu.cool/Papers/paper-hsja/</loc>
     
     <lastmod>2021-03-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/Reading-Notes/cppconcurrency-2/</loc>
-    
-    <lastmod>2021-01-20</lastmod>
     
   </url>
   
@@ -88,7 +95,7 @@
 
   <url>
     <loc>http://xinlu.cool/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -96,133 +103,140 @@
   
   <url>
     <loc>http://xinlu.cool/tags/C/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Concurrency/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/C-Concurrency-in-Action/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Adversarial-Example/</loc>
-    <lastmod>2021-05-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Black-box-Attack/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Audio-Adversarial-Example/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/White-box-Attack/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/LXD/</loc>
-    <lastmod>2021-05-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Netdata/</loc>
-    <lastmod>2021-05-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/CUDA/</loc>
-    <lastmod>2021-05-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Tensorflow/</loc>
-    <lastmod>2021-05-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Pytorch/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <loc>http://xinlu.cool/tags/Black-box-Attack/</loc>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Blockchain/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Auditing/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Zero-knowledge-Proof/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/LXD/</loc>
+    <lastmod>2021-07-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Netdata/</loc>
+    <lastmod>2021-07-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/CUDA/</loc>
+    <lastmod>2021-07-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Tensorflow/</loc>
+    <lastmod>2021-07-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Pytorch/</loc>
+    <lastmod>2021-07-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/End-to-end-ASR/</loc>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/TensorFlow/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Keras/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -231,28 +245,28 @@
   
   <url>
     <loc>http://xinlu.cool/categories/Reading-Notes/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/categories/Papers/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/categories/Manuals/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/categories/API-References/</loc>
-    <lastmod>2021-05-22</lastmod>
+    <lastmod>2021-07-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
