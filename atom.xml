@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xinlu.cool/"/>
-  <updated>2021-07-08T06:28:25.800Z</updated>
+  <updated>2021-07-17T09:09:41.572Z</updated>
   <id>http://xinlu.cool/</id>
   
   <author>
@@ -15,6 +15,65 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SoK：The Faults in our ASRs论文摘要</title>
+    <link href="http://xinlu.cool/Papers/paper-sok-faults-in-our-asrs/"/>
+    <id>http://xinlu.cool/Papers/paper-sok-faults-in-our-asrs/</id>
+    <published>2021-07-17T09:06:07.000Z</published>
+    <updated>2021-07-17T09:09:41.572Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container"><table><thead><tr><th>会议/期刊</th><th>S&amp;P</th></tr></thead><tbody><tr><td>年份</td><td>2021</td></tr><tr><td>机构</td><td>University of Florida</td></tr><tr><td>一作</td><td>Hadi Abdullah</td></tr><tr><td>领域</td><td>Speech Recognition, Speaker Recognition, Audio Adversarial Example</td></tr></tbody></table></div><h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p><a href="https://arxiv.org/abs/2007.06622">本综述</a>将语音识别（Speech Recognition）和说话人识别（Speaker Identification）统称为Voice Processing Systems（VPS）。该综述对VSP的威胁模型进行分类，按分类整理了现有工作，经过大量测试证明，目前还无法实现恶意输入在VPS之间的迁移性。</p><a id="more"></a><h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p><strong>ASR的典型应用场景有哪些？</strong></p><ul><li>个人助手（personal assistant，Google Home，Amazon Alexa，Siri）</li><li>电话监听系统（telephony surveillance systems）</li><li>会议转录服务（conferencing transcription services）</li></ul><p><strong>现代ASR系统的识别流程？</strong></p><ul><li>使用麦克风录下音频</li><li>预处理<ul><li>人声检测+去噪+低通滤波</li></ul></li><li>特征提取，例如MFCC</li><li>模型推理</li><li>对模型输出进行解码，得到文本</li></ul><p><strong>图像攻击方法无法在语音领域应用的原因有哪些？</strong></p><ul><li>ASR使用的预处理过程比图像复杂，主要使用了人类专家硬编码的信号处理算法，攻击者甚至可以利用预处理与人耳听觉的不一致，直接攻击预处理步骤，实现模型无关攻击</li><li>ASR使用序列模型来预测，预测结果与所有时间维度上的输入都有关，让攻击者必须考虑所有维度上的输入，攻击更加困难，基于梯度的攻击可能面临梯度消失或梯度爆炸问题</li><li>ASR的输出是文本，文本是离散数据，难以优化，图像分类模型可以使用gradient masking方法来防御，然而ASR使用的不可微分方法如beam search让此类防御不可行<ul><li>个人认为，文本的数据域非常庞大（取决于使用的词典大小）也是攻击难的一大原因</li></ul></li></ul><p><strong>对攻击者掌握的知识进行分类？</strong><br>将ASR有关的知识分成五个主要部分：任务、预处理、特征提取、模型推理、解码。</p><ul><li>white-box：攻击者知道所有部分的所有信息</li><li>grey-box：攻击者只知道一部分信息</li><li>black-box：攻击者只知道任务，例如知道英文语音识别任务，就可以知道模型在大规模英语语料数据集上训练过</li><li>no-box：攻击者不知道任何信息，例如，攻击电话监听系统时，攻击者甚至不知道ASR的具体任务是什么</li></ul><p><strong>语音对抗样本的传播媒介有哪些？</strong></p><ul><li>over-line：直接通过.wav文件传输，无损</li><li>over-air：空气传播，先录制后播放，考虑信号衰减和输入输出设备导致的损失</li><li>over-telephony-network：电话网络上传播，考虑编码、压缩、丢包导致的损失</li><li>over-others：例如.mp3压缩导致的损失</li></ul><p><strong>语音对抗样本对人耳听觉的影响有哪些？</strong></p><ul><li>inaudible：人耳听觉范围为20Hz-20kHz，超声波攻击（20kHz-10MHz）可以被硬件接收而人耳无感，硬件接收后会降采样到固定频率，所以软件方法无法检测超声波攻击</li><li>noisey：人耳听起来像噪声</li><li>clean：此类攻击将对抗扰动作为low-intensity perturbation嵌入原音频（例如一段音乐）当中，人耳察觉不到异常</li></ul><p><strong>关于迁移性</strong></p><ul><li>本文认为，语音对抗样本在不同模型间不具有迁移性，即使使用相同架构、相同训练集、相同参数训练出的模型也不具有迁移性。原因在于训练阶段GPU引入了不确定性</li><li>Commander Song将Kaldi上生成的对抗样本成功迁移到iFlytek上，这可能是因为iFlytek在预训练的Kaldi模型基础上fine-tune。语音对抗样本对fine-tune后的模型可能具有迁移性</li><li>作者使用不同随机数种子训练了8个一样的DeepSpeech ASR，在1个DeepSpeech ASR上使用C&amp;W/PGD生成10000+个对抗音频，都无法迁移到另外7个DeepSpeech ASR上；而使用相同随机数种子后，还是不具有迁移性；这说明GPU引入的不确定机制导致了模型的不同，也表明语音对抗样本不具有迁移性（至少在DeepSpeech上）</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;基本信息&quot;&gt;&lt;a href=&quot;#基本信息&quot; class=&quot;headerlink&quot; title=&quot;基本信息&quot;&gt;&lt;/a&gt;基本信息&lt;/h2&gt;&lt;div class=&quot;table-container&quot;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;会议/期刊&lt;/th&gt;
+&lt;th&gt;S&amp;amp;P&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;年份&lt;/td&gt;
+&lt;td&gt;2021&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;机构&lt;/td&gt;
+&lt;td&gt;University of Florida&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;一作&lt;/td&gt;
+&lt;td&gt;Hadi Abdullah&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;领域&lt;/td&gt;
+&lt;td&gt;Speech Recognition, Speaker Recognition, Audio Adversarial Example&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;主要贡献&quot;&gt;&lt;a href=&quot;#主要贡献&quot; class=&quot;headerlink&quot; title=&quot;主要贡献&quot;&gt;&lt;/a&gt;主要贡献&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/2007.06622&quot;&gt;本综述&lt;/a&gt;将语音识别（Speech Recognition）和说话人识别（Speaker Identification）统称为Voice Processing Systems（VPS）。该综述对VSP的威胁模型进行分类，按分类整理了现有工作，经过大量测试证明，目前还无法实现恶意输入在VPS之间的迁移性。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Papers" scheme="http://xinlu.cool/categories/Papers/"/>
+    
+    
+      <category term="Machine Learning" scheme="http://xinlu.cool/tags/Machine-Learning/"/>
+    
+      <category term="Adversarial Example" scheme="http://xinlu.cool/tags/Adversarial-Example/"/>
+    
+      <category term="Audio Adversarial Example" scheme="http://xinlu.cool/tags/Audio-Adversarial-Example/"/>
+    
+      <category term="Survey" scheme="http://xinlu.cool/tags/Survey/"/>
+    
+      <category term="ASR" scheme="http://xinlu.cool/tags/ASR/"/>
+    
+  </entry>
   
   <entry>
     <title>Exploring Targeted Universal Adversarial Perturbations to End-to-end ASR Models论文摘要</title>
