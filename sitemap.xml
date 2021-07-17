@@ -109,20 +109,6 @@
 
   
   <url>
-    <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
-    <lastmod>2021-07-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
-    <lastmod>2021-07-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://xinlu.cool/tags/C/</loc>
     <lastmod>2021-07-17</lastmod>
     <changefreq>daily</changefreq>
@@ -138,6 +124,20 @@
   
   <url>
     <loc>http://xinlu.cool/tags/C-Concurrency-in-Action/</loc>
+    <lastmod>2021-07-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
+    <lastmod>2021-07-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
     <lastmod>2021-07-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -165,20 +165,6 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Survey/</loc>
-    <lastmod>2021-07-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/ASR/</loc>
-    <lastmod>2021-07-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://xinlu.cool/tags/White-box-Attack/</loc>
     <lastmod>2021-07-17</lastmod>
     <changefreq>daily</changefreq>
@@ -187,6 +173,20 @@
   
   <url>
     <loc>http://xinlu.cool/tags/End-to-end-ASR/</loc>
+    <lastmod>2021-07-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Survey/</loc>
+    <lastmod>2021-07-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/ASR/</loc>
     <lastmod>2021-07-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -265,14 +265,14 @@
 
   
   <url>
-    <loc>http://xinlu.cool/categories/Papers/</loc>
+    <loc>http://xinlu.cool/categories/Reading-Notes/</loc>
     <lastmod>2021-07-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://xinlu.cool/categories/Reading-Notes/</loc>
+    <loc>http://xinlu.cool/categories/Papers/</loc>
     <lastmod>2021-07-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
