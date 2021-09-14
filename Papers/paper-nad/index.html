@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基本信息    会议&#x2F;期刊 ICLR     年份 2021   机构 西安电子科技大学   一作 Yige Li   领域 AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation     主要贡献本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法Neural Attention Distill">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Attention Distillation Erasing Backdoor Triggers from Deep Neural Networks论文摘要">
+<meta property="og:url" content="http://xinlu.cool/Papers/paper-nad/index.html">
+<meta property="og:site_name" content="xinlu&#39;s blog">
+<meta property="og:description" content="基本信息    会议&#x2F;期刊 ICLR     年份 2021   机构 西安电子科技大学   一作 Yige Li   领域 AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation     主要贡献本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法Neural Attention Distill">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095442909-c2d84148-cc22-4f0a-8fde-03890a7d025d.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099766371-ffc8572c-fd6f-411c-b3b8-80895299da3d.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099899537-d1ef83af-13fa-467a-bc44-8ffd057991de.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100595186-79d0bfbe-9dc7-49ba-9da5-dd737fcebb9f.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100642522-5d11300a-2cb1-4a41-9a71-982a2a86b230.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100181700-70996d35-a134-43b1-ad41-aabc00b399a2.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100406653-c3cdb8d9-083b-4ad9-b033-b2897eeb1e87.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100854872-8382094c-323a-4aef-a1f1-ca78d560082d.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631103581047-4432a229-99ae-4474-bce1-0ad5e2ab487d.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095099665-6e201098-efd2-4ecd-9cbb-055717873093.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095110534-3c5bced6-4970-4f63-b561-6dff29b9e403.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095299267-17b8d2e1-cfa9-4f81-8357-845162702902.png">
+<meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095310156-f5157a0d-9b12-4b59-a302-7091363c2f8b.png">
+<meta property="article:published_time" content="2021-09-14T02:33:29.000Z">
+<meta property="article:modified_time" content="2021-09-14T05:10:16.338Z">
+<meta property="article:author" content="xinlu">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Knowledge Distillation">
+<meta property="article:tag" content="Backdoor Attacks">
+<meta property="article:tag" content="Backdoor Mitigation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095442909-c2d84148-cc22-4f0a-8fde-03890a7d025d.png">
+
+<link rel="canonical" href="http://xinlu.cool/Papers/paper-nad/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Neural Attention Distillation Erasing Backdoor Triggers from Deep Neural Networks论文摘要 | xinlu's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/custom_css_source.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="xinlu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">xinlu's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/zhuangzi926" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Papers/paper-nad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xinlu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xinlu's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Neural Attention Distillation Erasing Backdoor Triggers from Deep Neural Networks论文摘要
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-14 10:33:29 / Modified: 13:10:16" itemprop="dateCreated datePublished" datetime="2021-09-14T10:33:29+08:00">2021-09-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index"><span itemprop="name">Papers</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>会议/期刊</th>
+<th>ICLR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>年份</td>
+<td>2021</td>
+</tr>
+<tr>
+<td>机构</td>
+<td>西安电子科技大学</td>
+</tr>
+<tr>
+<td>一作</td>
+<td>Yige Li</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法<a target="_blank" rel="noopener" href="https://openreview.net/forum?id=9l0K4OM-oXE">Neural Attention Distillation（NAD）</a>。NAD仅需5%的训练集数据，先对backdoored model进行fine-tune，得到teacher，然后再把backdoored model当作student，使用注意力蒸馏方法，固定teacher并训练student。NAD能有效清除6种后门攻击的影响（BadNets、Trojan、Blend、CL、SIG、Refool），并能保持模型在正常数据上的准确率受影响较小。实验表明，NAD算法在ASR和ACC上都超过了fine-tune和剪枝。</p>
+<a id="more"></a>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="已有工作"><a href="#已有工作" class="headerlink" title="已有工作"></a>已有工作</h3><p><strong>backdoor attack的背景recap</strong></p>
+<ul>
+<li>经典威胁模型<ul>
+<li>收集到不可信的数据</li>
+<li>下载到不可信的预训练模型</li>
+</ul>
+</li>
+<li>攻击方式分类<ul>
+<li>按是否直接修改label，分为poisoned-label attack和clean-label attack</li>
+</ul>
+</li>
+<li>trigger pattern分类<ul>
+<li>trigger pattern包括pixel、patch、sinusoidal strips、dynamic patterns、natural reflection、human imperceptible noise等等</li>
+</ul>
+</li>
+<li>比较特殊的场景：训练集未知、联邦学习等</li>
+</ul>
+<p><strong>backdoor defense的challenge</strong></p>
+<ul>
+<li>检测后门样本：不可见的or利用reflection的后门样本很难在test阶段被检测到</li>
+<li>重训练/剪枝：很难完全清除后门，效果还很局限</li>
+<li>检测trigger：即使还原出trigger，也需要后门清除算法</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="后门清除效果"><a href="#后门清除效果" class="headerlink" title="后门清除效果"></a>后门清除效果</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095442909-c2d84148-cc22-4f0a-8fde-03890a7d025d.png" style="zoom:67%;float:center" /></p>
+<ul>
+<li>Trojan经过NAD后还有19%的攻击成功率，还有提升空间</li>
+<li>NAD对Trojan、Blend、CL这三种攻击方法的效果远远超过其他几种方法</li>
+<li>经过NAD清除后的后门平均保留了7.22%的攻击效果，还有进步空间</li>
+<li>NAD方法的另一大优势是牺牲的ACC指标最小，猜测这应该是KD的功劳，并且也要看KD阶段使用的数据集质量</li>
+<li>MCR对complicated adversarial noises的后门攻击效果不好</li>
+<li>fine-tuning时使用的data augmentation可能起到unlearning的作用</li>
+<li>fine-pruning效果不好，原因可能是WRN-16-1的最后一层神经元数目太少，混杂了benign neurons和backdoored neurons，导致剪枝会影响ACC</li>
+</ul>
+<h3 id="fine-tune和KD阶段使用的数据量的影响"><a href="#fine-tune和KD阶段使用的数据量的影响" class="headerlink" title="fine-tune和KD阶段使用的数据量的影响"></a>fine-tune和KD阶段使用的数据量的影响</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099766371-ffc8572c-fd6f-411c-b3b8-80895299da3d.png" style="zoom:67%;float:center" /></p>
+<h3 id="为什么Attention-Map比Feature-Map更好？"><a href="#为什么Attention-Map比Feature-Map更好？" class="headerlink" title="为什么Attention Map比Feature Map更好？"></a>为什么Attention Map比Feature Map更好？</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099899537-d1ef83af-13fa-467a-bc44-8ffd057991de.png" style="zoom:67%;float:center" /></p>
+<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100595186-79d0bfbe-9dc7-49ba-9da5-dd737fcebb9f.png" style="zoom:67%;float:center" /></p>
+<ul>
+<li>从图3可以看出，后门攻击中，attention map很明显会暴露出trigger region</li>
+<li>从图11可以看出，trigger的信息在activation map中很分散</li>
+<li>如果使用feature map而不是attention map，会导致information loss on the sample density in the space，并且降低了蒸馏效果</li>
+</ul>
+<blockquote>
+<p>Directly aligning the feature maps could lead to an information loss on the sample density in the space, and this could lead to a decrement in the distillation performance (Zagoruyko &amp; Komodakis, 2017; Huang &amp; Wang, 2017; Lopez et al., 2019).</p>
+</blockquote>
+<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100642522-5d11300a-2cb1-4a41-9a71-982a2a86b230.png" style="zoom:67%;float:center" /></p>
+<ul>
+<li>NAD方法中，使用attention map效果明显比activation map效果好</li>
+<li>attention map中包含的trigger effect比feature map更加完整</li>
+</ul>
+<blockquote>
+<p>It can thus provide an integrated measure of the overall trigger effect. On the contrary, the trigger effect may be scattered into different channels if we use the raw activation values directly.</p>
+</blockquote>
+<ul>
+<li>attention map regularization的优化比feature map更加简单</li>
+</ul>
+<h3 id="与retrain-based方法对比"><a href="#与retrain-based方法对比" class="headerlink" title="与retrain-based方法对比"></a>与retrain-based方法对比</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100181700-70996d35-a134-43b1-ad41-aabc00b399a2.png" style="zoom:67%;float:center" /></p>
+<ul>
+<li>在CL攻击下，NAD方法比retrain-based方法效果更加好</li>
+<li>retrain-based方法对CL攻击效果不好，retrain后ASR仍然有25%、31%，而NAD方法能将ASR降至9%</li>
+<li>在BadNets攻击下，NAD方法与retrain-based方法效果差不多</li>
+</ul>
+<h3 id="使用不同的注意力计算方式对NAD性能的影响"><a href="#使用不同的注意力计算方式对NAD性能的影响" class="headerlink" title="使用不同的注意力计算方式对NAD性能的影响"></a>使用不同的注意力计算方式对NAD性能的影响</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100406653-c3cdb8d9-083b-4ad9-b033-b2897eeb1e87.png" style="zoom:67%;float:center;" /></p>
+<p><script type="math/tex">A_{sum}^2</script>​ 明显比其他三种更加好。</p>
+<h3 id="防御简单的adaptive-attack"><a href="#防御简单的adaptive-attack" class="headerlink" title="防御简单的adaptive attack"></a>防御简单的adaptive attack</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100854872-8382094c-323a-4aef-a1f1-ca78d560082d.png" style="zoom:67%;float:center;" /></p>
+<p>将trigger放在图像中央（CIFAR10数据集中，数据的重要信息一般都在正中间），与图像本身的attention重合，构成简单的adaptive attack。NAD对于这种攻击仍然有防御效果。</p>
+<h3 id="模型架构的影响"><a href="#模型架构的影响" class="headerlink" title="模型架构的影响"></a>模型架构的影响</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631103581047-4432a229-99ae-4474-bce1-0ad5e2ab487d.png" style="zoom:67%;float:center;" /></p>
+<ul>
+<li>将多种不同架构的teacher train from scratch（只用5%的训练数据），发现NAD对多种架构的WRN网络都适用</li>
+<li>本文只在WRN架构下研究</li>
+</ul>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><strong>NAD的思想</strong>：使容易被trigger pattern影响的神经元（backdoored neurons）与只对正常representation有反应的神经元（benign neurons）“对齐”。<br>​</p>
+<p><strong>NAD的主要challenge</strong></p>
+<ul>
+<li>如何定义proper attention representations（能区分开backdoored neurons和benign neurons）</li>
+<li>如何定义attention distillation的loss function<br>​</li>
+</ul>
+<p><strong>定义attention map的计算方式</strong></p>
+<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095099665-6e201098-efd2-4ecd-9cbb-055717873093.png"  /></p>
+<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095110534-3c5bced6-4970-4f63-b561-6dff29b9e403.png"  /></p>
+<p>其中，参数p可以提升backdoored neurons和benign neurons之间的分别，p越大，最大的神经元激活值的权重也就越大。btw，对attention map进行normalization非常重要，对蒸馏效果影响很大。<br>​</p>
+<p><strong>定义注意力蒸馏的loss函数</strong></p>
+<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095299267-17b8d2e1-cfa9-4f81-8357-845162702902.png" alt=""></p>
+<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095310156-f5157a0d-9b12-4b59-a302-7091363c2f8b.png" style="float:center;" /></p>
+<p>其中，D表示的是防御者拥有的数据集的子集，K表示ResNet中的Residual Group数量。</p>
+<h2 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h2><ul>
+<li>实验部分使用的模型架构单一，仅涉及WRN这一系列模型</li>
+<li>实验效果非常依赖数据增强的tricks</li>
+<li>由于fine-tune和知识蒸馏阶段所使用的训练数据受随机选取影响，复现结果的波动特别大</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+              <a href="/tags/Knowledge-Distillation/" rel="tag"># Knowledge Distillation</a>
+              <a href="/tags/Backdoor-Attacks/" rel="tag"># Backdoor Attacks</a>
+              <a href="/tags/Backdoor-Mitigation/" rel="tag"># Backdoor Mitigation</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Papers/paper-sok-faults-in-our-asrs/" rel="prev" title="SoK：The Faults in our ASRs论文摘要">
+      <i class="fa fa-chevron-left"></i> SoK：The Faults in our ASRs论文摘要
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE"><span class="nav-number">2.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%B2%E6%9C%89%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.1.</span> <span class="nav-text">已有工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E9%97%A8%E6%B8%85%E9%99%A4%E6%95%88%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text">后门清除效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fine-tune%E5%92%8CKD%E9%98%B6%E6%AE%B5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%8F%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">4.2.</span> <span class="nav-text">fine-tune和KD阶段使用的数据量的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88Attention-Map%E6%AF%94Feature-Map%E6%9B%B4%E5%A5%BD%EF%BC%9F"><span class="nav-number">4.3.</span> <span class="nav-text">为什么Attention Map比Feature Map更好？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8Eretrain-based%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="nav-number">4.4.</span> <span class="nav-text">与retrain-based方法对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F%E5%AF%B9NAD%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">4.5.</span> <span class="nav-text">使用不同的注意力计算方式对NAD性能的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E5%BE%A1%E7%AE%80%E5%8D%95%E7%9A%84adaptive-attack"><span class="nav-number">4.6.</span> <span class="nav-text">防御简单的adaptive attack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">4.7.</span> <span class="nav-text">模型架构的影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">6.</span> <span class="nav-text">缺陷</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xinlu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhuangzi926" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhuangzi926" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xinluzhuang@gmail.com" title="E-Mail → mailto:xinluzhuang@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xinlu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
