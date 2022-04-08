@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xinlu.cool/uncategorized/LXD%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/</loc>
+    <loc>http://xinlu.cool/Manuals/lxd-cheatsheet/</loc>
     
     <lastmod>2022-04-08</lastmod>
     
@@ -176,14 +176,14 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
+    <loc>http://xinlu.cool/tags/LXD/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
+    <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -204,14 +204,7 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Audio-Adversarial-Example/</loc>
-    <lastmod>2022-04-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/White-box-Attack/</loc>
+    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -232,6 +225,20 @@
   </url>
   
   <url>
+    <loc>http://xinlu.cool/tags/Audio-Adversarial-Example/</loc>
+    <lastmod>2022-04-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/White-box-Attack/</loc>
+    <lastmod>2022-04-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://xinlu.cool/tags/Survey/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -240,13 +247,6 @@
   
   <url>
     <loc>http://xinlu.cool/tags/ASR/</loc>
-    <lastmod>2022-04-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/End-to-end-ASR/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -268,13 +268,6 @@
   
   <url>
     <loc>http://xinlu.cool/tags/Zero-knowledge-Proof/</loc>
-    <lastmod>2022-04-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/LXD/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -309,6 +302,13 @@
   </url>
   
   <url>
+    <loc>http://xinlu.cool/tags/End-to-end-ASR/</loc>
+    <lastmod>2022-04-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://xinlu.cool/tags/TensorFlow/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -332,14 +332,14 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/categories/Papers/</loc>
+    <loc>http://xinlu.cool/categories/Manuals/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://xinlu.cool/categories/Manuals/</loc>
+    <loc>http://xinlu.cool/categories/Papers/</loc>
     <lastmod>2022-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
