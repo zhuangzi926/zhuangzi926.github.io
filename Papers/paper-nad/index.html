@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="基本信息    会议&#x2F;期刊 ICLR     年份 2021   机构 西安电子科技大学   一作 Yige Li   领域 AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation     主要贡献本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法Neural Attention Distill">
+  <meta name="description" content="基本信息   会议&#x2F;期刊 ICLR    年份 2021   机构 西安电子科技大学   一作 Yige Li   领域 AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation   主要贡献本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法Neural Attention Distil">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Neural Attention Distillation Erasing Backdoor Triggers from Deep Neural Networks论文摘要">
 <meta property="og:url" content="http://xinlu.cool/Papers/paper-nad/index.html">
 <meta property="og:site_name" content="xinlu&#39;s blog">
-<meta property="og:description" content="基本信息    会议&#x2F;期刊 ICLR     年份 2021   机构 西安电子科技大学   一作 Yige Li   领域 AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation     主要贡献本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法Neural Attention Distill">
+<meta property="og:description" content="基本信息   会议&#x2F;期刊 ICLR    年份 2021   机构 西安电子科技大学   一作 Yige Li   领域 AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation   主要贡献本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法Neural Attention Distil">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095442909-c2d84148-cc22-4f0a-8fde-03890a7d025d.png">
 <meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099766371-ffc8572c-fd6f-411c-b3b8-80895299da3d.png">
@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095299267-17b8d2e1-cfa9-4f81-8357-845162702902.png">
 <meta property="og:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095310156-f5157a0d-9b12-4b59-a302-7091363c2f8b.png">
 <meta property="article:published_time" content="2021-09-14T02:33:29.000Z">
-<meta property="article:modified_time" content="2021-09-14T05:10:16.338Z">
+<meta property="article:modified_time" content="2021-09-14T05:10:16.000Z">
 <meta property="article:author" content="xinlu">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Knowledge Distillation">
@@ -236,16 +236,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
-<table>
+        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><table>
 <thead>
 <tr>
-<th>会议/期刊</th>
+<th>会议&#x2F;期刊</th>
 <th>ICLR</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>年份</td>
 <td>2021</td>
 </tr>
@@ -261,11 +259,11 @@
 <td>领域</td>
 <td>AI Security, Backdoor Attack, Backdoor Defense, Knowledge Distillation</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>本文结合注意力蒸馏方法与后门防御策略，提出了一种新的模型后门清除方法<a target="_blank" rel="noopener" href="https://openreview.net/forum?id=9l0K4OM-oXE">Neural Attention Distillation（NAD）</a>。NAD仅需5%的训练集数据，先对backdoored model进行fine-tune，得到teacher，然后再把backdoored model当作student，使用注意力蒸馏方法，固定teacher并训练student。NAD能有效清除6种后门攻击的影响（BadNets、Trojan、Blend、CL、SIG、Refool），并能保持模型在正常数据上的准确率受影响较小。实验表明，NAD算法在ASR和ACC上都超过了fine-tune和剪枝。</p>
-<a id="more"></a>
+<span id="more"></span>
+
+
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="已有工作"><a href="#已有工作" class="headerlink" title="已有工作"></a>已有工作</h3><p><strong>backdoor attack的背景recap</strong></p>
 <ul>
 <li>经典威胁模型<ul>
@@ -286,10 +284,12 @@
 <p><strong>backdoor defense的challenge</strong></p>
 <ul>
 <li>检测后门样本：不可见的or利用reflection的后门样本很难在test阶段被检测到</li>
-<li>重训练/剪枝：很难完全清除后门，效果还很局限</li>
+<li>重训练&#x2F;剪枝：很难完全清除后门，效果还很局限</li>
 <li>检测trigger：即使还原出trigger，也需要后门清除算法</li>
 </ul>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="后门清除效果"><a href="#后门清除效果" class="headerlink" title="后门清除效果"></a>后门清除效果</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095442909-c2d84148-cc22-4f0a-8fde-03890a7d025d.png" style="zoom:67%;float:center" /></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="后门清除效果"><a href="#后门清除效果" class="headerlink" title="后门清除效果"></a>后门清除效果</h3><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095442909-c2d84148-cc22-4f0a-8fde-03890a7d025d.png" style="zoom:67%;float:center" />
+
+
 <ul>
 <li>Trojan经过NAD后还有19%的攻击成功率，还有提升空间</li>
 <li>NAD对Trojan、Blend、CL这三种攻击方法的效果远远超过其他几种方法</li>
@@ -299,9 +299,15 @@
 <li>fine-tuning时使用的data augmentation可能起到unlearning的作用</li>
 <li>fine-pruning效果不好，原因可能是WRN-16-1的最后一层神经元数目太少，混杂了benign neurons和backdoored neurons，导致剪枝会影响ACC</li>
 </ul>
-<h3 id="fine-tune和KD阶段使用的数据量的影响"><a href="#fine-tune和KD阶段使用的数据量的影响" class="headerlink" title="fine-tune和KD阶段使用的数据量的影响"></a>fine-tune和KD阶段使用的数据量的影响</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099766371-ffc8572c-fd6f-411c-b3b8-80895299da3d.png" style="zoom:67%;float:center" /></p>
-<h3 id="为什么Attention-Map比Feature-Map更好？"><a href="#为什么Attention-Map比Feature-Map更好？" class="headerlink" title="为什么Attention Map比Feature Map更好？"></a>为什么Attention Map比Feature Map更好？</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099899537-d1ef83af-13fa-467a-bc44-8ffd057991de.png" style="zoom:67%;float:center" /></p>
-<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100595186-79d0bfbe-9dc7-49ba-9da5-dd737fcebb9f.png" style="zoom:67%;float:center" /></p>
+<h3 id="fine-tune和KD阶段使用的数据量的影响"><a href="#fine-tune和KD阶段使用的数据量的影响" class="headerlink" title="fine-tune和KD阶段使用的数据量的影响"></a>fine-tune和KD阶段使用的数据量的影响</h3><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099766371-ffc8572c-fd6f-411c-b3b8-80895299da3d.png" style="zoom:67%;float:center" />
+
+
+
+
+<h3 id="为什么Attention-Map比Feature-Map更好？"><a href="#为什么Attention-Map比Feature-Map更好？" class="headerlink" title="为什么Attention Map比Feature Map更好？"></a>为什么Attention Map比Feature Map更好？</h3><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631099899537-d1ef83af-13fa-467a-bc44-8ffd057991de.png" style="zoom:67%;float:center" />
+
+<img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100595186-79d0bfbe-9dc7-49ba-9da5-dd737fcebb9f.png" style="zoom:67%;float:center" />
+
 <ul>
 <li>从图3可以看出，后门攻击中，attention map很明显会暴露出trigger region</li>
 <li>从图11可以看出，trigger的信息在activation map中很分散</li>
@@ -310,7 +316,9 @@
 <blockquote>
 <p>Directly aligning the feature maps could lead to an information loss on the sample density in the space, and this could lead to a decrement in the distillation performance (Zagoruyko &amp; Komodakis, 2017; Huang &amp; Wang, 2017; Lopez et al., 2019).</p>
 </blockquote>
-<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100642522-5d11300a-2cb1-4a41-9a71-982a2a86b230.png" style="zoom:67%;float:center" /></p>
+<img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100642522-5d11300a-2cb1-4a41-9a71-982a2a86b230.png" style="zoom:67%;float:center" />
+
+
 <ul>
 <li>NAD方法中，使用attention map效果明显比activation map效果好</li>
 <li>attention map中包含的trigger effect比feature map更加完整</li>
@@ -321,17 +329,22 @@
 <ul>
 <li>attention map regularization的优化比feature map更加简单</li>
 </ul>
-<h3 id="与retrain-based方法对比"><a href="#与retrain-based方法对比" class="headerlink" title="与retrain-based方法对比"></a>与retrain-based方法对比</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100181700-70996d35-a134-43b1-ad41-aabc00b399a2.png" style="zoom:67%;float:center" /></p>
+<h3 id="与retrain-based方法对比"><a href="#与retrain-based方法对比" class="headerlink" title="与retrain-based方法对比"></a>与retrain-based方法对比</h3><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100181700-70996d35-a134-43b1-ad41-aabc00b399a2.png" style="zoom:67%;float:center" />
+
+
 <ul>
 <li>在CL攻击下，NAD方法比retrain-based方法效果更加好</li>
 <li>retrain-based方法对CL攻击效果不好，retrain后ASR仍然有25%、31%，而NAD方法能将ASR降至9%</li>
 <li>在BadNets攻击下，NAD方法与retrain-based方法效果差不多</li>
 </ul>
-<h3 id="使用不同的注意力计算方式对NAD性能的影响"><a href="#使用不同的注意力计算方式对NAD性能的影响" class="headerlink" title="使用不同的注意力计算方式对NAD性能的影响"></a>使用不同的注意力计算方式对NAD性能的影响</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100406653-c3cdb8d9-083b-4ad9-b033-b2897eeb1e87.png" style="zoom:67%;float:center;" /></p>
-<p><script type="math/tex">A_{sum}^2</script>​ 明显比其他三种更加好。</p>
-<h3 id="防御简单的adaptive-attack"><a href="#防御简单的adaptive-attack" class="headerlink" title="防御简单的adaptive attack"></a>防御简单的adaptive attack</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100854872-8382094c-323a-4aef-a1f1-ca78d560082d.png" style="zoom:67%;float:center;" /></p>
+<h3 id="使用不同的注意力计算方式对NAD性能的影响"><a href="#使用不同的注意力计算方式对NAD性能的影响" class="headerlink" title="使用不同的注意力计算方式对NAD性能的影响"></a>使用不同的注意力计算方式对NAD性能的影响</h3><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100406653-c3cdb8d9-083b-4ad9-b033-b2897eeb1e87.png" style="zoom:67%;float:center;" />
+
+<p>$$A_{sum}^2$$​ 明显比其他三种更加好。</p>
+<h3 id="防御简单的adaptive-attack"><a href="#防御简单的adaptive-attack" class="headerlink" title="防御简单的adaptive attack"></a>防御简单的adaptive attack</h3><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631100854872-8382094c-323a-4aef-a1f1-ca78d560082d.png" style="zoom:67%;float:center;" />
+
 <p>将trigger放在图像中央（CIFAR10数据集中，数据的重要信息一般都在正中间），与图像本身的attention重合，构成简单的adaptive attack。NAD对于这种攻击仍然有防御效果。</p>
-<h3 id="模型架构的影响"><a href="#模型架构的影响" class="headerlink" title="模型架构的影响"></a>模型架构的影响</h3><p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631103581047-4432a229-99ae-4474-bce1-0ad5e2ab487d.png" style="zoom:67%;float:center;" /></p>
+<h3 id="模型架构的影响"><a href="#模型架构的影响" class="headerlink" title="模型架构的影响"></a>模型架构的影响</h3><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631103581047-4432a229-99ae-4474-bce1-0ad5e2ab487d.png" style="zoom:67%;float:center;" />
+
 <ul>
 <li>将多种不同架构的teacher train from scratch（只用5%的训练数据），发现NAD对多种架构的WRN网络都适用</li>
 <li>本文只在WRN架构下研究</li>
@@ -343,12 +356,15 @@
 <li>如何定义attention distillation的loss function<br>​</li>
 </ul>
 <p><strong>定义attention map的计算方式</strong></p>
-<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095099665-6e201098-efd2-4ecd-9cbb-055717873093.png"  /></p>
-<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095110534-3c5bced6-4970-4f63-b561-6dff29b9e403.png"  /></p>
+<img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095099665-6e201098-efd2-4ecd-9cbb-055717873093.png"  />
+
+<img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095110534-3c5bced6-4970-4f63-b561-6dff29b9e403.png"  />
+
 <p>其中，参数p可以提升backdoored neurons和benign neurons之间的分别，p越大，最大的神经元激活值的权重也就越大。btw，对attention map进行normalization非常重要，对蒸馏效果影响很大。<br>​</p>
 <p><strong>定义注意力蒸馏的loss函数</strong></p>
-<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095299267-17b8d2e1-cfa9-4f81-8357-845162702902.png" alt=""></p>
-<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095310156-f5157a0d-9b12-4b59-a302-7091363c2f8b.png" style="float:center;" /></p>
+<p><img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095299267-17b8d2e1-cfa9-4f81-8357-845162702902.png"></p>
+<img src="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/1631095310156-f5157a0d-9b12-4b59-a302-7091363c2f8b.png" style="float:center;" />
+
 <p>其中，D表示的是防御者拥有的数据集的子集，K表示ResNet中的Residual Group数量。</p>
 <h2 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h2><ul>
 <li>实验部分使用的模型架构单一，仅涉及WRN这一系列模型</li>
@@ -379,7 +395,10 @@
     <a href="/Papers/paper-sok-faults-in-our-asrs/" rel="prev" title="SoK：The Faults in our ASRs论文摘要">
       <i class="fa fa-chevron-left"></i> SoK：The Faults in our ASRs论文摘要
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/uncategorized/LXD%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" rel="next" title="LXD命令速查">
+      LXD命令速查 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -452,7 +471,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -500,7 +519,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

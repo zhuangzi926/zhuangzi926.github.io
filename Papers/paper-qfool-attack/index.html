@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="基本信息    会议&#x2F;期刊 ICCV     年份 2019   机构 EPFL   一作 Yujia Liu   领域 Adversarial Example, Decision-based Black-box Attack     主要贡献本文提出了一种新型黑盒对抗样本生成算法qFool。该算法不依赖模型输出的概率分布，仅利用Top-1预测结果就能构造出对抗样本。qFool算法的特点是查询次数">
+  <meta name="description" content="基本信息   会议&#x2F;期刊 ICCV    年份 2019   机构 EPFL   一作 Yujia Liu   领域 Adversarial Example, Decision-based Black-box Attack   主要贡献本文提出了一种新型黑盒对抗样本生成算法qFool。该算法不依赖模型输出的概率分布，仅利用Top-1预测结果就能构造出对抗样本。qFool算法的特点是查询次">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Geometry-Inspired Decision-Based Attack论文摘要">
 <meta property="og:url" content="http://xinlu.cool/Papers/paper-qfool-attack/index.html">
 <meta property="og:site_name" content="xinlu&#39;s blog">
-<meta property="og:description" content="基本信息    会议&#x2F;期刊 ICCV     年份 2019   机构 EPFL   一作 Yujia Liu   领域 Adversarial Example, Decision-based Black-box Attack     主要贡献本文提出了一种新型黑盒对抗样本生成算法qFool。该算法不依赖模型输出的概率分布，仅利用Top-1预测结果就能构造出对抗样本。qFool算法的特点是查询次数">
+<meta property="og:description" content="基本信息   会议&#x2F;期刊 ICCV    年份 2019   机构 EPFL   一作 Yujia Liu   领域 Adversarial Example, Decision-based Black-box Attack   主要贡献本文提出了一种新型黑盒对抗样本生成算法qFool。该算法不依赖模型输出的概率分布，仅利用Top-1预测结果就能构造出对抗样本。qFool算法的特点是查询次">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-24T05:57:05.000Z">
-<meta property="article:modified_time" content="2021-03-24T06:04:18.928Z">
+<meta property="article:modified_time" content="2021-03-24T06:04:18.000Z">
 <meta property="article:author" content="xinlu">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Adversarial Example">
@@ -221,16 +221,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
-<table>
+        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><table>
 <thead>
 <tr>
-<th><strong>会议/期刊</strong></th>
+<th><strong>会议&#x2F;期刊</strong></th>
 <th>ICCV</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><strong>年份</strong></td>
 <td>2019</td>
 </tr>
@@ -246,11 +244,11 @@
 <td><strong>领域</strong></td>
 <td>Adversarial Example, Decision-based Black-box Attack</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>本文提出了一种新型<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1903.10826">黑盒对抗样本生成算法qFool</a>。该算法不依赖模型输出的概率分布，仅<strong>利用Top-1预测结果</strong>就能构造出对抗样本。qFool算法的特点是<strong>查询次数较少</strong>，其变种qFool-subspace算法还能<strong>将对抗样本限制在输入的低频子空间中</strong>，在<strong>计算上更加高效</strong>。</p>
-<a id="more"></a>
+<span id="more"></span>
+
+
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="早期工作"><a href="#早期工作" class="headerlink" title="早期工作"></a>早期工作</h3><p>对抗样本攻击算法根据攻击设定可分为白盒与黑盒两种。黑盒攻击假设攻击者不知道模型的内部细节（架构、参数、损失、梯度…），仅仅知道模型的输出结果。黑盒攻击又可以细分为Score-based和Decision-based。Scored-based攻击假设攻击者能知道模型输出的各类别概率分布，而Decision-based攻击假设攻击者只知道模型输出的Top1预测结果。</p>
 <p>Decision-based黑盒攻击的早期工作包括Additive Gaussian Attack、Boundary Attack等。Additive Gaussian Attack生成的对抗样本对人眼来说太过于明显。Boundary Attack利用神经网络的决策边界的几何性质来构造对抗样本，方法颇为巧妙。Boundary Attack的另一大主要贡献还在于确立了<strong>黑盒攻击领域最主流的技术框架</strong>：先找到原始对抗样本，再用逼近法找到边界对抗样本，然后利用边界对抗样本的种种性质来寻找新的对抗样本，之后再逼近、寻找、…以此循环往复。</p>
 <p>在技术路线上，Decision-based黑盒攻击的难点在于缺少模型的梯度信息（个人认为梯度方向和所谓模型决策边界信息在黑盒对抗领域其实是一回事），而<strong>模型的逆梯度方向是构造对抗样本的关键</strong>。目前已知的解决这一问题的方法包括Transfer-based和Sample-based。Transfer-based方法根据对抗样本在不同模型之间的迁移性，假设不同模型之间的梯度方向相似，先在本地训练替代模型，然后利用替代模型的梯度来<strong>代替未知的目标模型梯度</strong>。Sample-based方法利用模型决策边界附近的一些特殊性质，<strong>构造边界附近的梯度估计量</strong>，然后用蒙特卡洛采样法来<strong>计算出梯度的估计</strong>。</p>
@@ -268,6 +266,8 @@
 <h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><h3 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h3><p>这里只关心适用最广泛的targeted attack场景，伪代码如下：</p>
 <p>输入：原始图片 <code>x_0</code>，目标图片 <code>x_t</code>，每次更新估计量所需的查询次数 <code>nu</code>，控制内循环查询次数的超参数 <code>threshold</code><br>输出：对抗样本 <code>x_adv</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">二分搜索寻找边界对抗样本</span><br><span class="line"><span class="keyword">while</span> 已消耗查询次数 &lt; 总查询次数：</span><br><span class="line">	为本轮迭代分配查询次数</span><br><span class="line">	<span class="keyword">while</span> 对抗样本更新幅度满足预设条件 <span class="keyword">and</span> 总查询次数未耗尽：</span><br><span class="line">    	在边界对抗样本上施加随机扰动（可以在频率子空间上施加扰动），查询 nu 次</span><br><span class="line">        利用内部循环产生的所有查询结果来构造梯度的估计量</span><br><span class="line">        新对抗样本 = 边界对抗样本 + 步长 * 梯度的估计量</span><br><span class="line">        二分搜索，更新新对抗样本</span><br><span class="line">    边界对抗样本 = 新对抗样本</span><br></pre></td></tr></table></figure>
+
+
 <p>算法中需要详细分析的有三点：</p>
 <ul>
 <li>怎么估计边界对抗样本上的梯度？</li>
@@ -275,32 +275,24 @@
 <li>如何在子空间上进行采样？</li>
 </ul>
 <h3 id="梯度的估计"><a href="#梯度的估计" class="headerlink" title="梯度的估计"></a>梯度的估计</h3><p>假设算法每轮迭代时向模型查询n次，那么每次构造n个随机噪声向量，采样后进行归一化，</p>
-<script type="math/tex; mode=display">\{\mathbf{\eta}_i\} \sim N(0, \mathbf{1}_n)</script><p>将噪声叠加到边界对抗样本P上，得到n个查询结果，</p>
-<script type="math/tex; mode=display">z_i = \left\{ \begin{array}{rcl}
--1 & f(\mathcal{P}+\mathbf{\eta}_i)=f(\mathbf{x}_0) \\
-+1 & f(\mathcal{P}+\mathbf{\eta}_i) \neq f(\mathbf{x}_0)
-\end{array}\right.
-, \;\;\; i=1,2,...,n</script><p>构造边界对抗样本附近的梯度的估计量，</p>
-<script type="math/tex; mode=display">\nabla f(\mathcal{x}_0) \approx \nabla f(\mathcal{P}) \approx \mathbf{\xi} 
-= \frac{\sum^n_{i=1}{z_i \mathbf{\eta}_i}}
-{\|\sum^n_{i=1}{z_i \mathbf{\eta}_i}\|_2}</script><h3 id="查询次数的分配策略"><a href="#查询次数的分配策略" class="headerlink" title="查询次数的分配策略"></a>查询次数的分配策略</h3><p>在理想的情况下，采样次数 <code>n</code> 充分大，采样得到的随机向量在决策边界两遍分布均匀，这样的话，算法利用 <code>n</code> 次查询得到的结果构造的统计量就能精确估计梯度。</p>
+<p>$${\mathbf{\eta}_i} \sim N(0, \mathbf{1}_n)$$</p>
+<p>将噪声叠加到边界对抗样本P上，得到n个查询结果，</p>
+<p>$$z_i &#x3D; \left{ \begin{array}{rcl}<br>-1 &amp; f(\mathcal{P}+\mathbf{\eta}_i)&#x3D;f(\mathbf{x}_0) \<br>+1 &amp; f(\mathcal{P}+\mathbf{\eta}_i) \neq f(\mathbf{x}_0)<br>\end{array}\right.<br>, ;;; i&#x3D;1,2,…,n$$</p>
+<p>构造边界对抗样本附近的梯度的估计量，</p>
+<p>$$\nabla f(\mathcal{x}<em>0) \approx \nabla f(\mathcal{P}) \approx \mathbf{\xi}<br>&#x3D; \frac{\sum^n</em>{i&#x3D;1}{z_i \mathbf{\eta}<em>i}}<br>{|\sum^n</em>{i&#x3D;1}{z_i \mathbf{\eta}_i}|_2}$$</p>
+<h3 id="查询次数的分配策略"><a href="#查询次数的分配策略" class="headerlink" title="查询次数的分配策略"></a>查询次数的分配策略</h3><p>在理想的情况下，采样次数 <code>n</code> 充分大，采样得到的随机向量在决策边界两遍分布均匀，这样的话，算法利用 <code>n</code> 次查询得到的结果构造的统计量就能精确估计梯度。</p>
 <p>但考虑到实际情况中，用户并不知道 <code>n</code> 的合适大小，采样得到的随机向量也可能分布并不充分均匀，就会为后续的梯度估计步骤引入误差，或者产生很大的对抗扰动。</p>
 <p>论文还指出，初始对抗样本与原始样本之间的距离对最终生成的对抗样本质量有很大影响，因此算法更希望在前期找到尽可能好的对抗样本。（意味着前几轮的查询总次数更多）</p>
 <p>为了避免以上情况，qFool算法提出了一种渐进的、贪心的分配策略：</p>
 <ul>
-<li>固定每次查询/采样数目为 <code>nu</code></li>
-<li>多次查询组成算法的一轮迭代 （每轮迭代的查询次数 = 查询次数 * <code>nu</code>）</li>
+<li>固定每次查询&#x2F;采样数目为 <code>nu</code></li>
+<li>多次查询组成算法的一轮迭代 （每轮迭代的查询次数 &#x3D; 查询次数 * <code>nu</code>）</li>
 <li>每轮迭代中，控制生成的扰动大小，控制方法是尽可能生成距离边界对抗样本更近的对抗样本</li>
 <li>迭代轮数受查询的总次数限制</li>
 </ul>
 <p>迭代进行的判定条件具体如下，</p>
-<script type="math/tex; mode=display">\frac{\|x^{(i)}_{adv} - \mathcal{P}_i\|}{n^{(i)}}
-\leq
-\epsilon \;\; \frac{\|x^{(i-1)}_{adv} - \mathcal{P}_i\|}{n^{(i-1)}}
-\;\;\;\;
-and
-\;\;\;\;
-\sum^i_{j=0}{n^{(j)}} < n</script><h3 id="子空间采样"><a href="#子空间采样" class="headerlink" title="子空间采样"></a>子空间采样</h3><p>本论文对图像进行离散余弦变换（DCT），变换后的频率图的左上部分表示的是原图的低频部分。</p>
+<p>$$\frac{|x^{(i)}_{adv} - \mathcal{P}<em>i|}{n^{(i)}}<br>\leq<br>\epsilon ;; \frac{|x^{(i-1)}</em>{adv} - \mathcal{P}<em>i|}{n^{(i-1)}}<br>;;;;<br>and<br>;;;;<br>\sum^i</em>{j&#x3D;0}{n^{(j)}} &lt; n$$</p>
+<h3 id="子空间采样"><a href="#子空间采样" class="headerlink" title="子空间采样"></a>子空间采样</h3><p>本论文对图像进行离散余弦变换（DCT），变换后的频率图的左上部分表示的是原图的低频部分。</p>
 <p>qFool算法在低频部分截取维度大小为 <code>m</code> 的子空间，在这个空间范围内施加对抗扰动，然后用反离散余弦变换（IDCT）还原成对抗图片。</p>
 <p>缩小维度让采样得到的随机噪声在决策边界的分布更加均匀，根据随机噪声估计得到的梯度方向也就更加精确，最终可以让生成的对抗扰动更小、更不易被察觉。在subspace内采样所需的查询次数更少。</p>
 <p>相比之下，在full space内采样得到的噪声分布得极为稀疏，沿决策边界均匀分布的可能性也更低。</p>
@@ -403,7 +395,7 @@ and
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -451,7 +443,7 @@ and
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

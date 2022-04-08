@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来最小化FSP矩阵的L2距离，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-08T13:33:20.000Z">
-<meta property="article:modified_time" content="2021-03-24T05:53:41.290Z">
+<meta property="article:modified_time" content="2021-03-24T05:53:41.000Z">
 <meta property="article:author" content="xinlu">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Knowledge Distillation">
@@ -227,17 +227,16 @@
 
       
         <p>本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来最小化FSP矩阵的L2距离，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。</p>
-<a id="more"></a>
-<h2 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h2><div class="table-container">
-<table>
+<span id="more"></span>
+
+<h2 id="一、基本信息"><a href="#一、基本信息" class="headerlink" title="一、基本信息"></a>一、基本信息</h2><table>
 <thead>
 <tr>
-<th>会议/期刊</th>
+<th>会议&#x2F;期刊</th>
 <th>CVPR</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>年份</td>
 <td>2017</td>
 </tr>
@@ -253,23 +252,21 @@
 <td>领域</td>
 <td>Knowledge Distillation，Transfer Learning</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h2 id="二、做了什么？针对什么应用场景？"><a href="#二、做了什么？针对什么应用场景？" class="headerlink" title="二、做了什么？针对什么应用场景？"></a>二、做了什么？针对什么应用场景？</h2><p>本文提出了一种新的卷积网络权重初始化方法，它的思路是利用FSP矩阵来表示相邻两层输出之间的关系，这种关系能告诉我们“神经网络解决问题的思路”，然后训练学生网络来minimize L2(FSP_teacher, FSP_student)，以此初始化学生网络权重，之后再接着训练。该方法在cifar10、cifar100数据集上被证明具有收敛快、精度高、适于迁移学习的效果。</p>
-<p>主要针对场景：<br>    1）手上有一个超大的模型，但部署环境不支持计算量/存储/功耗，因此需要训练一个小一点的模型or多个小型模型的集成，<br>    2）手上有一个预训练模型，但新任务样本量较少、从头训练效果不好，因此需要在新任务上进行fine-tune，<br>    3）追求模型的快速收敛，需要好的初始化策略，</p>
+<p>主要针对场景：<br>    1）手上有一个超大的模型，但部署环境不支持计算量&#x2F;存储&#x2F;功耗，因此需要训练一个小一点的模型or多个小型模型的集成，<br>    2）手上有一个预训练模型，但新任务样本量较少、从头训练效果不好，因此需要在新任务上进行fine-tune，<br>    3）追求模型的快速收敛，需要好的初始化策略，</p>
 <h2 id="三、这么做有什么好处？（纵向比较）"><a href="#三、这么做有什么好处？（纵向比较）" class="headerlink" title="三、这么做有什么好处？（纵向比较）"></a>三、这么做有什么好处？（纵向比较）</h2><p>第一次从“flow of solving problems”的角度看待知识蒸馏，具有启发意义。（之前的方法过于注重让student模仿</p>
 <p>将知识蒸馏技术引入了迁移学习领域。</p>
-<h2 id="四、为什么做这个工作？（横向比较）"><a href="#四、为什么做这个工作？（横向比较）" class="headerlink" title="四、为什么做这个工作？（横向比较）"></a>四、为什么做这个工作？（横向比较）</h2><p>vs 普通的KD（Romero/FitNets）：</p>
+<h2 id="四、为什么做这个工作？（横向比较）"><a href="#四、为什么做这个工作？（横向比较）" class="headerlink" title="四、为什么做这个工作？（横向比较）"></a>四、为什么做这个工作？（横向比较）</h2><p>vs 普通的KD（Romero&#x2F;FitNets）：</p>
 <ul>
-<li><p>其他知识蒸馏方法只追求student模仿teacher的结果输出/中间层输出，只重视结果而不重视解决问题的过程，</p>
+<li><p>其他知识蒸馏方法只追求student模仿teacher的结果输出&#x2F;中间层输出，只重视结果而不重视解决问题的过程，</p>
 </li>
 <li><p>训练过程低效，本方法多个模块可以独立训练，效果仍然很好，</p>
 </li>
 <li><p>不利于产生迁移性好的学生网络，因为没有学习过程只强调模仿</p>
 </li>
 </ul>
-<p>vs 其他快速收敛的方法：选择一个好的初始化策略能使深度网络优化地更快，选择一个好的优化器能使深度网络更易于达到全局/局部最优</p>
+<p>vs 其他快速收敛的方法：选择一个好的初始化策略能使深度网络优化地更快，选择一个好的优化器能使深度网络更易于达到全局&#x2F;局部最优</p>
 <ul>
 <li><p>simple init：Gaussian noise、Xavier</p>
 </li>
@@ -278,16 +275,16 @@
 <li><p>optimizer：sgd、adam</p>
 </li>
 </ul>
-<h2 id="五、方法上有什么创新之处？（实验方法-评价指标-谋篇布局-制图）"><a href="#五、方法上有什么创新之处？（实验方法-评价指标-谋篇布局-制图）" class="headerlink" title="五、方法上有什么创新之处？（实验方法/评价指标/谋篇布局/制图）"></a>五、方法上有什么创新之处？（实验方法/评价指标/谋篇布局/制图）</h2><p>核心问题：</p>
+<h2 id="五、方法上有什么创新之处？（实验方法-x2F-评价指标-x2F-谋篇布局-x2F-制图）"><a href="#五、方法上有什么创新之处？（实验方法-x2F-评价指标-x2F-谋篇布局-x2F-制图）" class="headerlink" title="五、方法上有什么创新之处？（实验方法&#x2F;评价指标&#x2F;谋篇布局&#x2F;制图）"></a>五、方法上有什么创新之处？（实验方法&#x2F;评价指标&#x2F;谋篇布局&#x2F;制图）</h2><p>核心问题：</p>
 <ol>
-<li>如何定义teacher网络所含的信息？ =&gt; FSP矩阵</li>
-<li>如何让student网络学习到teacher所含信息？ =&gt; 最小化两个网络的FSP矩阵距离</li>
-<li>如何减少students之前的关联性、引入差异性？（好做集成分类器） =&gt; 打乱teacher网络的通道，生成新的FSP matrices</li>
-<li>如何比较初始化策略 vs 简单的知识迁移？=&gt; 用相同的架构做kd，一种init student=trained teacher，另一种init student=FSP trained(trained  teacher)</li>
-<li>怎么证明收敛更快？=&gt; student只用 1/3 的迭代次数，达到和teacher相似的精确度</li>
+<li>如何定义teacher网络所含的信息？ &#x3D;&gt; FSP矩阵</li>
+<li>如何让student网络学习到teacher所含信息？ &#x3D;&gt; 最小化两个网络的FSP矩阵距离</li>
+<li>如何减少students之前的关联性、引入差异性？（好做集成分类器） &#x3D;&gt; 打乱teacher网络的通道，生成新的FSP matrices</li>
+<li>如何比较初始化策略 vs 简单的知识迁移？&#x3D;&gt; 用相同的架构做kd，一种init student&#x3D;trained teacher，另一种init student&#x3D;FSP trained(trained  teacher)</li>
+<li>怎么证明收敛更快？&#x3D;&gt; student只用 1&#x2F;3 的迭代次数，达到和teacher相似的精确度</li>
 </ol>
-<h2 id="六、思路上有什么创新之处？（新发现-新论断-新猜想）"><a href="#六、思路上有什么创新之处？（新发现-新论断-新猜想）" class="headerlink" title="六、思路上有什么创新之处？（新发现/新论断/新猜想）"></a>六、思路上有什么创新之处？（新发现/新论断/新猜想）</h2><ul>
-<li>定义了一种high level knowledge =&gt; flow of solving problems =&gt; relationship between outputs of 2 connected layers</li>
+<h2 id="六、思路上有什么创新之处？（新发现-x2F-新论断-x2F-新猜想）"><a href="#六、思路上有什么创新之处？（新发现-x2F-新论断-x2F-新猜想）" class="headerlink" title="六、思路上有什么创新之处？（新发现&#x2F;新论断&#x2F;新猜想）"></a>六、思路上有什么创新之处？（新发现&#x2F;新论断&#x2F;新猜想）</h2><ul>
+<li>定义了一种high level knowledge &#x3D;&gt; flow of solving problems &#x3D;&gt; relationship between outputs of 2 connected layers</li>
 <li>借鉴了Gramian matrix的思想（A neural algorithm of artistic style），提出了FSP矩阵（flow of solving problems）</li>
 </ul>
 <h2 id="七、有什么我可以借鉴的？"><a href="#七、有什么我可以借鉴的？" class="headerlink" title="七、有什么我可以借鉴的？"></a>七、有什么我可以借鉴的？</h2><p>对CIFAR10数据集，可以先padding到40x40再训练。</p>
@@ -376,7 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">一、基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F%E9%92%88%E5%AF%B9%E4%BB%80%E4%B9%88%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">二、做了什么？针对什么应用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BF%99%E4%B9%88%E5%81%9A%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84%EF%BC%9F%EF%BC%88%E7%BA%B5%E5%90%91%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、这么做有什么好处？（纵向比较）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%81%9A%E8%BF%99%E4%B8%AA%E5%B7%A5%E4%BD%9C%EF%BC%9F%EF%BC%88%E6%A8%AA%E5%90%91%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、为什么做这个工作？（横向比较）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%96%B9%E6%B3%95%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84%EF%BC%9F%EF%BC%88%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95-%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87-%E8%B0%8B%E7%AF%87%E5%B8%83%E5%B1%80-%E5%88%B6%E5%9B%BE%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">五、方法上有什么创新之处？（实验方法&#x2F;评价指标&#x2F;谋篇布局&#x2F;制图）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%9D%E8%B7%AF%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84%EF%BC%9F%EF%BC%88%E6%96%B0%E5%8F%91%E7%8E%B0-%E6%96%B0%E8%AE%BA%E6%96%AD-%E6%96%B0%E7%8C%9C%E6%83%B3%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、思路上有什么创新之处？（新发现&#x2F;新论断&#x2F;新猜想）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%9C%89%E4%BB%80%E4%B9%88%E6%88%91%E5%8F%AF%E4%BB%A5%E5%80%9F%E9%89%B4%E7%9A%84%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">七、有什么我可以借鉴的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E7%BC%BA%E7%82%B9%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">八、缺点有哪些？</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">一、基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F%E9%92%88%E5%AF%B9%E4%BB%80%E4%B9%88%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">二、做了什么？针对什么应用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BF%99%E4%B9%88%E5%81%9A%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84%EF%BC%9F%EF%BC%88%E7%BA%B5%E5%90%91%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、这么做有什么好处？（纵向比较）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%81%9A%E8%BF%99%E4%B8%AA%E5%B7%A5%E4%BD%9C%EF%BC%9F%EF%BC%88%E6%A8%AA%E5%90%91%E6%AF%94%E8%BE%83%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、为什么做这个工作？（横向比较）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%96%B9%E6%B3%95%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84%EF%BC%9F%EF%BC%88%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95-x2F-%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87-x2F-%E8%B0%8B%E7%AF%87%E5%B8%83%E5%B1%80-x2F-%E5%88%B6%E5%9B%BE%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">五、方法上有什么创新之处？（实验方法&#x2F;评价指标&#x2F;谋篇布局&#x2F;制图）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%9D%E8%B7%AF%E4%B8%8A%E6%9C%89%E4%BB%80%E4%B9%88%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84%EF%BC%9F%EF%BC%88%E6%96%B0%E5%8F%91%E7%8E%B0-x2F-%E6%96%B0%E8%AE%BA%E6%96%AD-x2F-%E6%96%B0%E7%8C%9C%E6%83%B3%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、思路上有什么创新之处？（新发现&#x2F;新论断&#x2F;新猜想）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%9C%89%E4%BB%80%E4%B9%88%E6%88%91%E5%8F%AF%E4%BB%A5%E5%80%9F%E9%89%B4%E7%9A%84%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">七、有什么我可以借鉴的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E7%BC%BA%E7%82%B9%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">8.</span> <span class="nav-text">八、缺点有哪些？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -390,7 +387,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -438,7 +435,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
