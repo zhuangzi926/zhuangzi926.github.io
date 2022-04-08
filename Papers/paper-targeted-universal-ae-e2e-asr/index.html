@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="基本信息   会议&#x2F;期刊 arxiv    年份 2021   机构 Google   一作 Zhiyun Lu   领域 Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR   主要贡献这篇文章主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Att">
+  <meta name="description" content="基本信息    会议&#x2F;期刊 arxiv     年份 2021   机构 Google   一作 Zhiyun Lu   领域 Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR     主要贡献这篇文章主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Atte">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Exploring Targeted Universal Adversarial Perturbations to End-to-end ASR Models论文摘要">
 <meta property="og:url" content="http://xinlu.cool/Papers/paper-targeted-universal-ae-e2e-asr/index.html">
 <meta property="og:site_name" content="xinlu&#39;s blog">
-<meta property="og:description" content="基本信息   会议&#x2F;期刊 arxiv    年份 2021   机构 Google   一作 Zhiyun Lu   领域 Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR   主要贡献这篇文章主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Att">
+<meta property="og:description" content="基本信息    会议&#x2F;期刊 arxiv     年份 2021   机构 Google   一作 Zhiyun Lu   领域 Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR     主要贡献这篇文章主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Atte">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-08T06:18:41.000Z">
 <meta property="article:modified_time" content="2021-07-08T06:28:25.000Z">
@@ -223,14 +223,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><table>
+        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
+<table>
 <thead>
 <tr>
-<th>会议&#x2F;期刊</th>
+<th>会议/期刊</th>
 <th>arxiv</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>年份</td>
 <td>2021</td>
 </tr>
@@ -246,16 +248,14 @@
 <td>领域</td>
 <td>Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.02757">这篇文章</a>主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Attention、RNN-T）训练universal perturbation，评估三种模型的鲁棒性。</p>
 <p>提出了一种新的攻击思路，prepending attack，在对抗语音前追加对抗噪声，而不改变原语音。由于e2e模型具有良好的推理能力（尤其是LAS模型），因此很容易受这种攻击影响。</p>
 <p>发现了Attention机制是鲁棒性低的原因，在对抗攻击场景下，Attention模型容易只考虑少数注入了对抗噪声的frame，而忽略掉其他部分。</p>
 <p>发现CTC模型对universal perturbation非常鲁棒。Targeted universal attacks exist for both LAS and RNN-T, but not for CTC models.</p>
 <span id="more"></span>
-
-
-
-
 <h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p><strong>为什么语音对抗样本比图像难？</strong>因为语音识别是序列识别（sequential predictions）。举例，语音untarget攻击会导致很高的WER，让用户发现大量与真实结果无关的识别文本，而图像untargeted攻击只会造成一次误分类。</p>
 <p><strong>什么是universal perturbation？</strong>一个从训练集中学习得到的扰动向量，可以泛化（到其他数据），以高概率使任意音频被误识别。</p>
 <p><strong>扰动的分类。</strong>将扰动分为additive和prepending（在头部追加）。additive攻击ASR的additive stability，prepending攻击ASR的causal stability。</p>
@@ -271,8 +271,8 @@
 <li><strong>文本对实验结果的影响。</strong>观察结论表明，目标识别文本越短、词汇使用频率越高，攻击就越容易成功。</li>
 </ul>
 <p><strong>只使用一句话训练universal perturbation，效果不好。</strong>使用Librispeech中的一句话训练的对抗扰动平均成功率仅为0.7%（test-clean）、2.7%（test-other）。</p>
-<p><strong>max-norm约束越强，成功率越低。</strong>无max-norm约束，，RNN-T上prepending attack成功率为<del>40%，4000时为</del>30%，2000时为~3%。</p>
-<p><strong>untargeted universal attack比较容易，但还是会保留一定的正常文本。</strong>三种模型被攻击后的WER分别为LAS 76.0&#x2F;100.5、RNN-T 87.5&#x2F;100.6、CTC 106.1&#x2F;121.2。</p>
+<p><strong>max-norm约束越强，成功率越低。</strong>无max-norm约束，，RNN-T上prepending attack成功率为~40%，4000时为~30%，2000时为~3%。</p>
+<p><strong>untargeted universal attack比较容易，但还是会保留一定的正常文本。</strong>三种模型被攻击后的WER分别为LAS 76.0/100.5、RNN-T 87.5/100.6、CTC 106.1/121.2。</p>
 
     </div>
 

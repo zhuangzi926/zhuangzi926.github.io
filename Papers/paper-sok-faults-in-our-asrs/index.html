@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="基本信息   会议&#x2F;期刊 S&amp;P    年份 2021   机构 University of Florida   一作 Hadi Abdullah   领域 Speech Recognition, Speaker Recognition, Audio Adversarial Example   主要贡献本综述将语音识别（Speech Recognition）和说话人识别（Spea">
+  <meta name="description" content="基本信息    会议&#x2F;期刊 S&amp;P     年份 2021   机构 University of Florida   一作 Hadi Abdullah   领域 Speech Recognition, Speaker Recognition, Audio Adversarial Example     主要贡献本综述将语音识别（Speech Recognition）和说话人识别（Speak">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SoK：The Faults in our ASRs论文摘要">
 <meta property="og:url" content="http://xinlu.cool/Papers/paper-sok-faults-in-our-asrs/index.html">
 <meta property="og:site_name" content="xinlu&#39;s blog">
-<meta property="og:description" content="基本信息   会议&#x2F;期刊 S&amp;P    年份 2021   机构 University of Florida   一作 Hadi Abdullah   领域 Speech Recognition, Speaker Recognition, Audio Adversarial Example   主要贡献本综述将语音识别（Speech Recognition）和说话人识别（Spea">
+<meta property="og:description" content="基本信息    会议&#x2F;期刊 S&amp;P     年份 2021   机构 University of Florida   一作 Hadi Abdullah   领域 Speech Recognition, Speaker Recognition, Audio Adversarial Example     主要贡献本综述将语音识别（Speech Recognition）和说话人识别（Speak">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-17T09:06:07.000Z">
 <meta property="article:modified_time" content="2021-07-17T09:09:41.000Z">
@@ -223,14 +223,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><table>
+        <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
+<table>
 <thead>
 <tr>
-<th>会议&#x2F;期刊</th>
+<th>会议/期刊</th>
 <th>S&amp;P</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>年份</td>
 <td>2021</td>
 </tr>
@@ -246,11 +248,11 @@
 <td>领域</td>
 <td>Speech Recognition, Speaker Recognition, Audio Adversarial Example</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2007.06622">本综述</a>将语音识别（Speech Recognition）和说话人识别（Speaker Identification）统称为Voice Processing Systems（VPS）。该综述对VSP的威胁模型进行分类，按分类整理了现有工作，经过大量测试证明，目前还无法实现恶意输入在VPS之间的迁移性。</p>
 <span id="more"></span>
-
-
 <h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p><strong>ASR的典型应用场景有哪些？</strong></p>
 <ul>
 <li>个人助手（personal assistant，Google Home，Amazon Alexa，Siri）</li>
@@ -301,7 +303,7 @@
 <ul>
 <li>本文认为，语音对抗样本在不同模型间不具有迁移性，即使使用相同架构、相同训练集、相同参数训练出的模型也不具有迁移性。原因在于训练阶段GPU引入了不确定性</li>
 <li>Commander Song将Kaldi上生成的对抗样本成功迁移到iFlytek上，这可能是因为iFlytek在预训练的Kaldi模型基础上fine-tune。语音对抗样本对fine-tune后的模型可能具有迁移性</li>
-<li>作者使用不同随机数种子训练了8个一样的DeepSpeech ASR，在1个DeepSpeech ASR上使用C&amp;W&#x2F;PGD生成10000+个对抗音频，都无法迁移到另外7个DeepSpeech ASR上；而使用相同随机数种子后，还是不具有迁移性；这说明GPU引入的不确定机制导致了模型的不同，也表明语音对抗样本不具有迁移性（至少在DeepSpeech上）</li>
+<li>作者使用不同随机数种子训练了8个一样的DeepSpeech ASR，在1个DeepSpeech ASR上使用C&amp;W/PGD生成10000+个对抗音频，都无法迁移到另外7个DeepSpeech ASR上；而使用相同随机数种子后，还是不具有迁移性；这说明GPU引入的不确定机制导致了模型的不同，也表明语音对抗样本不具有迁移性（至少在DeepSpeech上）</li>
 </ul>
 
     </div>

@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"xinlu.cool","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="基本信息   会议&#x2F;期刊 IJCAI    年份 2020   机构 华中科技大学   一作 Hongting Zhang   领域 Audio Adversarial Attack，Speech Recognition，White-box Attack   主要贡献本文提出了一种新型白盒语音对抗攻击算法Iterative Proportional Clipping（IPC），成功攻击了">
+  <meta name="description" content="基本信息    会议&#x2F;期刊 IJCAI     年份 2020   机构 华中科技大学   一作 Hongting Zhang   领域 Audio Adversarial Attack，Speech Recognition，White-box Attack     主要贡献本文提出了一种新型白盒语音对抗攻击算法Iterative Proportional Clipping（IPC），成功攻击了基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Generating Robust Audio Adversarial Examples with Temporal Dependency论文摘要">
 <meta property="og:url" content="http://xinlu.cool/Papers/paper-ipc/index.html">
 <meta property="og:site_name" content="xinlu&#39;s blog">
-<meta property="og:description" content="基本信息   会议&#x2F;期刊 IJCAI    年份 2020   机构 华中科技大学   一作 Hongting Zhang   领域 Audio Adversarial Attack，Speech Recognition，White-box Attack   主要贡献本文提出了一种新型白盒语音对抗攻击算法Iterative Proportional Clipping（IPC），成功攻击了">
+<meta property="og:description" content="基本信息    会议&#x2F;期刊 IJCAI     年份 2020   机构 华中科技大学   一作 Hongting Zhang   领域 Audio Adversarial Attack，Speech Recognition，White-box Attack     主要贡献本文提出了一种新型白盒语音对抗攻击算法Iterative Proportional Clipping（IPC），成功攻击了基">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-05T06:34:15.000Z">
 <meta property="article:modified_time" content="2021-07-08T06:23:53.000Z">
@@ -228,14 +228,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><table>
+        <h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><div class="table-container">
+<table>
 <thead>
 <tr>
-<th>会议&#x2F;期刊</th>
+<th>会议/期刊</th>
 <th>IJCAI</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>年份</td>
 <td>2020</td>
 </tr>
@@ -251,23 +253,26 @@
 <td>领域</td>
 <td>Audio Adversarial Attack，Speech Recognition，White-box Attack</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>本文提出了一种新型白盒语音对抗攻击算法<a target="_blank" rel="noopener" href="https://www.ijcai.org/proceedings/2020/438">Iterative Proportional Clipping（IPC）</a>，成功攻击了基于CNN的wav2letter++语音识别系统。该算法生成的对抗样本仍然保持了temporal dependency性质，temporal dependency based defense无法检测IPC算法生成的对抗样本。</p>
 <p>本文提出了两种进一步优化对抗样本的方法，分别将对抗噪声隐藏到high-intensity和high-frequency band上，人耳实验表明两种优化方法确实提高了人耳隐蔽性。</p>
 <span id="more"></span>
-
-
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="早期工作"><a href="#早期工作" class="headerlink" title="早期工作"></a>早期工作</h3><p>白盒语音对抗攻击算法在技术上已经成熟，但还面临难以解决的不足之处：</p>
 <ul>
-<li>在音频的<strong>静音部分&#x2F;low-intensity部分</strong>引入了噪音，容易被人耳察觉</li>
+<li>在音频的<strong>静音部分/low-intensity部分</strong>引入了噪音，容易被人耳察觉</li>
 <li>在音频的<strong>低频部分（300~3400Hz）</strong>部分引入了噪音，非常容易被人耳感知，这也是人说话声音的主要频带</li>
 <li>破坏了正常音频的<strong>temporal dependency</strong>性质，容易被检测</li>
 </ul>
 <p>IPC算法并没有提出重大的技术创新，而只是从temporal dependency这个侧面着手，破解了基于TD的防御手段，让生成的音频仍保持了TD性质。</p>
 <p>早期工作中，生成对抗音频所需时间较长（小时级），而IPC算法只需要3~15分钟就能生成一条对抗音频。</p>
-<h3 id="灵感来源"><a href="#灵感来源" class="headerlink" title="灵感来源"></a>灵感来源</h3><p>在对抗样本的生成过程中，往往施加的扰动越大，攻击成功率就越高，但音频质量会变得越低。之前的方法都会将扰动限制在<strong>固定的范围</strong>内，但音频质量仍然很糟糕。IPC算法认为生成对抗样本的优化过程应该是个data-related optimization，所以限制的不是扰动的绝对值，而是扰动&#x2F;原语音信号的比例。<strong>按固定比例限制扰动大小</strong>的方法保持了音频的TD性质。</p>
+<h3 id="灵感来源"><a href="#灵感来源" class="headerlink" title="灵感来源"></a>灵感来源</h3><p>在对抗样本的生成过程中，往往施加的扰动越大，攻击成功率就越高，但音频质量会变得越低。之前的方法都会将扰动限制在<strong>固定的范围</strong>内，但音频质量仍然很糟糕。IPC算法认为生成对抗样本的优化过程应该是个data-related optimization，所以限制的不是扰动的绝对值，而是扰动/原语音信号的比例。<strong>按固定比例限制扰动大小</strong>的方法保持了音频的TD性质。</p>
 <h2 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h2><p>这篇文章之前<a target="_blank" rel="noopener" href="https://openreview.net/forum?id=HJgFW6EKvH">被ICLR拒了</a>，拒稿理由合情合理。</p>
-<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><h3 id="白盒优化目标函数"><a href="#白盒优化目标函数" class="headerlink" title="白盒优化目标函数"></a>白盒优化目标函数</h3><p>$$\begin{array}{l}<br>\text { minimize } \lambda_{1} \cdot \operatorname{Loss}(f(\phi(x+\delta)), t)+\lambda_{2}|\delta|<em>{2}^{2} \<br>\text { s.t. }\left|\frac{\delta</em>{i}}{x_{i}}\right|&lt;B, i \in[n]<br>\end{array}$$<br>其中，常数B限制了每个扰动与原信号的比例上界。如果B增大，噪声的L2 norm增大，优化所需的epoch减小。</p>
+<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><h3 id="白盒优化目标函数"><a href="#白盒优化目标函数" class="headerlink" title="白盒优化目标函数"></a>白盒优化目标函数</h3><script type="math/tex; mode=display">\begin{array}{l}
+\text { minimize } \lambda_{1} \cdot \operatorname{Loss}(f(\phi(x+\delta)), t)+\lambda_{2}\|\delta\|_{2}^{2} \\
+\text { s.t. }\left|\frac{\delta_{i}}{x_{i}}\right|<B, i \in[n]
+\end{array}</script><p>其中，常数B限制了每个扰动与原信号的比例上界。如果B增大，噪声的L2 norm增大，优化所需的epoch减小。</p>
 <p>IPC算法只要求使用的语音预处理方法是可微分、可逆向的，例如 <code>torch.fft</code> 和 <code>torch.rfft</code> 。本文在实验部分把wav2letter++用pytorch重写了一遍。</p>
 <h3 id="关于Temporal-Dependency"><a href="#关于Temporal-Dependency" class="headerlink" title="关于Temporal Dependency"></a>关于Temporal Dependency</h3><ul>
 <li>TD包含了temporal closeness，period，trend这三个方面</li>
@@ -284,7 +289,7 @@
 <li>疑问：为什么这种剪拼操作没有破坏temporal dependency？</li>
 </ul>
 </li>
-<li>梯度方向传播时，冻结3500<del>8000Hz以外的频段，梯度只在3500</del>8000Hz内反向传播（只需要修改预处理步骤中的梯度反向传播逻辑即可）</li>
+<li>梯度方向传播时，冻结3500~8000Hz以外的频段，梯度只在3500~8000Hz内反向传播（只需要修改预处理步骤中的梯度反向传播逻辑即可）</li>
 <li>本文的人耳实验比较粗糙，只选择了20个志愿者做调研，但和其他方法的对比效果显著</li>
 </ul>
 

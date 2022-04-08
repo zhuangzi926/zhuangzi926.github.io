@@ -229,38 +229,30 @@
       
         <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1904.02144">HopSkipJumpAttack</a>是发表于2020年S&amp;P的论文，提出了一种新型黑盒对抗攻击的方法，利用采样+逼近的思路来生成对抗样本，理论基础完备，实验效果达到了SOTA。</p>
 <span id="more"></span>
-
-
 <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><h3 id="被攻击模型的定义"><a href="#被攻击模型的定义" class="headerlink" title="被攻击模型的定义"></a>被攻击模型的定义</h3><p>定义神经网络为以下函数</p>
-<p>$$F: \mathbb{R}^d \rightarrow \mathbb{R}^m$$</p>
-<p>函数的输入为区间[0, 1]上的d维向量</p>
-<p>$$x \in [0, 1]^d$$</p>
-<p>函数的输出为[0, 1]上的m维概率分布向量，满足全概率公式</p>
-<p>$$y \in \Delta_m :&#x3D; {y \in [0, 1]^m : | :  \Sigma^m_{c&#x3D;1} : y_c &#x3D; 1}$$</p>
-<p>m同时也是神经网络输出类别的总个数，c用来指代任意一个类别，神经网络输出的所有类别标签的集合即为</p>
-<p>$$[m] &#x3D; {1,…,m}$$</p>
-<p>将函数的输出写成向量的形式为</p>
-<p>$$y &#x3D; (F_1(x),…,F_m(x))$$</p>
-<p>基于以上函数的分类器可以表示为</p>
-<p>$$C(x) :&#x3D; \underset{c \in [m]}{\operatorname{argmax}}F_c (x)$$</p>
-<h3 id="对抗攻击的定义"><a href="#对抗攻击的定义" class="headerlink" title="对抗攻击的定义"></a>对抗攻击的定义</h3><p>untarget attack的目标是让分类器的输出类别从</p>
-<p>$$c^* :&#x3D; C(x^*)$$</p>
-<p>变成与原来类别不同的任何类别</p>
-<p>$$c \in [m] - {c^*}$$</p>
-<p>targeted attack的目标是让分类器的输出类别变成某个预先定义好的类别</p>
-<p>$$c^{\dagger} \in [m] - {c^*}$$</p>
-<p>定义函数S，S与攻击者的攻击目标有关，可以判定当前生成的对抗样本是否满足攻击目标</p>
-<p>$$S_{x^*}(x’):&#x3D; \left { \begin{array}{rcl}<br>\operatorname{max}<em>{c \neq c^*} F_c(x’)-F</em>{c^*}(x’) &amp; (Untargeted) \<br>F_{c^\dagger}(x’)-\operatorname{max}_{c \neq c^\dagger}F_c(x’) &amp; (Targeted)<br>\end{array}\right.$$</p>
-<p>对于任意对抗样本x’而言，只要满足S(x’)&gt;0，就可以认为攻击成功</p>
-<h3 id="边界上的对抗样本集合"><a href="#边界上的对抗样本集合" class="headerlink" title="边界上的对抗样本集合"></a>边界上的对抗样本集合</h3><p>当S(x’)&#x3D;0时，对抗攻击正好处在成功与失败的边界上，定义边界上的对抗样本构成的集合为</p>
-<p>$$bd(S_{x^*}):&#x3D;{ z \in [0, 1]^d : | : S_{x^*}(z)&#x3D;0 }$$</p>
-<h3 id="攻击成功的判定函数"><a href="#攻击成功的判定函数" class="headerlink" title="攻击成功的判定函数"></a>攻击成功的判定函数</h3><p>构造sign函数如下</p>
-<p>$$\phi_{x^*}(x’):&#x3D;\operatorname{sign}(S_{x^*}(x’))&#x3D; \left { \begin{array}{rcl}<br>1 &amp; if ; S_{x^*}(x’)&gt;0 \<br>-1 &amp; otherwise<br>\end{array}\right.$$</p>
-<p>当sign函数取值为+1时，对抗样本攻击即为成功。</p>
+<script type="math/tex; mode=display">F: \mathbb{R}^d \rightarrow \mathbb{R}^m</script><p>函数的输入为区间[0, 1]上的d维向量</p>
+<script type="math/tex; mode=display">x \in [0, 1]^d</script><p>函数的输出为[0, 1]上的m维概率分布向量，满足全概率公式</p>
+<script type="math/tex; mode=display">y \in \Delta_m := \{y \in [0, 1]^m \: | \:  \Sigma^m_{c=1} \: y_c = 1\}</script><p>m同时也是神经网络输出类别的总个数，c用来指代任意一个类别，神经网络输出的所有类别标签的集合即为</p>
+<script type="math/tex; mode=display">[m] = {1,...,m}</script><p>将函数的输出写成向量的形式为</p>
+<script type="math/tex; mode=display">y = (F_1(x),...,F_m(x))</script><p>基于以上函数的分类器可以表示为</p>
+<script type="math/tex; mode=display">C(x) := \underset{c \in [m]}{\operatorname{argmax}}F_c (x)</script><h3 id="对抗攻击的定义"><a href="#对抗攻击的定义" class="headerlink" title="对抗攻击的定义"></a>对抗攻击的定义</h3><p>untarget attack的目标是让分类器的输出类别从</p>
+<script type="math/tex; mode=display">c^* := C(x^*)</script><p>变成与原来类别不同的任何类别</p>
+<script type="math/tex; mode=display">c \in [m] - \{c^*\}</script><p>targeted attack的目标是让分类器的输出类别变成某个预先定义好的类别</p>
+<script type="math/tex; mode=display">c^{\dagger} \in [m] - \{c^*\}</script><p>定义函数S，S与攻击者的攻击目标有关，可以判定当前生成的对抗样本是否满足攻击目标</p>
+<script type="math/tex; mode=display">S_{x^*}(x'):= \left \{ \begin{array}{rcl}
+\operatorname{max}_{c \neq c^*} F_c(x')-F_{c^*}(x') & (Untargeted) \\
+F_{c^\dagger}(x')-\operatorname{max}_{c \neq c^\dagger}F_c(x') & (Targeted)
+\end{array}\right.</script><p>对于任意对抗样本x’而言，只要满足S(x’)&gt;0，就可以认为攻击成功</p>
+<h3 id="边界上的对抗样本集合"><a href="#边界上的对抗样本集合" class="headerlink" title="边界上的对抗样本集合"></a>边界上的对抗样本集合</h3><p>当S(x’)=0时，对抗攻击正好处在成功与失败的边界上，定义边界上的对抗样本构成的集合为</p>
+<script type="math/tex; mode=display">bd(S_{x^*}):=\{ z \in [0, 1]^d \: | \: S_{x^*}(z)=0 \}</script><h3 id="攻击成功的判定函数"><a href="#攻击成功的判定函数" class="headerlink" title="攻击成功的判定函数"></a>攻击成功的判定函数</h3><p>构造sign函数如下</p>
+<script type="math/tex; mode=display">\phi_{x^*}(x'):=\operatorname{sign}(S_{x^*}(x'))= \left \{ \begin{array}{rcl}
+1 & if \; S_{x^*}(x')>0 \\
+-1 & otherwise
+\end{array}\right.</script><p>当sign函数取值为+1时，对抗样本攻击即为成功。</p>
 <p>为了实现攻击的隐蔽性，攻击者最终的目标是找到与原始样本距离最小的对抗样本，距离函数一般取0、2、无穷范数。</p>
-<p>$$\operatorname{min}<em>{x’};d(x’, x^*) ;;;; s.t.  \phi</em>{x^*}(x’)&#x3D;1$$</p>
-<h2 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h2><h3 id="迭代更新"><a href="#迭代更新" class="headerlink" title="迭代更新"></a>迭代更新</h3><p>HSJA算法可以用数学公式描述如下<br>$$x_{t+1} &#x3D; \alpha_t x^* + (1 - \alpha_t)<br>{ x_t + \xi_t \frac{\nabla S_{x^*}(x_t)}{||\nabla S_{x^*}(x_t)||_2} }$$</p>
-<p>其中涉及的关键步骤有：</p>
+<script type="math/tex; mode=display">\operatorname{min}_{x'}\;d(x', x^*) \;\;\;\; s.t.  \phi_{x^*}(x')=1</script><h2 id="算法框架"><a href="#算法框架" class="headerlink" title="算法框架"></a>算法框架</h2><h3 id="迭代更新"><a href="#迭代更新" class="headerlink" title="迭代更新"></a>迭代更新</h3><p>HSJA算法可以用数学公式描述如下</p>
+<script type="math/tex; mode=display">x_{t+1} = \alpha_t x^* + (1 - \alpha_t) 
+\{ x_t + \xi_t \frac{\nabla S_{x^*}(x_t)}{||\nabla S_{x^*}(x_t)||_2} \}</script><p>其中涉及的关键步骤有：</p>
 <ul>
 <li>用<strong>二分搜索</strong>来选取合适的alpha，让新对抗样本逼近边界</li>
 <li>在边界上，用<strong>Monte Carlo采样</strong>得到函数S的梯度的估计，生成对抗扰动</li>
@@ -269,115 +261,79 @@
 <li>……</li>
 </ul>
 <h3 id="步长选择"><a href="#步长选择" class="headerlink" title="步长选择"></a>步长选择</h3><p>把梯度估计线性叠加到对抗样本上的公式描述如下</p>
-<p>$$\tilde{x}_t :&#x3D; x_t + \xi_t v_t (x_t, \delta_t)$$</p>
-<p>$$v_t(x_t, \delta_t) &#x3D; \left { \begin{array}{rcl}<br>\widehat{\nabla S}(x_t, \delta_t) &#x2F; ||\widehat{\nabla S}(x_t, \delta_t)||_2 &amp; if ;; p &#x3D; 2 \<br>\operatorname{sign}(\widehat{\nabla S}(x_t, \delta_t)) &amp; if ;; p &#x3D; \infty<br>\end{array}<br>\right.$$</p>
-<p>该迭代算法的收敛性与步长的选择直接相关，HSJA将步长初始化如下，如果更新后的对抗样本攻击失败，那么步长减半，以此类推。</p>
-<p>$$\xi_t :&#x3D; ||x_t - x^*||_p &#x2F; \sqrt{t}$$</p>
-<h2 id="算法细节"><a href="#算法细节" class="headerlink" title="算法细节"></a>算法细节</h2><h3 id="Lp-projection"><a href="#Lp-projection" class="headerlink" title="Lp-projection"></a>Lp-projection</h3><p>与大多数主流算法相似，HSJA算法给对抗样本到原始样本的距离增加了限制，不能大于epsilon。距离函数取Lp范数，p&#x3D;2或inf。</p>
+<script type="math/tex; mode=display">\tilde{x}_t := x_t + \xi_t v_t (x_t, \delta_t)</script><script type="math/tex; mode=display">v_t(x_t, \delta_t) = \left \{ \begin{array}{rcl}
+\widehat{\nabla S}(x_t, \delta_t) / ||\widehat{\nabla S}(x_t, \delta_t)||_2 & if \;\; p = 2 \\
+\operatorname{sign}(\widehat{\nabla S}(x_t, \delta_t)) & if \;\; p = \infty
+\end{array}
+\right.</script><p>该迭代算法的收敛性与步长的选择直接相关，HSJA将步长初始化如下，如果更新后的对抗样本攻击失败，那么步长减半，以此类推。</p>
+<script type="math/tex; mode=display">\xi_t := ||x_t - x^*||_p / \sqrt{t}</script><h2 id="算法细节"><a href="#算法细节" class="headerlink" title="算法细节"></a>算法细节</h2><h3 id="Lp-projection"><a href="#Lp-projection" class="headerlink" title="Lp-projection"></a>Lp-projection</h3><p>与大多数主流算法相似，HSJA算法给对抗样本到原始样本的距离增加了限制，不能大于epsilon。距离函数取Lp范数，p=2或inf。</p>
 <p>给定对抗样本x，Lp-projection步骤的目的是在对抗样本x上进行裁剪，裁剪后得到的新对抗样本y既要满足到原始样本的距离限制，又要距离原来的对抗样本x尽可能地近。</p>
-<p>Lp-projection步骤在p&#x3D;1, 2, …, 无穷时都有通解，但本算法重新构造了通解，以便后续进行二分搜索。以下分别为L2和Linf两种情况下的映射公式。</p>
-<p>当p&#x3D;2时，映射公式如下</p>
-<p>$$\Pi_{x^*,\alpha_t}^2 (x) :&#x3D;<br>\underset{||y-x^*||_2 \leqslant \alpha_t}{\operatorname{argmin}}<br>||y-x||_2 &#x3D;<br>\alpha_t x^* + (1-\alpha_t)x$$</p>
-<p>当p&#x3D;inf时，映射公式如下，值得注意的是，x和x*都是向量，而此处新定义的c是常数。</p>
-<p>$$\Pi_{x^*, \alpha}^\infty (x) :&#x3D;<br>\operatorname{max}{\operatorname{min}{x, x^*+c}, x^*-c} ;; (modified)$$</p>
-<p>$$c :&#x3D; \alpha||x - x^*||_\infty$$</p>
-<p><strong>原论文在此处的公式可能有误，已知c是个非负数，那么x<em>与x</em>+c的比较就失去了意义，以下给出原论文上的无穷范数映射公式</strong></p>
-<p>$$\Pi_{x^*, \alpha}^\infty (x)_i :&#x3D;<br>\operatorname{max}{\operatorname{min}{x_i^*, x_i^*+c}, x_i-c}$$</p>
-<p>无论p&#x3D;2还是inf，alpha的概念都是统一的：越接近0就离原始样本越近，越接近0就离对抗样本越近。利用概念上的统一性，后续在对alpha在区间[0, 1]上做二分搜索时，也更加方便。</p>
-<p>开源代码库<a target="_blank" rel="noopener" href="https://github.com/bethgelab/foolbox/blob/master/foolbox/attacks/hop_skip_jump.py">foolbox</a>给出了Lp-projection的实现，如下所示</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_project</span>(<span class="params"></span></span><br><span class="line"><span class="params">    self, originals: ep.Tensor, perturbed: ep.Tensor, epsilons: ep.Tensor</span></span><br><span class="line"><span class="params"></span>) -&gt; ep.Tensor:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Clips the perturbations to epsilon and returns the new perturbed</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        originals: A batch of reference inputs.</span></span><br><span class="line"><span class="string">        perturbed: A batch of perturbed inputs.</span></span><br><span class="line"><span class="string">        epsilons: A batch of norm values to project to.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        A tensor like perturbed but with the perturbation clipped to epsilon.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    epsilons = atleast_kd(epsilons, originals.ndim)</span><br><span class="line">    <span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">        perturbation = perturbed - originals</span><br><span class="line"></span><br><span class="line">        <span class="comment"># ep.clip does not support tensors as min/max</span></span><br><span class="line">        clipped_perturbed = ep.where(</span><br><span class="line">            perturbation &gt; epsilons, originals + epsilons, perturbed</span><br><span class="line">        )</span><br><span class="line">        clipped_perturbed = ep.where(</span><br><span class="line">            perturbation &lt; -epsilons, originals - epsilons, clipped_perturbed</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> clipped_perturbed</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1.0</span> - epsilons) * originals + epsilons * perturbed</span><br></pre></td></tr></table></figure>
-
-
-
+<p>Lp-projection步骤在p=1, 2, …, 无穷时都有通解，但本算法重新构造了通解，以便后续进行二分搜索。以下分别为L2和Linf两种情况下的映射公式。</p>
+<p>当p=2时，映射公式如下</p>
+<script type="math/tex; mode=display">\Pi_{x^*,\alpha_t}^2 (x) := 
+\underset{||y-x^*||_2 \leqslant \alpha_t}{\operatorname{argmin}}
+||y-x||_2 = 
+\alpha_t x^* + (1-\alpha_t)x</script><p>当p=inf时，映射公式如下，值得注意的是，x和x*都是向量，而此处新定义的c是常数。</p>
+<script type="math/tex; mode=display">\Pi_{x^*, \alpha}^\infty (x) := 
+\operatorname{max}\{\operatorname{min}\{x, x^*+c\}, x^*-c\} \;\; (modified)</script><script type="math/tex; mode=display">c := \alpha||x - x^*||_\infty</script><p><strong>原论文在此处的公式可能有误，已知c是个非负数，那么x<em>与x</em>+c的比较就失去了意义，以下给出原论文上的无穷范数映射公式</strong></p>
+<script type="math/tex; mode=display">\Pi_{x^*, \alpha}^\infty (x)_i := 
+\operatorname{max}\{\operatorname{min}\{x_i^*, x_i^*+c\}, x_i-c\}</script><p>无论p=2还是inf，alpha的概念都是统一的：越接近0就离原始样本越近，越接近0就离对抗样本越近。利用概念上的统一性，后续在对alpha在区间[0, 1]上做二分搜索时，也更加方便。</p>
+<p>开源代码库<a target="_blank" rel="noopener" href="https://github.com/bethgelab/foolbox/blob/master/foolbox/attacks/hop_skip_jump.py">foolbox</a>给出了Lp-projection的实现，如下所示<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_project</span>(<span class="params"></span></span><br><span class="line"><span class="params">    self, originals: ep.Tensor, perturbed: ep.Tensor, epsilons: ep.Tensor</span></span><br><span class="line"><span class="params"></span>) -&gt; ep.Tensor:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Clips the perturbations to epsilon and returns the new perturbed</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        originals: A batch of reference inputs.</span></span><br><span class="line"><span class="string">        perturbed: A batch of perturbed inputs.</span></span><br><span class="line"><span class="string">        epsilons: A batch of norm values to project to.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        A tensor like perturbed but with the perturbation clipped to epsilon.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    epsilons = atleast_kd(epsilons, originals.ndim)</span><br><span class="line">    <span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">        perturbation = perturbed - originals</span><br><span class="line"></span><br><span class="line">        <span class="comment"># ep.clip does not support tensors as min/max</span></span><br><span class="line">        clipped_perturbed = ep.where(</span><br><span class="line">            perturbation &gt; epsilons, originals + epsilons, perturbed</span><br><span class="line">        )</span><br><span class="line">        clipped_perturbed = ep.where(</span><br><span class="line">            perturbation &lt; -epsilons, originals - epsilons, clipped_perturbed</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> clipped_perturbed</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1.0</span> - epsilons) * originals + epsilons * perturbed</span><br></pre></td></tr></table></figure></p>
 <h3 id="梯度估计"><a href="#梯度估计" class="headerlink" title="梯度估计"></a>梯度估计</h3><h4 id="估计的成立条件"><a href="#估计的成立条件" class="headerlink" title="估计的成立条件"></a>估计的成立条件</h4><p>HSJA算法需要对函数S在第t次迭代生成的对抗样本xt上求梯度。若要使这一梯度可被估计，需要满足以下假设条件</p>
 <ul>
 <li>函数S<strong>二阶可导</strong>，并且满足<strong>局部Lipschitz约束</strong>，x0是初始对抗样本</li>
 </ul>
-<p>$$\exists L&gt;0, ;;<br>\forall x,y \in {z:||z-x^*||_2 \leqslant ||x_0 - x^*||_2 }, $$</p>
-<p>$$||\nabla S_{x^*}(x) - \nabla S_{x^*}(y)||_2 \leqslant L||x-y||_2$$</p>
-<ul>
-<li>如果对抗样本xt刚好<strong>处于边界</strong>，即S(xt)&#x3D;0，那么函数S在xt上的导数一定<strong>存在下界</strong>，并且<strong>下界大于0</strong></li>
+<script type="math/tex; mode=display">\exists L>0, \;\; 
+\forall x,y \in \{z:||z-x^*||_2 \leqslant ||x_0 - x^*||_2 \},</script><script type="math/tex; mode=display">||\nabla S_{x^*}(x) - \nabla S_{x^*}(y)||_2 \leqslant L||x-y||_2</script><ul>
+<li>如果对抗样本xt刚好<strong>处于边界</strong>，即S(xt)=0，那么函数S在xt上的导数一定<strong>存在下界</strong>，并且<strong>下界大于0</strong></li>
 </ul>
-<p>$$\exists \tilde{C} &gt; 0, ;; \forall z \in bd(S_{x^*})$$</p>
-<p>$$|| \nabla S_{x^*}(z) || &gt; \tilde{C}$$</p>
-<ul>
-<li>如果要用对抗样本xt与初始样本x*的差来做函数S梯度的<strong>无偏估计</strong>（即下面的函数r&#x3D;1），那么xt必须要处于HSJA算法优化过程中的<strong>驻点</strong>上</li>
+<script type="math/tex; mode=display">\exists \tilde{C} > 0, \;\; \forall z \in bd(S_{x^*})</script><script type="math/tex; mode=display">|| \nabla S_{x^*}(z) || > \tilde{C}</script><ul>
+<li>如果要用对抗样本xt与初始样本x<em>的差来做函数S梯度的<strong>无偏估计</strong>（即下面的函数r=1），那么xt必须要处于HSJA算法优化过程中的<em>*驻点</em></em>上</li>
 </ul>
-<p>$$\begin{align}<br>r(x_t, x^*) :&amp;&#x3D; cos \angle (x_t - x^*, \nabla S_{x^*}(x_t)) \<br>&amp; &#x3D; \frac{&lt;x_t - x^*, \nabla S_{x^*}(x_t)&gt;}{||x_t - x^*||<em>2 || \nabla S</em>{x^*}(x_t)||_2}<br>\end{align}$$</p>
-<ul>
+<script type="math/tex; mode=display">\begin{align}
+r(x_t, x^*) :&= cos \angle (x_t - x^*, \nabla S_{x^*}(x_t)) \\
+& = \frac{<x_t - x^*, \nabla S_{x^*}(x_t)>}{||x_t - x^*||_2 || \nabla S_{x^*}(x_t)||_2}
+\end{align}</script><ul>
 <li>在上述假设都成立的情况下，在HSJA算法优化过程中<strong>选取合适的步长</strong>，可以保证算法得到的对抗样本xt最终收敛至驻点</li>
 </ul>
-<p>$$\xi_t &#x3D; || x_t - x^* ||_2 t^{-q} ;;;; for ; q \in (\frac{1}{2},1)$$</p>
-<p>$$0 \leqslant 1 - r(x_t, x^*) \leqslant ct^{q-1} ;;;; for ; t&#x3D;1,2,…$$</p>
-<p>以上分别为步长更新公式和步长对函数r的限制，具体证明过程里用到了二阶泰勒估计。</p>
-<p>上述估计方法也可以推广到p&#x3D;inf的情况。</p>
-<h4 id="渐进无偏估计量"><a href="#渐进无偏估计量" class="headerlink" title="渐进无偏估计量"></a>渐进无偏估计量</h4><p>对任意位于边界上的xt，可以用以下Monte Carlo采样得到的统计量来估计函数S的梯度<br>$$\widetilde{\nabla S}(x_t, \delta) :&#x3D;<br>\frac{1}{B} \sum_{b&#x3D;1}^{B} \phi_{x^*}(x_t+\delta u_b)u_b, $$</p>
-<p>$$ x_t \in bd(S_{x^*}) $$</p>
-<p>$$ i.i.d. ;{u_b}_{b&#x3D;1}^B \sim U(-1, 1)^d $$</p>
-<p>随机变量ub是独立同分布的d维随机向量，服从均匀分布，B表示样本容量，也是Monte Carlo采样的次数。</p>
+<script type="math/tex; mode=display">\xi_t = || x_t - x^* ||_2 t^{-q} \;\;\;\; for \; q \in (\frac{1}{2},1)</script><script type="math/tex; mode=display">0 \leqslant 1 - r(x_t, x^*) \leqslant ct^{q-1} \;\;\;\; for \; t=1,2,...</script><p>以上分别为步长更新公式和步长对函数r的限制，具体证明过程里用到了二阶泰勒估计。</p>
+<p>上述估计方法也可以推广到p=inf的情况。</p>
+<h4 id="渐进无偏估计量"><a href="#渐进无偏估计量" class="headerlink" title="渐进无偏估计量"></a>渐进无偏估计量</h4><p>对任意位于边界上的xt，可以用以下Monte Carlo采样得到的统计量来估计函数S的梯度</p>
+<script type="math/tex; mode=display">\widetilde{\nabla S}(x_t, \delta) := 
+\frac{1}{B} \sum_{b=1}^{B} \phi_{x^*}(x_t+\delta u_b)u_b,</script><script type="math/tex; mode=display">x_t \in bd(S_{x^*})</script><script type="math/tex; mode=display">i.i.d. \;\{u_b\}_{b=1}^B \sim U(-1, 1)^d</script><p>随机变量ub是独立同分布的d维随机向量，服从均匀分布，B表示样本容量，也是Monte Carlo采样的次数。</p>
 <p>由于引入了delta，导致该估计量是有偏的，但偏差具有下界，可表示为</p>
-<p>$$\cos \angle (\mathbb{E}[ \widetilde{\nabla S} (x_t, \delta)], \nabla S_{x^*}(x_t)) \geqslant<br>1 - \frac{9 L^2 \delta^2 d^2}{8||\nabla S(x_t)||_2^2}$$</p>
-<p>以上估计量的渐进无偏性可表示为</p>
-<p>$$\lim_{\delta \rightarrow 0} \cos \angle (\mathbb{E}[ \widetilde{\nabla S} (x_t, \delta)], \nabla S_{x^*}(x_t))&#x3D;1$$</p>
-<p>一般取delta为1&#x2F;d，之后会给出一个偏差更小的delta选取方法。</p>
+<script type="math/tex; mode=display">\cos \angle (\mathbb{E}[ \widetilde{\nabla S} (x_t, \delta)], \nabla S_{x^*}(x_t)) \geqslant
+1 - \frac{9 L^2 \delta^2 d^2}{8||\nabla S(x_t)||_2^2}</script><p>以上估计量的渐进无偏性可表示为</p>
+<script type="math/tex; mode=display">\lim_{\delta \rightarrow 0} \cos \angle (\mathbb{E}[ \widetilde{\nabla S} (x_t, \delta)], \nabla S_{x^*}(x_t))=1</script><p>一般取delta为1/d，之后会给出一个偏差更小的delta选取方法。</p>
 <h4 id="方差更小的估计量"><a href="#方差更小的估计量" class="headerlink" title="方差更小的估计量"></a>方差更小的估计量</h4><p>由于实验误差的存在，xt不一定恰好在边界上，delta也不总是为0，因此采样得到的新样本在边界两边常常是分布不均匀的，这会产生难以忽视的误差。</p>
 <p>因此HSJA算法提出了一个新的方差更小的估计量。和之前的估计量一样，新估计量也是渐进无偏的。新估计量表示如下</p>
-<p>$$\begin{align}<br>\overline{\phi_{x^*}} &amp; :&#x3D; \frac{1}{B} \sum_{b&#x3D;1}^{B} \phi_{x^*}(x_t + \delta u_b)<br>\ \widehat{\nabla S}(x_t, \delta) &amp;:&#x3D; \frac{1}{B-1} \sum_{b&#x3D;1}^{B} (\phi_{x^*}(x_t+\delta u_b) - \overline{\phi_{x^*}})u_b<br>\end{align}$$</p>
-<p>方差上界的证明部分略去。</p>
+<script type="math/tex; mode=display">\begin{align}
+\overline{\phi_{x^*}} & := \frac{1}{B} \sum_{b=1}^{B} \phi_{x^*}(x_t + \delta u_b)
+\\ \widehat{\nabla S}(x_t, \delta) &:= \frac{1}{B-1} \sum_{b=1}^{B} (\phi_{x^*}(x_t+\delta u_b) - \overline{\phi_{x^*}})u_b
+\end{align}</script><p>方差上界的证明部分略去。</p>
 <h4 id="Monte-Carlo采样方法的实现"><a href="#Monte-Carlo采样方法的实现" class="headerlink" title="Monte Carlo采样方法的实现"></a>Monte Carlo采样方法的实现</h4><p>开源代码库<a target="_blank" rel="noopener" href="https://github.com/bethgelab/foolbox/blob/master/foolbox/attacks/hop_skip_jump.py">foolbox</a>给出了该梯度估计方法的实现，与原论文的代码仓库相比实现更加简洁，但思路比较难理解。</p>
-<p>首先，生成随机张量rv并单位化。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.constraint == <span class="string">&quot;l2&quot;</span>:</span><br><span class="line">    rv = ep.normal(x_advs, noise_shape)</span><br><span class="line"><span class="keyword">elif</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">    rv = ep.uniform(x_advs, low=-<span class="number">1</span>, high=<span class="number">1</span>, shape=noise_shape)</span><br><span class="line">rv /= atleast_kd(ep.norms.l2(flatten(rv, keep=<span class="number">1</span>), -<span class="number">1</span>), rv.ndim) + <span class="number">1e-12</span></span><br></pre></td></tr></table></figure>
-
-
-
+<p>首先，生成随机张量rv并单位化。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.constraint == <span class="string">&quot;l2&quot;</span>:</span><br><span class="line">    rv = ep.normal(x_advs, noise_shape)</span><br><span class="line"><span class="keyword">elif</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">    rv = ep.uniform(x_advs, low=-<span class="number">1</span>, high=<span class="number">1</span>, shape=noise_shape)</span><br><span class="line">rv /= atleast_kd(ep.norms.l2(flatten(rv, keep=<span class="number">1</span>), -<span class="number">1</span>), rv.ndim) + <span class="number">1e-12</span></span><br></pre></td></tr></table></figure></p>
 <p>然后生成扰动图片，即x_adv+delta*rv，图片的值域必须被裁剪到[0, 1]之间。<br>foolbox库要求用户在实例化对象时指明输入的上下界，之后会把所有的输入张量都缩放到[0, 1]之间。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scaled_rv = atleast_kd(ep.expand_dims(delta, <span class="number">0</span>), rv.ndim) * rv</span><br><span class="line">perturbed = ep.expand_dims(x_advs, <span class="number">0</span>) + scaled_rv</span><br><span class="line">perturbed = ep.clip(perturbed, <span class="number">0</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>从扰动图片中还原出采样得到的rv，这一步其实有点巧妙，隐式地对采样得到的rv的大小进行了裁剪。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rv = (perturbed - x_advs) / delta</span><br></pre></td></tr></table></figure>
-
-
-
 <p>接下来的步骤需要对pytorch的张量condition操作有一定了解，但这段代码的目的是很明确的，只要生成的扰动图片攻击成功了，multipliers中该扰动图片就对应为1，否则对应为-1。</p>
 <p>perturbed的形状为：<code>(step_size, batch_size, C, H, W)</code>。</p>
 <p>decision的形状为：<code>(step_size, batch_size)</code>，类型为<code>bool</code>。</p>
 <p>multipliers最终的形状为：<code>(step_size, batch_size)</code>，攻击成功对应为1，攻击失败对应为-1。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">multipliers_list: <span class="type">List</span>[ep.Tensor] = []</span><br><span class="line"><span class="keyword">for</span> step <span class="keyword">in</span> <span class="built_in">range</span>(steps):</span><br><span class="line">    decision = is_adversarial(perturbed[step])</span><br><span class="line">    multipliers_list.append(</span><br><span class="line">        ep.where(</span><br><span class="line">            decision,</span><br><span class="line">            ep.ones(x_advs, (<span class="built_in">len</span>(x_advs,))),</span><br><span class="line">            -ep.ones(x_advs, (<span class="built_in">len</span>(decision,))),</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"><span class="comment"># (steps, bs, ...)</span></span><br><span class="line">multipliers = ep.stack(multipliers_list, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>代码还精炼地实现了减少方差的操作，如果所有采样得到的随机扰动都攻击成功&#x2F;都攻击失败，那么multipliers值不变，否则就需要减去均值来减少估计的方差。</p>
+<p>代码还精炼地实现了减少方差的操作，如果所有采样得到的随机扰动都攻击成功/都攻击失败，那么multipliers值不变，否则就需要减去均值来减少估计的方差。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vals = ep.where(</span><br><span class="line">    ep.<span class="built_in">abs</span>(ep.mean(multipliers, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)) == <span class="number">1</span>,</span><br><span class="line">    multipliers,</span><br><span class="line">    multipliers - ep.mean(multipliers, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
 <p>最后求出梯度的估计量，并单位化。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grad = ep.mean(atleast_kd(vals, rv.ndim) * rv, axis=<span class="number">0</span>)</span><br><span class="line">grad /= ep.norms.l2(atleast_kd(flatten(grad), grad.ndim)) + <span class="number">1e-12</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="选择合适的扰动大小"><a href="#选择合适的扰动大小" class="headerlink" title="选择合适的扰动大小"></a>选择合适的扰动大小</h3><p>HSJA论文中这部分证明比较硬核，我所学知识有限，实在无法理解。大概意思是控制扰动大小的参数delta与估计误差有很大关系，因此需要谨慎选择。</p>
 <p>常量gamma的值在论文中并没有，而是作为经验参数，默认为1.0。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">select_delta</span>(<span class="params"></span></span><br><span class="line"><span class="params">    self, originals: ep.Tensor, distances: ep.Tensor, step: <span class="built_in">int</span></span></span><br><span class="line"><span class="params"></span>) -&gt; ep.Tensor:</span><br><span class="line">    result: ep.Tensor</span><br><span class="line">    <span class="keyword">if</span> step == <span class="number">0</span>:</span><br><span class="line">        result = <span class="number">0.1</span> * ep.ones_like(distances)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        d = np.prod(originals.shape[<span class="number">1</span>:])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">            theta = self.gamma / (d * d)</span><br><span class="line">            result = d * theta * distances</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            theta = self.gamma / (d * np.sqrt(d))</span><br><span class="line">            result = np.sqrt(d) * theta * distances</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="二分搜索逼近边界"><a href="#二分搜索逼近边界" class="headerlink" title="二分搜索逼近边界"></a>二分搜索逼近边界</h3><p>上述梯度估计的重要前提之一是对抗样本xt要刚好处于边界，如果并不处于边界的话，就需要用二分搜索来逼近边界。</p>
 <p>HSJA算法将Lp-projection与二分搜索相结合。在Lp-projection中，参数alpha的值越大，新对抗样本距离原始样本就越远，alpha值越小，新对抗样本距离原始样本就越近。</p>
-<p>以下结合代码来理解该二分搜索的步骤，初始时，设置alpha的上界、下界分别为0、1。（Linf时上界不可能超过当前无穷范数距离，因此上界初始化为Linf的值）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">    highs = linf(originals, perturbed)</span><br><span class="line">    thresholds = highs * self.gamma / (d * d)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    highs = ep.ones(perturbed, <span class="built_in">len</span>(perturbed))</span><br><span class="line">    thresholds = self.gamma / (d * math.sqrt(d))</span><br><span class="line">lows = ep.zeros_like(highs)</span><br></pre></td></tr></table></figure>
-
-
-<p>当新对抗样本攻击成功时，将上界调低一点；当新对抗样本攻击失败时，将下界调高一点。如果上下界差距超过预先定义的thresholds就停止搜索。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ep.<span class="built_in">any</span>(highs - lows &gt; thresholds):</span><br><span class="line">    mids = (lows + highs) / <span class="number">2</span></span><br><span class="line">    mids_perturbed = self._project(originals, perturbed, mids)</span><br><span class="line">    is_adversarial_ = is_adversarial(mids_perturbed)</span><br><span class="line"></span><br><span class="line">    highs = ep.where(is_adversarial_, mids, highs)</span><br><span class="line">    lows = ep.where(is_adversarial_, lows, mids)</span><br></pre></td></tr></table></figure>
-
-
-<p>以上步骤中有一个注意点：用变量highs中存储的所有alpha值来做Lp-projection，都可以攻击成功。利用这个trick，把最终生成的对抗样本再通过highs进行Lp-projection，确保输出的对抗样本都能攻击成功。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = self._project(originals, perturbed, highs)</span><br></pre></td></tr></table></figure>
-
-
+<p>以下结合代码来理解该二分搜索的步骤，初始时，设置alpha的上界、下界分别为0、1。（Linf时上界不可能超过当前无穷范数距离，因此上界初始化为Linf的值）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.constraint == <span class="string">&quot;linf&quot;</span>:</span><br><span class="line">    highs = linf(originals, perturbed)</span><br><span class="line">    thresholds = highs * self.gamma / (d * d)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    highs = ep.ones(perturbed, <span class="built_in">len</span>(perturbed))</span><br><span class="line">    thresholds = self.gamma / (d * math.sqrt(d))</span><br><span class="line">lows = ep.zeros_like(highs)</span><br></pre></td></tr></table></figure></p>
+<p>当新对抗样本攻击成功时，将上界调低一点；当新对抗样本攻击失败时，将下界调高一点。如果上下界差距超过预先定义的thresholds就停止搜索。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ep.<span class="built_in">any</span>(highs - lows &gt; thresholds):</span><br><span class="line">    mids = (lows + highs) / <span class="number">2</span></span><br><span class="line">    mids_perturbed = self._project(originals, perturbed, mids)</span><br><span class="line">    is_adversarial_ = is_adversarial(mids_perturbed)</span><br><span class="line"></span><br><span class="line">    highs = ep.where(is_adversarial_, mids, highs)</span><br><span class="line">    lows = ep.where(is_adversarial_, lows, mids)</span><br></pre></td></tr></table></figure></p>
+<p>以上步骤中有一个注意点：用变量highs中存储的所有alpha值来做Lp-projection，都可以攻击成功。利用这个trick，把最终生成的对抗样本再通过highs进行Lp-projection，确保输出的对抗样本都能攻击成功。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = self._project(originals, perturbed, highs)</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
