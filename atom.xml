@@ -6,7 +6,7 @@
   <link href="http://xinlu.cool/atom.xml" rel="self"/>
   
   <link href="http://xinlu.cool/"/>
-  <updated>2022-05-16T09:20:00.836Z</updated>
+  <updated>2022-05-18T05:24:32.601Z</updated>
   <id>http://xinlu.cool/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux防火墙ufw配置</title>
+    <link href="http://xinlu.cool/Manuals/linux-ufw/"/>
+    <id>http://xinlu.cool/Manuals/linux-ufw/</id>
+    <published>2022-05-18T05:18:34.000Z</published>
+    <updated>2022-05-18T05:24:32.601Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用ufw配置服务器防火墙，比直接编辑iptables更加简单、便捷。</p><span id="more"></span><h2 id="1-初次使用，启动默认配置"><a href="#1-初次使用，启动默认配置" class="headerlink" title="1. 初次使用，启动默认配置"></a>1. 初次使用，启动默认配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw default deny incoming</span><br><span class="line">sudo ufw default allow outgoing</span><br><span class="line">sudo ufw default deny routed</span><br></pre></td></tr></table></figure><h2 id="2-放通端口、协议"><a href="#2-放通端口、协议" class="headerlink" title="2. 放通端口、协议"></a>2. 放通端口、协议</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw allow ssh</span><br><span class="line">sudo ufw allow 22</span><br><span class="line">sudo ufw allow 22/tcp</span><br><span class="line">sudo ufw allow 6000:6007/tcp</span><br></pre></td></tr></table></figure><h2 id="3-限制入流量的来源"><a href="#3-限制入流量的来源" class="headerlink" title="3. 限制入流量的来源"></a>3. 限制入流量的来源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw allow from 203.0.113.0/24</span><br><span class="line">sudo ufw allow from 203.0.113.0/24 to any port 22</span><br></pre></td></tr></table></figure><h2 id="4-拒绝入流量"><a href="#4-拒绝入流量" class="headerlink" title="4. 拒绝入流量"></a>4. 拒绝入流量</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw deny http</span><br><span class="line">sudo ufw deny from 203.0.113.4</span><br></pre></td></tr></table></figure><h2 id="5-列出当前规则"><a href="#5-列出当前规则" class="headerlink" title="5. 列出当前规则"></a>5. 列出当前规则</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw status</span><br><span class="line">sudo ufw status numbered</span><br><span class="line">sudo ufw status verbose</span><br></pre></td></tr></table></figure><h2 id="6-按内容-序号删除规则"><a href="#6-按内容-序号删除规则" class="headerlink" title="6. 按内容/序号删除规则"></a>6. 按内容/序号删除规则</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw delete 2</span><br><span class="line">sudo ufw delete allow http</span><br><span class="line">sudo ufw delete allow 80</span><br></pre></td></tr></table></figure><h2 id="7-启动-禁用ufw"><a href="#7-启动-禁用ufw" class="headerlink" title="7. 启动/禁用ufw"></a>7. 启动/禁用ufw</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw enable</span><br><span class="line">sudo ufw disable</span><br></pre></td></tr></table></figure><h2 id="8-重置所有规则（包括默认）"><a href="#8-重置所有规则（包括默认）" class="headerlink" title="8. 重置所有规则（包括默认）"></a>8. 重置所有规则（包括默认）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw reset</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;使用ufw配置服务器防火墙，比直接编辑iptables更加简单、便捷。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Manuals" scheme="http://xinlu.cool/categories/Manuals/"/>
+    
+    
+    <category term="Linux" scheme="http://xinlu.cool/tags/Linux/"/>
+    
+    <category term="Firewall" scheme="http://xinlu.cool/tags/Firewall/"/>
+    
+  </entry>
   
   <entry>
     <title>PBFT论文摘要</title>
@@ -110,9 +133,9 @@
     
     <category term="Machine Learning" scheme="http://xinlu.cool/tags/Machine-Learning/"/>
     
-    <category term="Knowledge Distillation" scheme="http://xinlu.cool/tags/Knowledge-Distillation/"/>
-    
     <category term="Backdoor Attacks" scheme="http://xinlu.cool/tags/Backdoor-Attacks/"/>
+    
+    <category term="Knowledge Distillation" scheme="http://xinlu.cool/tags/Knowledge-Distillation/"/>
     
     <category term="Backdoor Mitigation" scheme="http://xinlu.cool/tags/Backdoor-Mitigation/"/>
     

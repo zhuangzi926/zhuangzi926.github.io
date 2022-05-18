@@ -166,6 +166,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Papers/paper-targeted-universal-ae-e2e-asr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xinlu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xinlu's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Papers/paper-targeted-universal-ae-e2e-asr/" class="post-title-link" itemprop="url">Exploring Targeted Universal Adversarial Perturbations to End-to-end ASR Models论文摘要</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-07-08 14:18:41 / Modified: 14:28:25" itemprop="dateCreated datePublished" datetime="2021-07-08T14:18:41+08:00">2021-07-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index"><span itemprop="name">Papers</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>会议/期刊</th>
+<th>arxiv</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>年份</td>
+<td>2021</td>
+</tr>
+<tr>
+<td>机构</td>
+<td>Google</td>
+</tr>
+<tr>
+<td>一作</td>
+<td>Zhiyun Lu</td>
+</tr>
+<tr>
+<td>领域</td>
+<td>Audio Adversarial Example, Universal Adversarial Example, End-to-end ASR</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2104.02757">这篇文章</a>主要探索不同端到端模型架构对通用语音对抗样本的影响。在三种不同架构的e2e ASR上（CTC、Attention、RNN-T）训练universal perturbation，评估三种模型的鲁棒性。</p>
+<p>提出了一种新的攻击思路，prepending attack，在对抗语音前追加对抗噪声，而不改变原语音。由于e2e模型具有良好的推理能力（尤其是LAS模型），因此很容易受这种攻击影响。</p>
+<p>发现了Attention机制是鲁棒性低的原因，在对抗攻击场景下，Attention模型容易只考虑少数注入了对抗噪声的frame，而忽略掉其他部分。</p>
+<p>发现CTC模型对universal perturbation非常鲁棒。Targeted universal attacks exist for both LAS and RNN-T, but not for CTC models.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Papers/paper-targeted-universal-ae-e2e-asr/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Papers/paper-ipc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -559,87 +665,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://xinlu.cool/Papers/paper-hsja/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xinlu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xinlu's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Papers/paper-hsja/" class="post-title-link" itemprop="url">HopSkipJumpAttack论文分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-19 15:36:29" itemprop="dateCreated datePublished" datetime="2021-01-19T15:36:29+08:00">2021-01-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-24 13:53:30" itemprop="dateModified" datetime="2021-03-24T13:53:30+08:00">2021-03-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Papers/" itemprop="url" rel="index"><span itemprop="name">Papers</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1904.02144">HopSkipJumpAttack</a>是发表于2020年S&amp;P的论文，提出了一种新型黑盒对抗攻击的方法，利用采样+逼近的思路来生成对抗样本，理论基础完备，实验效果达到了SOTA。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Papers/paper-hsja/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -709,7 +734,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -722,7 +747,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

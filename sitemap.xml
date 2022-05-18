@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinlu.cool/Manuals/linux-ufw/</loc>
+    
+    <lastmod>2022-05-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://xinlu.cool/Papers/paper-pbft/</loc>
     
     <lastmod>2022-05-16</lastmod>
@@ -157,7 +166,7 @@
 
   <url>
     <loc>http://xinlu.cool/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -165,182 +174,196 @@
   
   <url>
     <loc>http://xinlu.cool/tags/C/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Concurrency/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/C-Concurrency-in-Action/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Linux/</loc>
+    <lastmod>2022-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Firewall/</loc>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/LXD/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
-    <lastmod>2022-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Adversarial-Example/</loc>
-    <lastmod>2022-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Black-box-Attack/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Audio-Adversarial-Example/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/White-box-Attack/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Backdoor-Attacks/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Backdoor-Mitigation/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Black-box-Attack/</loc>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Blockchain/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Distributed-System/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Consensus/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Survey/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/ASR/</loc>
-    <lastmod>2022-05-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/End-to-end-ASR/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Auditing/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Zero-knowledge-Proof/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/End-to-end-ASR/</loc>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Netdata/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/CUDA/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Tensorflow/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Pytorch/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/TensorFlow/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/tags/Keras/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -349,28 +372,28 @@
   
   <url>
     <loc>http://xinlu.cool/categories/Reading-Notes/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/categories/Manuals/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/categories/Papers/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://xinlu.cool/categories/API-References/</loc>
-    <lastmod>2022-05-16</lastmod>
+    <lastmod>2022-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
