@@ -31,8 +31,8 @@
 <meta property="article:published_time" content="2022-05-16T02:04:50.000Z">
 <meta property="article:modified_time" content="2022-05-16T09:20:00.836Z">
 <meta property="article:author" content="xinlu">
-<meta property="article:tag" content="Blockchain">
 <meta property="article:tag" content="Distributed System">
+<meta property="article:tag" content="Blockchain">
 <meta property="article:tag" content="Consensus">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog-images-1258605293.cos.ap-shanghai.myqcloud.com/img/pbft.png">
@@ -281,7 +281,7 @@
 <p>定义三元谓词 $committed(m, v, n)$ ，谓词成立的条件是有 $f+1$ 个non-faulty replica都将$prepare(m, v, n, i)$ 判定为true。</p>
 <p>定义四元谓词 $committed-local(m, v, n, i)$ ，谓词成立的条件是 $prepare(m, v, n, i)$ 判定为true，并且replica i已经接受了来自 $2f+1$ 个不同replicas（允许包含自己）的commit消息。</p>
 <p>如果存在replica i，能满足$committed-local(m, v, n, i)$为true，那么 $committed(m, v, n)$ 也为true，此时replica i开始执行request。</p>
-<h3 id="REPLY"><a href="#REPLY" class="headerlink" title="REPLY"></a>REPLY</h3><p>执行完毕后，replica各自将reply消息 ${\langle REPLY, v, t, c, i, r \rangle}_{\sigma_}$ 发送给client，client等待 $f+1$ 个来自不同的replicas、且执行结果相同的reply消息后，接受该结果。</p>
+<h3 id="REPLY"><a href="#REPLY" class="headerlink" title="REPLY"></a>REPLY</h3><p>执行完毕后，replica各自将reply消息 ${\langle REPLY, v, t, c, i, r \rangle}<em>{\sigma</em>}$ 发送给client，client等待 $f+1$ 个来自不同的replicas、且执行结果相同的reply消息后，接受该结果。</p>
 <ul>
 <li>REPLY消息标识符</li>
 <li>当前视图编号v</li>
@@ -304,7 +304,7 @@
 <li>将被节点 $i$ 签名后的消息 $m$ 标记为 ${\langle m \rangle}_{\sigma_i}$</li>
 <li>将消息 $m$ 的摘要（digest）标记为 $D(m)$ ，这里的摘要一般是指hash函数</li>
 </ul>
-<p>在发送消息之前，节点 $i$ 先计算消息 $m$ 的摘要$D(m)$ ，然后用自己的私钥为$D(m)$ 进行签名得到 ${\langle m \rangle}_{\sigma_i}$，认证信息${\langle m \rangle}_{\sigma_i}$被附加在消息 $m$ 之后。网络中，所有节点都互相知道各自的公钥，也就可以认证消息的来源。</p>
+<p>在发送消息之前，节点 $i$ 先计算消息 $m$ 的摘要$D(m)$ ，然后用自己的私钥为$D(m)$ 进行签名得到 ${\langle m \rangle}<em>{\sigma_i}$，认证信息${\langle m \rangle}</em>{\sigma_i}$被附加在消息 $m$ 之后。网络中，所有节点都互相知道各自的公钥，也就可以认证消息的来源。</p>
 <h3 id="checkpoint"><a href="#checkpoint" class="headerlink" title="checkpoint"></a>checkpoint</h3><p>每个replica在执行完request的相关操作（收发pre-prepare、prepare、commit消息）后，都会记录下当前状态（state），写进自己的message log里。</p>
 <p>为了减少不必要的存储开销，PBFT设计了checkpoint机制，安全地删除掉message log中已经得到 $f+1$ 个非故障节点证明有效的消息。为了节省checkpoint机制本身的开销，PBFT论文中建议，在执行完多个（例如，每执行完100个requests）后，replica将message log中有关于这些requests的操作记录统称为checkpoint，而将还不足以产生checkpoint的message log称为current state。</p>
 <p>从另一个角度看，每个replica在message log中存储的内容应包括：</p>
@@ -360,8 +360,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
               <a href="/tags/Distributed-System/" rel="tag"># Distributed System</a>
+              <a href="/tags/Blockchain/" rel="tag"># Blockchain</a>
               <a href="/tags/Consensus/" rel="tag"># Consensus</a>
           </div>
 
@@ -450,7 +450,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -463,7 +463,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
