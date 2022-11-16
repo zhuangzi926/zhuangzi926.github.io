@@ -224,20 +224,6 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
-    <lastmod>2022-11-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
-    <lastmod>2022-11-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://xinlu.cool/tags/Distributed-System/</loc>
     <lastmod>2022-11-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -266,6 +252,20 @@
   </url>
   
   <url>
+    <loc>http://xinlu.cool/tags/Machine-Learning/</loc>
+    <lastmod>2022-11-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Knowledge-Distillation/</loc>
+    <lastmod>2022-11-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://xinlu.cool/tags/Adversarial-Example/</loc>
     <lastmod>2022-11-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -274,20 +274,6 @@
   
   <url>
     <loc>http://xinlu.cool/tags/Black-box-Attack/</loc>
-    <lastmod>2022-11-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Backdoor-Attacks/</loc>
-    <lastmod>2022-11-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinlu.cool/tags/Backdoor-Mitigation/</loc>
     <lastmod>2022-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -308,14 +294,14 @@
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Blockchain/</loc>
+    <loc>http://xinlu.cool/tags/Backdoor-Attacks/</loc>
     <lastmod>2022-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://xinlu.cool/tags/Consensus/</loc>
+    <loc>http://xinlu.cool/tags/Backdoor-Mitigation/</loc>
     <lastmod>2022-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -330,6 +316,20 @@
   
   <url>
     <loc>http://xinlu.cool/tags/ASR/</loc>
+    <lastmod>2022-11-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Blockchain/</loc>
+    <lastmod>2022-11-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinlu.cool/tags/Consensus/</loc>
     <lastmod>2022-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

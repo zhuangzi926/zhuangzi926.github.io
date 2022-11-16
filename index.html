@@ -191,7 +191,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-11-16 15:23:00 / Modified: 15:30:34" itemprop="dateCreated datePublished" datetime="2022-11-16T15:23:00+08:00">2022-11-16</time>
+              <time title="Created: 2022-11-16 15:23:00 / Modified: 15:41:38" itemprop="dateCreated datePublished" datetime="2022-11-16T15:23:00+08:00">2022-11-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,7 +218,8 @@
 <p>分布式程序的框架由有两组程序组成：</p>
 <ul>
 <li>第一组的代码是<code>coordinator.go</code>，只有一个进程，这个进程负责把任务分发给工作节点；</li>
-<li>第二组的代码是<code>worker.go</code>，有多个进程，从调度节点接收任务，完成后输出到文件。</li>
+<li>第二组的代码是<code>worker.go</code>，有多个进程，从调度节点接收任务，完成后输出到文件；</li>
+<li>第三组的代码是<code>rpc.go</code>，主要用于实现rpc调用的参数和返回值的数据结构。</li>
 </ul>
 <p>设计这个小的分布式程序的关键可能在于两点：</p>
 <ul>
